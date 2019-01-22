@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace Core::Debug
+namespace Debug
 {
 	/* static assert break program */
 	void 	staticAssert(bool condition, std::string file, int line);
@@ -18,9 +18,9 @@ namespace Core::Debug
 /* Macro to call asserts */
 #else
 	#define Assert(condition)\
-	Core::Debug::assert(condition, __FILE__, __LINE__)
+	Debug::assert(condition, __FILE__, __LINE__)
 	#define StaticAssert(condition)\
-	Core::Debug::staticAssert(condition, __FILE__, __LINE__)
+	Debug::staticAssert(condition, __FILE__, __LINE__)
 #endif
 
 #endif //_ASSERTION_H_

@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace Core::Debug
+namespace Debug
 {
 	class Log
 	{
@@ -56,9 +56,8 @@ namespace Core::Debug
 #else
 	/* macro to call log */
 	#define LOG(severity, message)\
-	Core::Debug::Log::instance().logType(Core::Debug::Log::Severity::severity,\
-																			message)
-	#define	ClearLOG() Core::Debug::clearLog()
+	Debug::Log::instance().logType(Debug::Log::Severity::severity, message)
+	#define	ClearLOG() Debug::clearLog()
 #endif
 
 #endif //_LOG_H_

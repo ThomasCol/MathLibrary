@@ -3,7 +3,7 @@ FLAGS		= -W -Wall -Werror -g -std=c++11
 BIN			= bin
 SRC			= $(shell find src -name '*.cpp')
 OBJ			= $(patsubst src/%.cpp, bin/%.o, $(SRC))
-LIBS		= m SDL2 GL GLU GLEW SOIL
+LIBS		= m SDL2 GL GLU GLEW
 INC_PATH    = $(shell find include -type d)
 INCLUDE		= $(patsubst %, -I%, $(INC_PATH))
 LIBRARIES	= $(patsubst %, -l%, $(LIBS))

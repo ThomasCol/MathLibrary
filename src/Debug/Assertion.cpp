@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-namespace Core::Debug
+namespace Debug
 {
 	void 	staticAssert(bool condition, std::string file, int line)
 	{

@@ -5,7 +5,7 @@
 #include <chrono>
 #include <ctime>
 
-namespace Core::Debug
+namespace Debug
 {
 
 	Log	Log::m_instance {Log()};
