@@ -91,6 +91,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -106,6 +107,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,11 +153,38 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Geometry\Box.cpp" />
+    <ClCompile Include="Src\Geometry\Cylinder.cpp" />
+    <ClCompile Include="Src\Geometry\OrientedBox.cpp" />
+    <ClCompile Include="Src\Geometry\Plane.cpp" />
+    <ClCompile Include="Src\Geometry\Quad.cpp" />
+    <ClCompile Include="Src\Geometry\Segment.cpp" />
+    <ClCompile Include="Src\Geometry\Sphere.cpp" />
     <ClCompile Include="Src\Main.cpp" />
+    <ClCompile Include="Src\Mat.cpp" />
+    <ClCompile Include="Src\Mat4.cpp" />
+    <ClCompile Include="Src\Maths.cpp" />
+    <ClCompile Include="Src\Ref3.cpp" />
+    <ClCompile Include="Src\Vec2.cpp" />
     <ClCompile Include="Src\Vec3.cpp" />
+    <ClCompile Include="Src\Vec4.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\Geometry\Box.h" />
+    <ClInclude Include="Include\Geometry\Cylinder.h" />
+    <ClInclude Include="Include\Geometry\OrientedBox.h" />
+    <ClInclude Include="Include\Geometry\Plane.h" />
+    <ClInclude Include="Include\Geometry\Quad.h" />
+    <ClInclude Include="Include\Geometry\Segment.h" />
+    <ClInclude Include="Include\Geometry\Sphere.h" />
+    <ClInclude Include="Include\Mat.h" />
+    <ClInclude Include="Include\Mat4.h" />
+    <ClInclude Include="Include\MathDefines.h" />
+    <ClInclude Include="Include\Maths.hpp" />
+    <ClInclude Include="Include\Ref3.h" />
+    <ClInclude Include="Include\Vec2.h" />
     <ClInclude Include="Include\Vec3.h" />
+    <ClInclude Include="Include\Vec4.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
