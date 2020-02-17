@@ -2,33 +2,45 @@
 
 #include <math.h>
 
+#include <string>
+
 namespace Math
 {
-	Vec2	Vec2::zero {0.f, 0.f};
-	Vec2	Vec2::up {0.f, 1.f};
-	Vec2	Vec2::down {0.f, -1.f};
-	Vec2	Vec2::left {-1.f, 0.f};
-	Vec2	Vec2::right {1.f, 0.f};
+#pragma region Attributes
 
-	Vec2::Vec2(float posX, float posY):
+	const QXvec2	QXvec2::zero {0.f, 0.f};
+	const QXvec2	QXvec2::up {0.f, 1.f};
+	const QXvec2	QXvec2::down {0.f, -1.f};
+	const QXvec2	QXvec2::left {-1.f, 0.f};
+	const QXvec2	QXvec2::right {1.f, 0.f};
+
+#pragma endregion
+
+#pragma region Constructors
+
+	QXvec2::QXvec2(const QXfloat& posX = 0.f , const QXfloat& posY = 0.f) :
 		x {posX},
 		y {posY}
 	{}
 
-	Vec2::~Vec2()
+	QXvec2::QXvec2(const QXvec2& vect) :
+		x{ vect.x },
+		y{ vect.y }
 	{}
 
-	Vec2::Vec2(float pos):
-		x {pos},
-		y {pos}
+	QXvec2::QXvec2(QXvec2&& vec):
+		x { std::move(vec.x) },
+		y { std::move(vec.y) }
 	{}
 
-	Vec2::Vec2(const Vec2& vect):
-		x {vect.x},
-		y {vect.y}
+	QXvec2::~QXvec2()
 	{}
 
-	Vec2& Vec2::operator=(const Vec2& vect)
+#pragma endregion
+
+#pragma region Operators
+
+	QXvec2& QXvec2::operator=(const QXvec2& vect)
 	{
 		x = vect.x;
 		y = vect.y;
@@ -36,132 +48,15 @@ namespace Math
 		return *this;
 	}
 
-	std::ostream&	operator<<(std::ostream& os, const Vec2& vect)
+	QXvec2& QXvec2::operator=(QXvec2&& vect)
 	{
-		os << vect.x << ", " << vect.y << std::endl;
-
-		return os;
-	}
-
-	std::string	operator+(std::string& str, const Vec2& vect)
-	{
-		std::string	res = str + "x : " + std::to_string(vect.x) +
-		" , y : " + std::to_string(vect.y);
-
-		return res;
-	}
-
-	Vec2	Vec2::operator+(const Vec2& vect)
-	{
-		Vec2	res;
-
-		res.x = x + vect.x;
-		res.y = y + vect.y;
-
-		return res;
-	}
-
-	Vec2	Vec2::operator-(const Vec2& vect)
-	{
-		Vec2	res;
-
-		res.x = x - vect.x;
-		res.y = y - vect.y;
-
-		return res;
-	}
-
-	Vec2	Vec2::operator-()
-	{
-		Vec2	res;
-
-		res.x = -x;
-		res.y = -y;
-
-		return res;
-	}
-
-	Vec2	Vec2::operator*(float nb)
-	{
-		Vec2	res;
-
-		res.x = x * nb;
-		res.y = y * nb;
-
-		return res;
-	}
-
-	Vec2	operator*(float nb, const Vec2& vect)
-	{
-		Vec2	res;
-
-		res.x = vect.x * nb;
-		res.y = vect.y * nb;
-
-		return res;
-	}
-
-	Vec2	Vec2::operator/(float nb)
-	{
-		Vec2	res;
-
-		res.x = x / nb;
-		res.y = y / nb;
-
-		return res;
-	}
-
-	Vec2	operator/(float nb, const Vec2& vect)
-	{
-		Vec2	res;
-
-		res.x = nb / vect.x;
-		res.y = nb / vect.y;
-
-		return res;
-	}
-
-	Vec2	Vec2::operator++(int nb)
-	{
-		nb = 1;
-
-		float	size {Length()};
-
-		x *= ((size + nb) / size);
-		y *= ((size + nb) / size);
+		x = std::move(vect.x);
+		y = std::move(vect.y);
 
 		return *this;
 	}
 
-	Vec2	Vec2::operator--(int nb)
-	{
-		nb = 1;
-
-		float	size {Length()};
-
-		x *= ((size - nb) / size);
-		y *= ((size - nb) / size);
-
-		return *this;
-	}
-
-	Vec2&	Vec2::operator/=(float nb)
-	{
-		x /= nb;
-		y /= nb;
-
-		return *this;
-	}
-
-	Vec2&	Vec2::operator*=(float nb)
-	{
-		x *= nb;
-		y *= nb;
-
-		return *this;
-	}
-
-	Vec2&	Vec2::operator+=(const Vec2& vect)
+	QXvec2& QXvec2::operator+=(const QXvec2& vect)
 	{
 		x += vect.x;
 		y += vect.y;
@@ -169,7 +64,17 @@ namespace Math
 		return *this;
 	}
 
-	Vec2&	Vec2::operator-=(const Vec2& vect)
+	QXvec2	QXvec2::operator+(const QXvec2& vect) const
+	{
+		QXvec2	res;
+
+		res.x = x + vect.x;
+		res.y = y + vect.y;
+
+		return res;
+	}
+
+	QXvec2& QXvec2::operator-=(const QXvec2& vect)
 	{
 		x -= vect.x;
 		y -= vect.y;
@@ -177,53 +82,167 @@ namespace Math
 		return *this;
 	}
 
-	float	Vec2::operator,(const Vec2& vect) const
+	QXvec2	QXvec2::operator-(const QXvec2& vect) const
 	{
-		return vect.x * x + vect.y * y;
-	}
+		QXvec2	res;
 
-	float	Vec2::operator^(const Vec2& vec) const
-	{
-		float	res;
-
-		res = x * vec.y - y * vec.x;
+		res.x = x - vect.x;
+		res.y = y - vect.y;
 
 		return res;
 	}
 
-	float	Vec2::Length() const
+	QXvec2	QXvec2::operator-() const
 	{
-		return sqrt(x * x + y * y);
-	}
+		QXvec2	res;
 
-	float	Vec2::SqrLength() const
-	{
-		return x * x + y * y;
-	}
-
-	Vec2	Vec2::Scale(float nb) const
-	{
-		Vec2	res;
-
-		res.x = x * nb;
-		res.y = y * nb;
+		res.x = -x;
+		res.y = -y;
 
 		return res;
 	}
 
-	Vec2& Vec2::Scale(float nb)
+	QXvec2& QXvec2::operator/=(QXfloat value)
 	{
-		x = x * nb;
-		y = y * nb;
+		x /= value;
+		y /= value;
 
 		return *this;
 	}
 
-	Vec2	Vec2::Normalize() const
+	QXvec2	QXvec2::operator/(QXfloat value) const
 	{
-		Vec2	res;
+		QXvec2	res;
 
-	    float size = Length();
+		res.x = x / value;
+		res.y = y / value;
+
+		return res;
+	}
+
+	QXvec2& QXvec2::operator*=(QXfloat nb)
+	{
+		x *= nb;
+		y *= nb;
+
+		return *this;
+	}
+
+	QXvec2	QXvec2::operator*(QXfloat value) const
+	{
+		QXvec2	res;
+
+		res.x = x * value;
+		res.y = y * value;
+
+		return res;
+	}
+
+	QXbool	QXvec2::operator==(const QXvec2& vect) const
+	{
+		if (SqrLength() == vect.SqrLength())
+			return true;
+		return false;
+	}
+
+	QXbool	QXvec2::operator!=(const QXvec2& vect) const
+	{
+		if (SqrLength() != vect.SqrLength())
+			return true;
+		return false;
+	}
+
+	QXbool	QXvec2::operator<(const QXvec2& vect) const
+	{
+		if (SqrLength() < vect.SqrLength())
+			return true;
+		return false;
+	}
+
+	QXbool	QXvec2::operator<=(const QXvec2& vect) const
+	{
+		if (SqrLength() <= vect.SqrLength())
+			return true;
+		return false;
+	}
+
+	QXbool	QXvec2::operator>(const QXvec2& vect) const
+	{
+		if (SqrLength() > vect.SqrLength())
+			return true;
+		return false;
+	}
+
+	QXbool	QXvec2::operator>=(const QXvec2& vect) const
+	{
+		if (SqrLength() >= vect.SqrLength())
+			return true;
+		return false;
+	}
+
+	const QXfloat QXvec2::operator[](const QXuint idx) const noexcept
+	{
+		return e[idx];
+	}
+
+	QXfloat& QXvec2::operator[](const QXuint idx) noexcept
+	{
+		return e[idx];
+	}
+
+#pragma endregion
+
+#pragma region Functions
+
+	QXfloat QXvec2::Angle(const QXvec2& vect) const
+	{
+		return std::atan2(vect.y - y, vect.x - x);	
+	}
+
+	QXfloat QXvec2::Cross(const QXvec2& vect) const
+	{
+		return x * vect.y - vect.x * y;
+	}
+
+
+	QXfloat QXvec2::Dot(const QXvec2& vect) const
+	{
+		return x * vect.x + y * vect.y;
+	}
+
+	QXbool QXvec2::IsCollinear(const QXvec2& vect) const
+	{
+		QXfloat res{ Dot(vect) };
+		if (res == 1 || res == -1)
+			return true;
+		return false;
+	}
+
+	QXfloat	QXvec2::Length() const
+	{
+		return sqrt(x * x + y * y);
+	}
+
+	QXvec2& QXvec2::Normalize()
+	{
+		QXfloat	size = Length();
+
+		if (size == 0)
+		{
+			return *this;
+		}
+
+		x = x / size;
+		y = y / size;
+
+		return *this;
+	}
+
+	QXvec2	QXvec2::Normalized() const
+	{
+		QXvec2	res;
+
+	    QXfloat size = Length();
 
 	    if (size == 0)
 		{
@@ -236,67 +255,49 @@ namespace Math
 		return res;
 	}
 
-	Vec2&	Vec2::Normalize()
+	QXvec2& QXvec2::Scale(QXfloat nb)
 	{
-		float	size = Length();
-
-		if (size == 0)
-		{
-	    	return *this;
-		}
-
-		x = x / size;
-		y = y / size;
+		x = x * nb;
+		y = y * nb;
 
 		return *this;
 	}
 
-	bool	Vec2::operator==(const Vec2& vect)
+	QXvec2	QXvec2::Scale(QXfloat nb) const
 	{
-		if (SqrLength() == vect.SqrLength())
-			return true;
-		return false;
+		QXvec2	res;
+
+		res.x = x * nb;
+		res.y = y * nb;
+
+		return res;
 	}
 
-	bool	Vec2::operator!=(const Vec2& vect)
+	QXfloat	QXvec2::SqrLength() const
 	{
-		if (SqrLength() != vect.SqrLength())
-			return true;
-		return false;
+		return x * x + y * y;
 	}
 
-	bool	Vec2::operator<(const Vec2& vect)
+	QXstring	QXvec2::ToString() const
 	{
-		if (SqrLength() < vect.SqrLength())
-			return true;
-		return false;
-	}
-
-	bool	Vec2::operator<=(const Vec2& vect)
-	{
-		if (SqrLength() <= vect.SqrLength())
-			return true;
-		return false;
-	}
-
-	bool	Vec2::operator>(const Vec2& vect)
-	{
-		if (SqrLength() > vect.SqrLength())
-			return true;
-		return false;
-	}
-
-	bool	Vec2::operator>=(const Vec2& vect)
-	{
-		if (SqrLength() >= vect.SqrLength())
-			return true;
-		return false;
-	}
-
-	std::string	Vec2::ToString() const
-	{
-		std::string vec = std::to_string(x) + ", " + std::to_string(y) + "\n";
+		QXstring vec = std::to_string(x) + ", " + std::to_string(y) + "\n";
 
 		return vec;
+	}
+#pragma endregion
+
+	std::ostream& operator<<(std::ostream& os, const QXvec2& vect)
+	{
+		os << vect.x << ", " << vect.y << std::endl;
+
+		return os;
+	}
+
+	std::string	operator+(std::string& str, const QXvec2& vect)
+	{
+		std::string	res = str + "x : " + std::to_string(vect.x) +
+			" , y : " + std::to_string(vect.y);
+
+		return res;
 	}
 }
