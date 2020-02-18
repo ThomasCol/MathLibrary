@@ -9,9 +9,9 @@ namespace Math
 
 	QXref3::QXref3(const QXvec3& O, QXfloat AngleI, QXfloat AngleJ, QXfloat AngleK) noexcept :
 		o{ O },
-		i{ Mat4::CreateFixedAngleEulerRotationMatrix(QXvec3(AngleI, AngleJ, AngleK)) * QXvec3::right },
-		j{ Mat4::CreateFixedAngleEulerRotationMatrix(QXvec3(AngleI, AngleJ, AngleK)) * QXvec3::up },
-		k{ Mat4::CreateFixedAngleEulerRotationMatrix(QXvec3(AngleI, AngleJ, AngleK)) * QXvec3::forward }
+		i{ QXmat4::CreateFixedAngleEulerRotationMatrix(QXvec3(AngleI, AngleJ, AngleK)) * QXvec3::right },
+		j{ QXmat4::CreateFixedAngleEulerRotationMatrix(QXvec3(AngleI, AngleJ, AngleK)) * QXvec3::up },
+		k{ QXmat4::CreateFixedAngleEulerRotationMatrix(QXvec3(AngleI, AngleJ, AngleK)) * QXvec3::forward }
   {}
 
   QXref3::QXref3(const QXvec3& O, const QXvec3& I, const QXvec3& J, const QXvec3& K) noexcept :
@@ -168,21 +168,22 @@ namespace Math
 	  return m * res;
   }
 
-  QXref3& QXref3::Rotate(const Quaternion& quat) noexcept
+  QXref3& QXref3::Rotate(const QXquaternion& quat) noexcept
   {
-	  i *= quat;
-	  j *= quat;
-	  k *= quat;
+	  i = quat * i;
+	  j = quat * j;
+	  k = quat * k;
+
 	  return *this;
   }
 
-  QXref3 QXref3::Rotate(const Quaternion& quat) const noexcept
+  QXref3 QXref3::Rotate(const QXquaternion& quat) const noexcept
   {
 	  QXref3 res{ *this };
 
-	  res.i *= quat;
-	  res.j *= quat;
-	  res.k *= quat;
+	  res.i = quat * res.i;
+	  res.j = quat * res.j;
+	  res.k = quat * res.k;
 
 	  return res;
   }

@@ -3,31 +3,32 @@
 namespace Math
 {
 	#pragma region Constructors
-	QXquaternion::QXquaternion() : w(1), v(0, 0, 0)
-	{
-	}
 
-	QXquaternion::QXquaternion(const QXquaternion& q) : w(q.w), v(q.v.x, q.v.y, q.v.z)
-	{
-	}
+	QXquaternion::QXquaternion(QXfloat vw, QXfloat vx, QXfloat vy, QXfloat vz) noexcept : 
+		w(vw), 
+		v(vx, vy, vz)
+	{}
 
-	QXquaternion::QXquaternion(const QXquaternion&& q)
-	{
-		std::move(q);
-	}
+	QXquaternion::QXquaternion(QXfloat vw, const QXvec3& vQ) noexcept :
+		w(vw),
+		v(vQ)
+	{}
 
-	QXquaternion::QXquaternion(QXfloat vw, QXvec3 vQ) : w(vw), v(QXvec3(vQ))
-	{
-	}
+	QXquaternion::QXquaternion(const QXquaternion& q) noexcept : 
+		w{ q.w },
+		v{ q.v }
+	{}
 
-	QXquaternion::QXquaternion(QXfloat vw, QXfloat vx, QXfloat vy, QXfloat vz) : w(vw), v(vx, vy, vz)
-	{
-	}
+	QXquaternion::QXquaternion(const QXquaternion&& q) noexcept:
+		w{ std::move(q.w) },
+		v{ std::move(q.v) }
+	{}
+
 	#pragma endregion Constructors
 
 	#pragma region Functions
 
-	QXquaternion& QXquaternion::AddQuaternion(QXquaternion& q)
+	QXquaternion& QXquaternion::AddQuaternion(const QXquaternion& q) const noexcept
 	{
 		QXquaternion res = QXquaternion();
 
@@ -36,13 +37,13 @@ namespace Math
 		return res;
 	}
 
-	QXquaternion& QXquaternion::ConjugateQuaternion()
+	QXquaternion& QXquaternion::ConjugateQuaternion() const noexcept
 	{
 		QXquaternion res(w, -v.x, -v.y, -v.z);
 		return res;
 	}
 
-	QXmat4 QXquaternion::ConvertQuaternionToMat()
+	QXmat4 QXquaternion::ConvertQuaternionToMat() const noexcept
 	{
 		QXmat4 res;
 
@@ -62,17 +63,17 @@ namespace Math
 		return res;
 	}
 
-	float QXquaternion::DotProductQuaternion(QXquaternion& q)
+	QXfloat QXquaternion::DotProductQuaternion(const QXquaternion& q) const noexcept
 	{
 		return (w * q.w + v.Dot(q.v));
 	}
 
-	QXquaternion& QXquaternion::InverseQuaternion()
+	QXquaternion& QXquaternion::InverseQuaternion() noexcept
 	{
 		return ConjugateQuaternion().MultQuaternion(1 / SqrtRootQuaternion());
 	}
 
-	QXquaternion& QXquaternion::MultQuaternion(QXfloat s)
+	QXquaternion& QXquaternion::MultQuaternion(QXfloat s) const noexcept
 	{
 		QXquaternion res = QXquaternion();
 
@@ -81,7 +82,7 @@ namespace Math
 		return res;
 	}
 
-	QXquaternion& QXquaternion::MultQuaternion(QXquaternion& q)
+	QXquaternion& QXquaternion::MultQuaternion(const QXquaternion& q) const noexcept
 	{
 		QXquaternion res = QXquaternion();
 
@@ -93,7 +94,7 @@ namespace Math
 		return res;
 	}
 
-	void QXquaternion::NegateQuaternion()
+	void QXquaternion::NegateQuaternion() noexcept
 	{
 		w = -w;
 		v.x = -v.x;
@@ -101,25 +102,25 @@ namespace Math
 		v.z = -v.z;
 	}
 
-	QXquaternion& QXquaternion::NormalizeQuaternion()
+	QXquaternion& QXquaternion::NormalizeQuaternion() noexcept
 	{
-		float s = 1 / QuaternionLength();
+		QXfloat s = 1 / QuaternionLength();
 
 		return MultQuaternion(s);
 	}
 
-	void QXquaternion::NullQuaternion()
+	void QXquaternion::NullQuaternion() noexcept
 	{
 		w = 0;
 		v.x = v.y = v.z = 0;
 	}
 
-	float QXquaternion::QuaternionLength()
+	QXfloat QXquaternion::QuaternionLength() const noexcept
 	{
 		return sqrt(powf(w, 2) + (v.Dot(v)));
 	}
 
-	QXquaternion& QXquaternion::ReturnNegateQuaternion()
+	QXquaternion& QXquaternion::ReturnNegateQuaternion() const noexcept
 	{
 		QXquaternion res = QXquaternion();
 
@@ -131,14 +132,14 @@ namespace Math
 		return res;
 	}
 
-	float QXquaternion::SqrtRootQuaternion()
+	QXfloat QXquaternion::SqrtRootQuaternion() const noexcept
 	{
 		return DotProductQuaternion(ConjugateQuaternion());
 	}
 
-	QXquaternion& QXquaternion::SlerpQuaternion(QXquaternion& q, QXfloat t)
+	QXquaternion& QXquaternion::SlerpQuaternion(const QXquaternion& q, QXfloat t) noexcept
 	{
-		float theta{ acos(DotProductQuaternion(q)) };
+		QXfloat theta{ acos(DotProductQuaternion(q)) };
 
 		if (theta < 0.f)
 			* this = *this * -1.f;
@@ -146,7 +147,7 @@ namespace Math
 		return ((*this * sin((1 - t) * theta) + q * sin(t * theta)) * (1 / sin(theta))).NormalizeQuaternion();
 	}
 
-	QXquaternion& QXquaternion::SubQuaternion(QXquaternion& q)
+	QXquaternion& QXquaternion::SubQuaternion(const QXquaternion& q) const noexcept
 	{
 		QXquaternion res = QXquaternion();
 
@@ -155,7 +156,7 @@ namespace Math
 		return res;
 	}
 
-	QXstring QXquaternion::ToString() const
+	QXstring QXquaternion::ToString() const noexcept
 	{
 		QXstring quat = std::to_string(w) + ", " + v.ToString();
 
@@ -166,7 +167,7 @@ namespace Math
 
 	#pragma region Static Functions
 
-	QXmat4 QXquaternion::ConvertQuaternionToMat(QXquaternion& q)
+	QXmat4 QXquaternion::ConvertQuaternionToMat(const QXquaternion& q) noexcept
 	{
 		QXmat4 res;
 
@@ -186,36 +187,36 @@ namespace Math
 		return res;
 	}
 
-	QXquaternion QXquaternion::ConvertMatToQuaternion(QXmat4 m)
+	QXquaternion QXquaternion::ConvertMatToQuaternion(const QXmat4& m) noexcept
 	{
-		float qw = sqrt(1 + m.array[0] + m.array[5] + m.array[10]) / 2.f;
-		float qx = (m.array[9] - m.array[6]) / (4 * qw);
-		float qy = (m.array[2] - m.array[8]) / (4 * qw);
-		float qz = (m.array[4] - m.array[1]) / (4 * qw);
+		QXfloat qw = sqrt(1 + m.array[0] + m.array[5] + m.array[10]) / 2.f;
+		QXfloat qx = (m.array[9] - m.array[6]) / (4 * qw);
+		QXfloat qy = (m.array[2] - m.array[8]) / (4 * qw);
+		QXfloat qz = (m.array[4] - m.array[1]) / (4 * qw);
 
 		return QXquaternion(qw, QXvec3(qx, qy, qz));
 	}
 
-	QXquaternion QXquaternion::ConvertEulerAngleToQuaternion(QXvec3& euler)
+	QXquaternion QXquaternion::ConvertEulerAngleToQuaternion(QXvec3& euler) noexcept
 	{
-		float c1 = cos(euler.x / 2);
-		float c2 = cos(euler.y / 2);
-		float c3 = cos(euler.z / 2);
-		float s1 = sin(euler.x / 2);
-		float s2 = sin(euler.y / 2);
-		float s3 = sin(euler.z / 2);
+		QXfloat c1 = cos(euler.x / 2);
+		QXfloat c2 = cos(euler.y / 2);
+		QXfloat c3 = cos(euler.z / 2);
+		QXfloat s1 = sin(euler.x / 2);
+		QXfloat s2 = sin(euler.y / 2);
+		QXfloat s3 = sin(euler.z / 2);
 
-		float qw = ((c1 * c2 * c3) - (s1 * s2 * s3));
-		float qx = ((s1 * s2 * c3) + (c1 * c2 * s3));
-		float qy = ((s1 * c2 * c3) + (c1 * s2 * s3));
-		float qz = ((c1 * s2 * c3) - (s1 * c2 * s3));
+		QXfloat qw = ((c1 * c2 * c3) - (s1 * s2 * s3));
+		QXfloat qx = ((s1 * s2 * c3) + (c1 * c2 * s3));
+		QXfloat qy = ((s1 * c2 * c3) + (c1 * s2 * s3));
+		QXfloat qz = ((c1 * s2 * c3) - (s1 * c2 * s3));
 
 		return QXquaternion(qw, QXvec3(qx, qy, qz));
 	}
 
-	QXquaternion QXquaternion::SlerpQuaternion(QXquaternion q1, QXquaternion q2, QXfloat t)
+	QXquaternion QXquaternion::SlerpQuaternion(QXquaternion& q1, const QXquaternion& q2, QXfloat t) noexcept
 	{
-		float theta{ q1.DotProductQuaternion(q2) };
+		QXfloat theta{ q1.DotProductQuaternion(q2) };
 
 		if (theta < 0.f)
 			q1 = q1 * -1.f;
@@ -227,7 +228,7 @@ namespace Math
 
 	#pragma region Operator Functions
 
-	QXquaternion& QXquaternion::operator=(const QXquaternion& q)
+	QXquaternion& QXquaternion::operator=(const QXquaternion& q) noexcept
 	{
 		w = q.w;
 		v = q.v;
@@ -235,7 +236,7 @@ namespace Math
 		return *this;
 	}
 
-	QXquaternion& QXquaternion::operator*(QXfloat s)
+	QXquaternion& QXquaternion::operator*(QXfloat s) const noexcept
 	{
 		QXquaternion res = QXquaternion();
 
@@ -244,7 +245,7 @@ namespace Math
 		return res;
 	}
 
-	QXquaternion& QXquaternion::operator*(const QXquaternion& q)
+	QXquaternion& QXquaternion::operator*(const QXquaternion& q) const noexcept
 	{
 		QXquaternion res = QXquaternion();
 
@@ -256,7 +257,7 @@ namespace Math
 		return res;
 	}
 
-	QXquaternion& QXquaternion::operator+(const QXquaternion& q)
+	QXquaternion& QXquaternion::operator+(const QXquaternion& q) const noexcept
 	{
 		QXquaternion res = QXquaternion();
 
@@ -265,7 +266,7 @@ namespace Math
 		return res;
 	}
 
-	QXquaternion& QXquaternion::operator-(const QXquaternion& q)
+	QXquaternion& QXquaternion::operator-(const QXquaternion& q) const noexcept
 	{
 		QXquaternion res = QXquaternion();
 

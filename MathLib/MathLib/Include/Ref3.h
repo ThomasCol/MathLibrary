@@ -142,18 +142,18 @@ namespace Math
 		/**
 		 * @brief Rotate axes of referential
 		 * 
-		 * @param quat Quaternion of rotation
+		 * @param quat QXquaternion of rotation
 		 * @return QXref3& Reference of current referential
 		 */
-		QXref3& Rotate(const Quaternion& quat) noexcept;
+		QXref3& Rotate(const QXquaternion& quat) noexcept;
 				
 		/**
 		 * @brief Rotate axes of referential
 		 * 
-		 * @param quat Quaternion of rotation
+		 * @param quat QXquaternion of rotation
 		 * @return QXref3 New referential
 		 */
-		QXref3 Rotate(const Quaternion& quat) const noexcept;
+		QXref3 Rotate(const QXquaternion& quat) const noexcept;
 
 		/**
 		 * @brief Translate Center of referential
