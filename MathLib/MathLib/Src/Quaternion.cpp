@@ -62,7 +62,7 @@ namespace Math
 		return res;
 	}
 
-	float QXquaternion::DotProductQuaternion(QXquaternion& q)
+	QXfloat QXquaternion::DotProductQuaternion(QXquaternion& q)
 	{
 		return (w * q.w + v.Dot(q.v));
 	}
@@ -103,7 +103,7 @@ namespace Math
 
 	QXquaternion& QXquaternion::NormalizeQuaternion()
 	{
-		float s = 1 / QuaternionLength();
+		QXfloat s = 1 / QuaternionLength();
 
 		return MultQuaternion(s);
 	}
@@ -114,7 +114,7 @@ namespace Math
 		v.x = v.y = v.z = 0;
 	}
 
-	float QXquaternion::QuaternionLength()
+	QXfloat QXquaternion::QuaternionLength()
 	{
 		return sqrt(powf(w, 2) + (v.Dot(v)));
 	}
@@ -131,14 +131,14 @@ namespace Math
 		return res;
 	}
 
-	float QXquaternion::SqrtRootQuaternion()
+	QXfloat QXquaternion::SqrtRootQuaternion()
 	{
 		return DotProductQuaternion(ConjugateQuaternion());
 	}
 
 	QXquaternion& QXquaternion::SlerpQuaternion(QXquaternion& q, QXfloat t)
 	{
-		float theta{ acos(DotProductQuaternion(q)) };
+		QXfloat theta{ acos(DotProductQuaternion(q)) };
 
 		if (theta < 0.f)
 			* this = *this * -1.f;
@@ -188,34 +188,34 @@ namespace Math
 
 	QXquaternion QXquaternion::ConvertMatToQuaternion(QXmat4 m)
 	{
-		float qw = sqrt(1 + m.array[0] + m.array[5] + m.array[10]) / 2.f;
-		float qx = (m.array[9] - m.array[6]) / (4 * qw);
-		float qy = (m.array[2] - m.array[8]) / (4 * qw);
-		float qz = (m.array[4] - m.array[1]) / (4 * qw);
+		QXfloat qw = sqrt(1 + m.array[0] + m.array[5] + m.array[10]) / 2.f;
+		QXfloat qx = (m.array[9] - m.array[6]) / (4 * qw);
+		QXfloat qy = (m.array[2] - m.array[8]) / (4 * qw);
+		QXfloat qz = (m.array[4] - m.array[1]) / (4 * qw);
 
 		return QXquaternion(qw, QXvec3(qx, qy, qz));
 	}
 
 	QXquaternion QXquaternion::ConvertEulerAngleToQuaternion(QXvec3& euler)
 	{
-		float c1 = cos(euler.x / 2);
-		float c2 = cos(euler.y / 2);
-		float c3 = cos(euler.z / 2);
-		float s1 = sin(euler.x / 2);
-		float s2 = sin(euler.y / 2);
-		float s3 = sin(euler.z / 2);
+		QXfloat c1 = cos(euler.x / 2);
+		QXfloat c2 = cos(euler.y / 2);
+		QXfloat c3 = cos(euler.z / 2);
+		QXfloat s1 = sin(euler.x / 2);
+		QXfloat s2 = sin(euler.y / 2);
+		QXfloat s3 = sin(euler.z / 2);
 
-		float qw = ((c1 * c2 * c3) - (s1 * s2 * s3));
-		float qx = ((s1 * s2 * c3) + (c1 * c2 * s3));
-		float qy = ((s1 * c2 * c3) + (c1 * s2 * s3));
-		float qz = ((c1 * s2 * c3) - (s1 * c2 * s3));
+		QXfloat qw = ((c1 * c2 * c3) - (s1 * s2 * s3));
+		QXfloat qx = ((s1 * s2 * c3) + (c1 * c2 * s3));
+		QXfloat qy = ((s1 * c2 * c3) + (c1 * s2 * s3));
+		QXfloat qz = ((c1 * s2 * c3) - (s1 * c2 * s3));
 
 		return QXquaternion(qw, QXvec3(qx, qy, qz));
 	}
 
 	QXquaternion QXquaternion::SlerpQuaternion(QXquaternion q1, QXquaternion q2, QXfloat t)
 	{
-		float theta{ q1.DotProductQuaternion(q2) };
+		QXfloat theta{ q1.DotProductQuaternion(q2) };
 
 		if (theta < 0.f)
 			q1 = q1 * -1.f;

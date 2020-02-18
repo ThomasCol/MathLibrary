@@ -65,7 +65,7 @@ namespace Math
 
 		#pragma region Functions
 		/**
-		 * @brief Add two Quaternion
+		 * @brief Add two Quaternion object
 		 * 
 		 * @param q Quaternion to add
 		 * @return Reference of new QXquaternion result object
@@ -199,7 +199,7 @@ namespace Math
 		static QXquaternion	ConvertMatToQuaternion(QXmat4 m);
 
 		/**
-		 * @brief Convert Euler angle into Quaternion
+		 * @brief Convert Euler angle into Quaternion object
 		 * 
 		 * @param euler Vec3 for conversion
 		 * @return New Quaternion from Vec3
@@ -227,7 +227,7 @@ namespace Math
 		QXquaternion&		operator=(const QXquaternion& q);
 
 		/**
-		 * @brief Multiply Quaternion object with QXfloat
+		 * @brief Operator * multiplication
 		 * 
 		 * @param s float scale value for multiplication
 		 * @return New reference QXquaternion result of multiplication
@@ -235,7 +235,7 @@ namespace Math
 		QXquaternion&		operator*(QXfloat s);
 
 		/**
-		 * @brief Multiply two Quaternion object
+		 * @brief Operator * multiplication
 		 * 
 		 * @param q Quaternion for multiplication
 		 * @return New reference QXquaternion result of multiplication
@@ -243,7 +243,7 @@ namespace Math
 		QXquaternion&		operator*(const QXquaternion& q);
 
 		/**
-		 * @brief Conjugate of Quaternion object
+		 * @brief Operator + addition
 		 * 
 		 * @param q QXquaternion for addition
 		 * @return Reference of new QXquaternion result object
@@ -251,7 +251,7 @@ namespace Math
 		QXquaternion&		operator+(const QXquaternion& q);
 
 		/**
-		 * @brief String of Quaternion object
+		 * @brief Operator - substaction
 		 * 
 		 * @param q QXquaternion for substraction
 		 * @return String quaternion of the current quaternion

@@ -116,6 +116,26 @@ namespace Math
 		return res;
 	}
 
+	QXmat4& QXmat4::operator*=(const QXmat4& mat)
+	{
+		QXmat4	res;
+
+		for (QXint i = 0; i < 4; i++)
+		{
+			for (QXint j = 0; j < 4; j++)
+			{
+				for (QXint k = 0; k < 4; k++)
+				{
+					res[i][j] += (*this)[i][k] * mat[k][j];
+				}
+			}
+		}
+
+		(*this) = res;
+
+		return *this;
+	}
+
 	QXvec3	QXmat4::operator*(const QXvec3& vec) const
 	{
 
@@ -137,26 +157,6 @@ namespace Math
 		QXvec3 vecRes(res[0][0], res[1][0], res[2][0]);
 
 		return vecRes;
-	}
-
-	QXmat4& QXmat4::operator*=(const QXmat4& mat)
-	{
-		QXmat4	res;
-
-		for (QXint i = 0; i < 4; i++)
-		{
-			for (QXint j = 0; j < 4; j++)
-			{
-				for (QXint k = 0; k < 4; k++)
-				{
-					res[i][j] += (*this)[i][k] * mat[k][j];
-				}
-			}
-		}
-
-		(*this) = res;
-
-		return *this;
 	}
 	#pragma endregion Operator Functions
 
