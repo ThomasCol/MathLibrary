@@ -5,126 +5,51 @@
 
 namespace Math
 {
-	Mat4::Mat4()
+	#pragma region Constructor
+	QXmat4::QXmat4()
 	{
-		for (int i = 0; i < 16; i++)
+		for (QXint i = 0; i < 16; i++)
 		{
 			array[i] = 0;
 		}
 	}
 
-	Mat4::Mat4(const Mat4& mat)
+	QXmat4::QXmat4(const QXmat4& mat)
 	{
-		for (int i = 0; i < 16; i++)
+		for (QXint i = 0; i < 16; i++)
 		{
 			array[i] = mat.array[i];
 		}
 	}
+	#pragma endregion Constructor
 
-	float*	Mat4::operator[](int i)
+	#pragma region Functions
+	QXmat4 QXmat4::Inverse() const
 	{
-		return &array[i * 4];
+		QXmat m(4, 4);
+
+		for (QXint i = 0; i < 4; i++)
+			for (QXint j = 0; j < 4; j++)
+				m[i][j] = (*this)[i][j];
+
+		m = m.Inverse();
+		QXmat4 invt;
+
+		for (QXint i = 0; i < 4; i++)
+			for (QXint j = 0; j < 4; j++)
+				invt[i][j] = m[i][j];
+
+		return invt;
 	}
 
-	const float*  Mat4::operator[](int i) const
+	QXmat4	QXmat4::Transpose() const
 	{
-	    return &array[i * 4];
-	}
+		QXmat4	res;
+		QXfloat	tmp;
 
-	Mat4	Mat4::Identity()
-	{
-		Mat4	identity;
-
-		identity[0][0] = 1;
-		identity[1][1] = 1;
-		identity[2][2] = 1;
-		identity[3][3] = 1;
-
-		return identity;
-	}
-
-	Mat4	Mat4::operator+(const Mat4& mat) const
-	{
-		Mat4	res;
-
-	    for (int i = 0; i < 16; i++)
+	    for (QXint i = 0; i < 4; i++)
 	    {
-			res.array[i] = mat.array[i] + array[i];
-	    }
-
-	    return res;
-	}
-
-	Mat4	Mat4::operator*(const Mat4& mat) const
-	{
-		Mat4	res;
-		int		i, j, k;
-
-	    for (i = 0; i < 4; i++)
-	    {
-	        for (j = 0; j < 4; j++)
-	        {
-	            for (k = 0; k < 4; k++)
-	            {
-	                res.array[i * 4 + j] += array[i * 4 + k] * mat.array[k * 4 + j];
-	            }
-	        }
-	    }
-
-	    return res;
-	}
-
-	Vec3	Mat4::operator*(const Vec3& vec) const
-	{
-
-	    return Vec3(array[0] * vec.x + array[1] * vec.x + array[2] * vec.x + array[3] * vec.x,
-			array[4] * vec.y + array[5] * vec.y + array[6] * vec.y + array[7] * vec.y,
-			array[8] * vec.z + array[9] * vec.z + array[10] * vec.z + array[11] * vec.z);
-	}
-
-	Vec3	Mat4::operator*(const Vec4& vec) const
-	{
-		Mat4  matVec;
-	    matVec[0][0] = vec.x;
-	    matVec[1][0] = vec.y;
-	    matVec[2][0] = vec.z;
-	    matVec[3][0] = vec.w;
-
-	    Mat4  res((*this) * matVec);
-
-	    Vec3 vecRes(res[0][0], res[1][0], res[2][0]);
-
-	    return vecRes;
-	}
-
-	Mat4&	Mat4::operator*=(const Mat4& mat)
-	{
-		Mat4	res;
-
-	    for (int i = 0; i < 4; i++)
-	    {
-	        for (int j = 0; j < 4; j++)
-	        {
-	            for (int k = 0; k < 4; k++)
-	            {
-	                res[i][j] += (*this)[i][k] * mat[k][j];
-	            }
-	        }
-	    }
-
-		(*this) = res;
-
-	    return *this;
-	}
-
-	Mat4	Mat4::Transpose() const
-	{
-		Mat4	res;
-		float	tmp;
-
-	    for (int i = 0; i < 4; i++)
-	    {
-	        for (int j = 0; j < 4; j++)
+	        for (QXint j = 0; j < 4; j++)
 	        {
 	            tmp = array[i * 4 + j];
 	            res[j][i] = tmp;
@@ -134,12 +59,12 @@ namespace Math
 	    return res;
 	}
 
-	std::string	Mat4::ToString() const
+	QXstring	QXmat4::ToString() const
 	{
 		std::string	mat;
-		for (int i = 0; i < 4; i++)
+		for (QXint i = 0; i < 4; i++)
 	    {
-	        for (int j = 0; j < 4; j++)
+	        for (QXint j = 0; j < 4; j++)
 	        {
 	            mat = mat + std::to_string(array[i * 4 + j]) + " ";
 	        }
@@ -149,9 +74,96 @@ namespace Math
 		return mat;
 	}
 
-	Mat4	Mat4::CreateScaleMatrix(const Vec3& scale)
+	#pragma region Operator Functions
+	QXfloat* QXmat4::operator[](QXint i)
 	{
-		Mat4  scaleMatrix;
+		return &array[i * 4];
+	}
+
+	const QXfloat* QXmat4::operator[](QXint i) const
+	{
+		return &array[i * 4];
+	}
+
+	QXmat4	QXmat4::operator+(const QXmat4& mat) const
+	{
+		QXmat4	res;
+
+		for (QXint i = 0; i < 16; i++)
+		{
+			res.array[i] = mat.array[i] + array[i];
+		}
+
+		return res;
+	}
+
+	QXmat4	QXmat4::operator*(const QXmat4& mat) const
+	{
+		QXmat4	res;
+		QXint	i, j, k;
+
+		for (i = 0; i < 4; i++)
+		{
+			for (j = 0; j < 4; j++)
+			{
+				for (k = 0; k < 4; k++)
+				{
+					res.array[i * 4 + j] += array[i * 4 + k] * mat.array[k * 4 + j];
+				}
+			}
+		}
+
+		return res;
+	}
+
+	QXvec3	QXmat4::operator*(const QXvec3& vec) const
+	{
+
+		return QXvec3(array[0] * vec.x + array[1] * vec.x + array[2] * vec.x + array[3] * vec.x,
+			array[4] * vec.y + array[5] * vec.y + array[6] * vec.y + array[7] * vec.y,
+			array[8] * vec.z + array[9] * vec.z + array[10] * vec.z + array[11] * vec.z);
+	}
+
+	QXvec3	QXmat4::operator*(const QXvec4& vec) const
+	{
+		QXmat4  matVec;
+		matVec[0][0] = vec.x;
+		matVec[1][0] = vec.y;
+		matVec[2][0] = vec.z;
+		matVec[3][0] = vec.w;
+
+		QXmat4  res((*this) * matVec);
+
+		QXvec3 vecRes(res[0][0], res[1][0], res[2][0]);
+
+		return vecRes;
+	}
+
+	QXmat4& QXmat4::operator*=(const QXmat4& mat)
+	{
+		QXmat4	res;
+
+		for (QXint i = 0; i < 4; i++)
+		{
+			for (QXint j = 0; j < 4; j++)
+			{
+				for (QXint k = 0; k < 4; k++)
+				{
+					res[i][j] += (*this)[i][k] * mat[k][j];
+				}
+			}
+		}
+
+		(*this) = res;
+
+		return *this;
+	}
+	#pragma endregion Operator Functions
+
+	#pragma region Static Functions
+	QXmat4	QXmat4::CreateScaleMatrix(const QXvec3& scale)
+	{
+		QXmat4  scaleMatrix;
 
 	    scaleMatrix[0][0] = scale.x;
 	    scaleMatrix[1][1] = scale.y;
@@ -161,9 +173,9 @@ namespace Math
 	    return scaleMatrix;
 	}
 
-	Mat4	Mat4::CreateTranslationMatrix(const Vec3& trans)
+	QXmat4	QXmat4::CreateTranslationMatrix(const QXvec3& trans)
 	{
-		Mat4	transMatrix;
+		QXmat4	transMatrix;
 
 		transMatrix[0][0] = 1;
 		transMatrix[0][3] = trans.x;
@@ -176,16 +188,16 @@ namespace Math
 		return transMatrix;
 	}
 
-	Mat4		Mat4::CreateRotationMatrix(const Vec3& axis, const float& angle)
+	QXmat4		QXmat4::CreateRotationMatrix(const QXvec3& axis, const QXfloat& angle)
 	{
-		float c = cos(angle);
-		float s = sin(angle);
-		float t = 1 - c;
-		float axisX = axis.x;
-		float axisY = axis.y;
-		float axisZ = axis.z;
+		QXfloat c = cos(angle);
+		QXfloat s = sin(angle);
+		QXfloat t = 1 - c;
+		QXfloat axisX = axis.x;
+		QXfloat axisY = axis.y;
+		QXfloat axisZ = axis.z;
 
-		Mat4	rotation;
+		QXmat4	rotation;
 
 		rotation[0][0] = axisX * axisX * t + c;
 		rotation[0][1] = axisX * axisY * t - axisZ * s;
@@ -210,29 +222,29 @@ namespace Math
 		return rotation;
 	}
 
-	Mat4	Mat4::CreateXRotationMatrix(const float angle)
+	QXmat4	QXmat4::CreateXRotationMatrix(const QXfloat angle)
 	{
-		Mat4	xRotation;
+		QXmat4	xRotation;
 
-	    float   c = cos(angle);
-	    float   s = sin(angle);
+		QXfloat   c = cos(angle);
+		QXfloat   s = sin(angle);
 
 		xRotation[0][0] = 1;
 		xRotation[1][1] = c;
-	    xRotation[1][2] = -s;
-	    xRotation[2][1] = s;
-	    xRotation[2][2] = c;
+		xRotation[1][2] = -s;
+		xRotation[2][1] = s;
+		xRotation[2][2] = c;
 		xRotation[3][3] = 1;
 
-	    return xRotation;
+		return xRotation;
 	}
 
-	Mat4	Mat4::CreateYRotationMatrix(const float angle)
+	QXmat4	QXmat4::CreateYRotationMatrix(const QXfloat angle)
 	{
-		Mat4	yRotation;
+		QXmat4	yRotation;
 
-		float   c = cos(angle);
-		float   s = sin(angle);
+		QXfloat   c = cos(angle);
+		QXfloat   s = sin(angle);
 
 		yRotation[0][0] = c;
 		yRotation[0][2] = s;
@@ -244,53 +256,53 @@ namespace Math
 		return yRotation;
 	}
 
-	Mat4	Mat4::CreateZRotationMatrix(const float angle)
+	QXmat4	QXmat4::CreateZRotationMatrix(const QXfloat angle)
 	{
-		Mat4	zRotation;
+		QXmat4	zRotation;
 
-	    float   c = cos(angle);
-	    float   s = sin(angle);
+		QXfloat   c = cos(angle);
+		QXfloat   s = sin(angle);
 
-	    zRotation[0][0] = c;
-	    zRotation[0][1] = -s;
-	    zRotation[1][0] = s;
-	    zRotation[1][1] = c;
+		zRotation[0][0] = c;
+		zRotation[0][1] = -s;
+		zRotation[1][0] = s;
+		zRotation[1][1] = c;
 		zRotation[2][2] = 1;
 		zRotation[3][3] = 1;
 
-	    return zRotation;
+		return zRotation;
 	}
 
-	Mat4	Mat4::CreateFixedAngleEulerRotationMatrix(const Vec3& rotate)
+	QXmat4	QXmat4::CreateFixedAngleEulerRotationMatrix(const QXvec3& rotate)
 	{
-		Mat4	xRotation(Mat4::CreateXRotationMatrix(rotate.x));
-	    Mat4	yRotation(Mat4::CreateYRotationMatrix(rotate.y));
-	    Mat4	zRotation(Mat4::CreateZRotationMatrix(rotate.z));
+		QXmat4	xRotation(QXmat4::CreateXRotationMatrix(rotate.x));
+		QXmat4	yRotation(QXmat4::CreateYRotationMatrix(rotate.y));
+		QXmat4	zRotation(QXmat4::CreateZRotationMatrix(rotate.z));
 
-	    Mat4	rotation(yRotation * xRotation * zRotation);
+		QXmat4	rotation(yRotation * xRotation * zRotation);
 
-	    return rotation;
+		return rotation;
 	}
 
-	Mat4	Mat4::CreateTRSMatrix(const Vec3& trans, const Vec3& rotate, const Vec3& scale)
+	QXmat4	QXmat4::CreateTRSMatrix(const QXvec3& trans, const QXvec3& rotate, const QXvec3& scale)
 	{
-		Mat4	transMatrix(Mat4::CreateTranslationMatrix(trans));
-		Mat4	rotateMatrix(Mat4::CreateFixedAngleEulerRotationMatrix(rotate));
-		Mat4	scaleMatrix(Mat4::CreateScaleMatrix(scale));
+		QXmat4	transMatrix(QXmat4::CreateTranslationMatrix(trans));
+		QXmat4	rotateMatrix(QXmat4::CreateFixedAngleEulerRotationMatrix(rotate));
+		QXmat4	scaleMatrix(QXmat4::CreateScaleMatrix(scale));
 
-		Mat4	TRS(transMatrix * rotateMatrix * scaleMatrix);
+		QXmat4	TRS(transMatrix * rotateMatrix * scaleMatrix);
 
 		return TRS;
 	}
 
-	Mat4	Mat4::CreateProjectionMatrix(int width, int height, float near,
-			float far, float fov)
+	QXmat4	QXmat4::CreateProjectionMatrix(QXint width, QXint height, QXfloat near,
+		QXfloat far, QXfloat fov)
 	{
- 		Mat4    toReturn;
-		float top , bottom , left , right;
-		float a = (float)width / height;
+		QXmat4    toReturn;
+		QXfloat top, bottom, left, right;
+		QXfloat a = (QXfloat)width / height;
 
-		top = (float)(near * tan(fov * 0.5 * M_PI / 180.0f));
+		top = (QXfloat)(near * tan(fov * 0.5 * M_PI / 180.0f));
 		bottom = -top;
 		right = top * a;
 		left = -right;
@@ -305,14 +317,14 @@ namespace Math
 		return toReturn;
 	}
 
-	Mat4    Mat4::CreateOrthographicProjectionMatrix(int width, int height, float near, float far)
+	QXmat4    QXmat4::CreateOrthographicProjectionMatrix(QXint width, QXint height, QXfloat near, QXfloat far)
 	{
-		Mat4 toReturn = Mat4::Identity();
-		float top , bottom , left , right;
+		QXmat4 toReturn = QXmat4::Identity();
+		QXfloat top, bottom, left, right;
 
-		top = (float)height / 2.f;
+		top = (QXfloat)height / 2.f;
 		bottom = -top;
-		right = (float)width / 2.f;
+		right = (QXfloat)width / 2.f;
 		left = -right;
 		toReturn[0][0] = 1 / right - left;
 		toReturn[1][1] = 2 / top - bottom;
@@ -324,11 +336,11 @@ namespace Math
 	}
 
 	// Custom implementation of the LookAt function
-	Mat4	Mat4::CreateLookAtMatrix(Vec3 position, Vec3 target, Vec3 up, Vec3 scale)
+	QXmat4	QXmat4::CreateLookAtMatrix(QXvec3 position, QXvec3 target, QXvec3 up, QXvec3 scale)
 	{
-		Mat4	lookAt;
+		QXmat4	lookAt;
 
-		Vec3	X, Y, Z;
+		QXvec3	X, Y, Z;
 
 		Z = target - position;
 		Z.Normalize();
@@ -357,66 +369,17 @@ namespace Math
 		return lookAt;
 	}
 
-
-	Mat4 Mat4::Inverse() const
+	QXmat4	QXmat4::Identity()
 	{
-		Mat m(4, 4);
+		QXmat4	identity;
 
-		for (int i = 0; i < 4; i++)
-			for (int j = 0; j < 4; j++)
-				m[i][j] = (*this)[i][j];
+		identity[0][0] = 1;
+		identity[1][1] = 1;
+		identity[2][2] = 1;
+		identity[3][3] = 1;
 
-		m = m.Inverse();
-		Mat4 invt;
-
-		for (int i = 0; i < 4; i++)
-			for (int j = 0; j < 4; j++)
-				invt[i][j] = m[i][j];
-
-		return invt;
+		return identity;
 	}
-
-	Vec3 WorldToLocal(Vec3 vec, Ref3 ref)
-	{
-		Mat4 m;
-
-		m[0][0] = ref.i.x;
-		m[0][1] = ref.j.x;
-		m[0][2] = ref.k.x;
-		m[0][3] = ref.o.x;
-		m[1][0] = ref.i.y;
-		m[1][1] = ref.j.y;
-		m[1][2] = ref.k.y;
-		m[1][3] = ref.o.y;
-		m[2][0] = ref.i.z;
-		m[2][1] = ref.j.z;
-		m[2][2] = ref.k.z;
-		m[2][3] = ref.o.z;
-		m[3][3] = 1;
-
-		m = m.Inverse();
-		return m * vec;
-
-	}
-
-	Vec3 LocalToWorld(Vec3 vec, Ref3 ref)
-	{
-		Mat4 m;
-
-		m[0][0] = ref.i.x;
-		m[0][1] = ref.j.x;
-		m[0][2] = ref.k.x;
-		m[0][3] = ref.o.x;
-		m[1][0] = ref.i.y;
-		m[1][1] = ref.j.y;
-		m[1][2] = ref.k.y;
-		m[1][3] = ref.o.y;
-		m[2][0] = ref.i.z;
-		m[2][1] = ref.j.z;
-		m[2][2] = ref.k.z;
-		m[2][3] = ref.o.z;
-		m[3][3] = 1;
-
-		return m * vec;
-	}
+	#pragma endregion Static Functions
+	#pragma endregion Functions
 }

@@ -13,8 +13,8 @@ namespace Math
 	struct	QXquaternion
 	{
 		#pragma region Attributes
-		float	_w{ 0.f };
-		Vec3	_v = Vec3(0, 0, 0);
+		QXfloat	w{ 0.f };
+		QXvec3	v = QXvec3(0, 0, 0);
 		#pragma endregion
 	
 		#pragma region Constructors/Destructor
@@ -44,7 +44,7 @@ namespace Math
 		 * @param vw Value of angle in radian
 		 * @param vQ Vector of rotation
 		 */
-		QXquaternion(float vw, Vec3 vQ) noexcept;
+		QXquaternion(QXfloat vw, QXvec3 vQ) noexcept;
 
 		/**
 		 * @brief Construct a new Quaternion object
@@ -54,7 +54,7 @@ namespace Math
 		 * @param vy Value for y parameter of Vector
 		 * @param vz Value for z parameter of Vector
 		 */
-		QXquaternion(float vw, float vx, float vy, float vz) noexcept;
+		QXquaternion(QXfloat vw, QXfloat vx, QXfloat vy, QXfloat vz) noexcept;
 
 		/**
 		 * @brief Destroy the Quaternion object
@@ -84,7 +84,7 @@ namespace Math
 		 * 
 		 * @return New QXmat4 from the current Quaternion
 		 */
-		Mat4				ConvertQuaternionToMat();
+		QXmat4				ConvertQuaternionToMat();
 
 		/**
 		 * @brief Dot product between two Quaternion object
@@ -107,7 +107,7 @@ namespace Math
 		 * @param s float scale value for multiplication
 		 * @return New reference QXquaternion result of multiplication 
 		 */
-		QXquaternion&		MultQuaternion(float s);
+		QXquaternion&		MultQuaternion(QXfloat s);
 
 		/**
 		 * @brief Multiply two Quaternion object
@@ -164,7 +164,7 @@ namespace Math
 		 * @param t float ratio
 		 * @return reference of the current QXquaternion slerp normalize
 		 */
-		QXquaternion&		SlerpQuaternion(QXquaternion& q, float t);
+		QXquaternion&		SlerpQuaternion(QXquaternion& q, QXfloat t);
 
 		/**
 		 * @brief Substract two Quaternion object
@@ -179,7 +179,7 @@ namespace Math
 		 * 
 		 * @return String quaternion of the current quaternion
 		 */
-		std::string			ToString() const;
+		QXstring			ToString() const;
 		#pragma region Static Functions
 
 		/**
@@ -188,7 +188,7 @@ namespace Math
 		 * @param q Quaternion for conversion
 		 * @return New QXmat4 from the Quaternion
 		 */
-		static Mat4			ConvertQuaternionToMat(QXquaternion& q);
+		static QXmat4			ConvertQuaternionToMat(QXquaternion& q);
 
 		/**
 		 * @brief Convert Mat4 object into Quaternion object
@@ -196,7 +196,7 @@ namespace Math
 		 * @param m Mat4 for conversion
 		 * @return New Quaternion from the Mat4
 		 */
-		static QXquaternion	ConvertMatToQuaternion(Mat4 m);
+		static QXquaternion	ConvertMatToQuaternion(QXmat4 m);
 
 		/**
 		 * @brief Convert Euler angle into Quaternion
@@ -204,7 +204,7 @@ namespace Math
 		 * @param euler Vec3 for conversion
 		 * @return New Quaternion from Vec3
 		 */
-		static QXquaternion	ConvertEulerAngleToQuaternion(Vec3& euler);
+		static QXquaternion	ConvertEulerAngleToQuaternion(QXvec3& euler);
 
 		/**
 		 * @brief Slerp of Quaternion object
@@ -214,7 +214,7 @@ namespace Math
 		 * @param t float ratio
 		 * @return QXquaternion slerp normalize
 		 */
-		static QXquaternion	SlerpQuaternion(QXquaternion q1, QXquaternion q2, float t);
+		static QXquaternion	SlerpQuaternion(QXquaternion q1, QXquaternion q2, QXfloat t);
 		#pragma endregion Static Functions
 		#pragma region Operator Functions
 
@@ -232,7 +232,7 @@ namespace Math
 		 * @param s float scale value for multiplication
 		 * @return New reference QXquaternion result of multiplication
 		 */
-		QXquaternion&		operator*(float s);
+		QXquaternion&		operator*(QXfloat s);
 
 		/**
 		 * @brief Multiply two Quaternion object

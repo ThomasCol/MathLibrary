@@ -3,11 +3,11 @@
 namespace Math
 {
 	#pragma region Constructors
-	QXquaternion::QXquaternion() : _w(1), _v(0, 0, 0)
+	QXquaternion::QXquaternion() : w(1), v(0, 0, 0)
 	{
 	}
 
-	QXquaternion::QXquaternion(const QXquaternion& q) : _w(q._w), _v(q._v.x, q._v.y, q._v.z)
+	QXquaternion::QXquaternion(const QXquaternion& q) : w(q.w), v(q.v.x, q.v.y, q.v.z)
 	{
 	}
 
@@ -16,11 +16,11 @@ namespace Math
 		std::move(q);
 	}
 
-	QXquaternion::QXquaternion(float vw, Vec3 vQ) : _w(vw), _v(Vec3(vQ))
+	QXquaternion::QXquaternion(QXfloat vw, QXvec3 vQ) : w(vw), v(QXvec3(vQ))
 	{
 	}
 
-	QXquaternion::QXquaternion(float vw, float vx, float vy, float vz) : _w(vw), _v(vx, vy, vz)
+	QXquaternion::QXquaternion(QXfloat vw, QXfloat vx, QXfloat vy, QXfloat vz) : w(vw), v(vx, vy, vz)
 	{
 	}
 	#pragma endregion Constructors
@@ -31,32 +31,32 @@ namespace Math
 	{
 		QXquaternion res = QXquaternion();
 
-		res._w = _w + q._w;
-		res._v = _v + q._v;
+		res.w = w + q.w;
+		res.v = v + q.v;
 		return res;
 	}
 
 	QXquaternion& QXquaternion::ConjugateQuaternion()
 	{
-		QXquaternion res(_w, -_v.x, -_v.y, -_v.z);
+		QXquaternion res(w, -v.x, -v.y, -v.z);
 		return res;
 	}
 
-	Mat4 QXquaternion::ConvertQuaternionToMat()
+	QXmat4 QXquaternion::ConvertQuaternionToMat()
 	{
-		Mat4 res;
+		QXmat4 res;
 
-		res.array[0] = 1 - (2 * powf(_v.y, 2)) - (2 * powf(_v.z, 2));
-		res.array[1] = (2 * _v.x * _v.y) - (2 * _w * _v.z);
-		res.array[2] = (2 * _v.x * _v.z) + (2 * _w * _v.y);
+		res.array[0] = 1 - (2 * powf(v.y, 2)) - (2 * powf(v.z, 2));
+		res.array[1] = (2 * v.x * v.y) - (2 * w * v.z);
+		res.array[2] = (2 * v.x * v.z) + (2 * w * v.y);
 
-		res.array[4] = (2 * _v.x * _v.y) + (2 * _w * _v.z);
-		res.array[5] = 1 - (2 * powf(_v.x, 2)) - (2 * powf(_v.z, 2));
-		res.array[6] = (2 * _v.y * _v.z) - (2 * _w * _v.x);
+		res.array[4] = (2 * v.x * v.y) + (2 * w * v.z);
+		res.array[5] = 1 - (2 * powf(v.x, 2)) - (2 * powf(v.z, 2));
+		res.array[6] = (2 * v.y * v.z) - (2 * w * v.x);
 
-		res.array[8] = (2 * _v.x * _v.z) - (2 * _w * _v.y);
-		res.array[9] = (2 * _v.y * _v.z) + (2 * _w * _v.x);
-		res.array[10] = 1 - (2 * powf(_v.x, 2)) - (2 * powf(_v.y, 2));
+		res.array[8] = (2 * v.x * v.z) - (2 * w * v.y);
+		res.array[9] = (2 * v.y * v.z) + (2 * w * v.x);
+		res.array[10] = 1 - (2 * powf(v.x, 2)) - (2 * powf(v.y, 2));
 		res.array[15] = 1;
 
 		return res;
@@ -64,7 +64,7 @@ namespace Math
 
 	float QXquaternion::DotProductQuaternion(QXquaternion& q)
 	{
-		return (_w * q._w + _v.Dot(q._v));
+		return (w * q.w + v.Dot(q.v));
 	}
 
 	QXquaternion& QXquaternion::InverseQuaternion()
@@ -72,12 +72,12 @@ namespace Math
 		return ConjugateQuaternion().MultQuaternion(1 / SqrtRootQuaternion());
 	}
 
-	QXquaternion& QXquaternion::MultQuaternion(float s)
+	QXquaternion& QXquaternion::MultQuaternion(QXfloat s)
 	{
 		QXquaternion res = QXquaternion();
 
-		res._w = s * _w;
-		res._v = _v * s;
+		res.w = s * w;
+		res.v = v * s;
 		return res;
 	}
 
@@ -85,20 +85,20 @@ namespace Math
 	{
 		QXquaternion res = QXquaternion();
 
-		res._w = _w * q._w - _v.x * q._v.x - _v.y * q._v.y - _v.z * q._v.z;
-		res._v.x = _w * q._v.x + _v.x * q._w + _v.y * q._v.z - _v.z * q._v.y;
-		res._v.y = _w * q._v.y - _v.x * q._v.z + _v.y * q._w + _v.z * q._v.x;
-		res._v.z = _w * q._v.z + _v.x * q._v.y - _v.y * q._v.x + _v.z * q._w;
+		res.w = w * q.w - v.x * q.v.x - v.y * q.v.y - v.z * q.v.z;
+		res.v.x = w * q.v.x + v.x * q.w + v.y * q.v.z - v.z * q.v.y;
+		res.v.y = w * q.v.y - v.x * q.v.z + v.y * q.w + v.z * q.v.x;
+		res.v.z = w * q.v.z + v.x * q.v.y - v.y * q.v.x + v.z * q.w;
 
 		return res;
 	}
 
 	void QXquaternion::NegateQuaternion()
 	{
-		_w = -_w;
-		_v.x = -_v.x;
-		_v.y = -_v.y;
-		_v.z = -_v.z;
+		w = -w;
+		v.x = -v.x;
+		v.y = -v.y;
+		v.z = -v.z;
 	}
 
 	QXquaternion& QXquaternion::NormalizeQuaternion()
@@ -110,23 +110,23 @@ namespace Math
 
 	void QXquaternion::NullQuaternion()
 	{
-		_w = 0;
-		_v.x = _v.y = _v.z = 0;
+		w = 0;
+		v.x = v.y = v.z = 0;
 	}
 
 	float QXquaternion::QuaternionLength()
 	{
-		return sqrt(powf(_w, 2) + (_v.Dot(_v)));
+		return sqrt(powf(w, 2) + (v.Dot(v)));
 	}
 
 	QXquaternion& QXquaternion::ReturnNegateQuaternion()
 	{
 		QXquaternion res = QXquaternion();
 
-		res._w = -_w;
-		res._v.x = -_v.x;
-		res._v.y = -_v.y;
-		res._v.z = -_v.z;
+		res.w = -w;
+		res.v.x = -v.x;
+		res.v.y = -v.y;
+		res.v.z = -v.z;
 
 		return res;
 	}
@@ -136,7 +136,7 @@ namespace Math
 		return DotProductQuaternion(ConjugateQuaternion());
 	}
 
-	QXquaternion& QXquaternion::SlerpQuaternion(QXquaternion& q, float t)
+	QXquaternion& QXquaternion::SlerpQuaternion(QXquaternion& q, QXfloat t)
 	{
 		float theta{ acos(DotProductQuaternion(q)) };
 
@@ -150,14 +150,14 @@ namespace Math
 	{
 		QXquaternion res = QXquaternion();
 
-		res._w = _w - q._w;
-		res._v = _v - q._v;
+		res.w = w - q.w;
+		res.v = v - q.v;
 		return res;
 	}
 
-	std::string QXquaternion::ToString() const
+	QXstring QXquaternion::ToString() const
 	{
-		std::string quat = std::to_string(_w) + ", " + _v.ToString();
+		QXstring quat = std::to_string(w) + ", " + v.ToString();
 
 		return quat;
 	}
@@ -166,37 +166,37 @@ namespace Math
 
 	#pragma region Static Functions
 
-	Mat4 QXquaternion::ConvertQuaternionToMat(QXquaternion& q)
+	QXmat4 QXquaternion::ConvertQuaternionToMat(QXquaternion& q)
 	{
-		Mat4 res;
+		QXmat4 res;
 
-		res.array[0] = 1 - (2 * powf(q._v.y, 2)) - (2 * powf(q._v.z, 2));
-		res.array[1] = (2 * q._v.x * q._v.y) - (2 * q._w * q._v.z);
-		res.array[2] = (2 * q._v.x * q._v.z) + (2 * q._w * q._v.y);
+		res.array[0] = 1 - (2 * powf(q.v.y, 2)) - (2 * powf(q.v.z, 2));
+		res.array[1] = (2 * q.v.x * q.v.y) - (2 * q.w * q.v.z);
+		res.array[2] = (2 * q.v.x * q.v.z) + (2 * q.w * q.v.y);
 
-		res.array[4] = (2 * q._v.x * q._v.y) + (2 * q._w * q._v.z);
-		res.array[5] = 1 - (2 * powf(q._v.x, 2)) - (2 * powf(q._v.z, 2));
-		res.array[6] = (2 * q._v.y * q._v.z) - (2 * q._w * q._v.x);
+		res.array[4] = (2 * q.v.x * q.v.y) + (2 * q.w * q.v.z);
+		res.array[5] = 1 - (2 * powf(q.v.x, 2)) - (2 * powf(q.v.z, 2));
+		res.array[6] = (2 * q.v.y * q.v.z) - (2 * q.w * q.v.x);
 
-		res.array[8] = (2 * q._v.x * q._v.z) - (2 * q._w * q._v.y);
-		res.array[9] = (2 * q._v.y * q._v.z) + (2 * q._w * q._v.x);
-		res.array[10] = 1 - (2 * powf(q._v.x, 2)) - (2 * powf(q._v.y, 2));
+		res.array[8] = (2 * q.v.x * q.v.z) - (2 * q.w * q.v.y);
+		res.array[9] = (2 * q.v.y * q.v.z) + (2 * q.w * q.v.x);
+		res.array[10] = 1 - (2 * powf(q.v.x, 2)) - (2 * powf(q.v.y, 2));
 		res.array[15] = 1;
 
 		return res;
 	}
 
-	QXquaternion QXquaternion::ConvertMatToQuaternion(Mat4 m)
+	QXquaternion QXquaternion::ConvertMatToQuaternion(QXmat4 m)
 	{
 		float qw = sqrt(1 + m.array[0] + m.array[5] + m.array[10]) / 2.f;
 		float qx = (m.array[9] - m.array[6]) / (4 * qw);
 		float qy = (m.array[2] - m.array[8]) / (4 * qw);
 		float qz = (m.array[4] - m.array[1]) / (4 * qw);
 
-		return QXquaternion(qw, Vec3(qx, qy, qz));
+		return QXquaternion(qw, QXvec3(qx, qy, qz));
 	}
 
-	QXquaternion QXquaternion::ConvertEulerAngleToQuaternion(Vec3& euler)
+	QXquaternion QXquaternion::ConvertEulerAngleToQuaternion(QXvec3& euler)
 	{
 		float c1 = cos(euler.x / 2);
 		float c2 = cos(euler.y / 2);
@@ -210,10 +210,10 @@ namespace Math
 		float qy = ((s1 * c2 * c3) + (c1 * s2 * s3));
 		float qz = ((c1 * s2 * c3) - (s1 * c2 * s3));
 
-		return QXquaternion(qw, Vec3(qx, qy, qz));
+		return QXquaternion(qw, QXvec3(qx, qy, qz));
 	}
 
-	QXquaternion QXquaternion::SlerpQuaternion(QXquaternion q1, QXquaternion q2, float t)
+	QXquaternion QXquaternion::SlerpQuaternion(QXquaternion q1, QXquaternion q2, QXfloat t)
 	{
 		float theta{ q1.DotProductQuaternion(q2) };
 
@@ -229,18 +229,18 @@ namespace Math
 
 	QXquaternion& QXquaternion::operator=(const QXquaternion& q)
 	{
-		_w = q._w;
-		_v = q._v;
+		w = q.w;
+		v = q.v;
 
 		return *this;
 	}
 
-	QXquaternion& QXquaternion::operator*(float s)
+	QXquaternion& QXquaternion::operator*(QXfloat s)
 	{
 		QXquaternion res = QXquaternion();
 
-		res._w = s * _w;
-		res._v = _v * s;
+		res.w = s * w;
+		res.v = v * s;
 		return res;
 	}
 
@@ -248,10 +248,10 @@ namespace Math
 	{
 		QXquaternion res = QXquaternion();
 
-		res._w = _w * q._w - _v.x * q._v.x - _v.y * q._v.y - _v.z * q._v.z;
-		res._v.x = _w * q._v.x + _v.x * q._w + _v.y * q._v.z - v.z * q._v.y;
-		res._v.y = _w * q._v.y - _v.x * q._v.z + _v.y * q._w + v.z * q._v.x;
-		res._v.z = _w * q._v.z + _v.x * q._v.y - _v.y * q._v.x + v.z * q._w;
+		res.w = w * q.w - v.x * q.v.x - v.y * q.v.y - v.z * q.v.z;
+		res.v.x = w * q.v.x + v.x * q.w + v.y * q.v.z - v.z * q.v.y;
+		res.v.y = w * q.v.y - v.x * q.v.z + v.y * q.w + v.z * q.v.x;
+		res.v.z = w * q.v.z + v.x * q.v.y - v.y * q.v.x + v.z * q.w;
 
 		return res;
 	}
@@ -260,8 +260,8 @@ namespace Math
 	{
 		QXquaternion res = QXquaternion();
 
-		res._w = _w + q._w;
-		res._v = _v + q._v;
+		res.w = w + q.w;
+		res.v = v + q.v;
 		return res;
 	}
 
@@ -269,8 +269,8 @@ namespace Math
 	{
 		QXquaternion res = QXquaternion();
 
-		res._w = _w - q._w;
-		res._v = _v - q._v;
+		res.w = w - q.w;
+		res.v = v - q.v;
 		return res;
 	}
 
