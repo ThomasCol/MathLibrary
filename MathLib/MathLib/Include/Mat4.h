@@ -9,61 +9,72 @@
 
 namespace Math
 {
-	struct Mat4
+	/**
+	 * @brief QXmat4 structure
+	 * 
+	 */
+	struct QXmat4
 	{
-		float	array[16];
+		#pragma region Attributes
+		QXfloat	array[16];
+		#pragma endregion Attributes
 
+		#pragma region Constructor/Destructor
 		/* constructor */
-		Mat4();
-		Mat4(const Mat4& mat);
+		QXmat4();
+		QXmat4(const QXmat4& mat);
 
 		/* destructor */
-		~Mat4() = default;
+		~QXmat4() = default;
+		#pragma endregion Constructor/Destructor
 
-		static Mat4		Identity();
+		#pragma region Functions
+		/* func to get inverse matrix */
+		QXmat4 				Inverse() const;
 
-		/* operator for access to the matrix */
-		float*			operator[](int i);
-		const float*	operator[](int i) const;
-
-		/* math operators */
-		Mat4			operator+(const Mat4& mat) const;
-		Mat4			operator*(const Mat4& mat) const;
-		Mat4&			operator*=(const Mat4& mat);
-		Vec3			operator*(const Vec3& vec) const;
-		Vec3			operator*(const Vec4& vec) const;
-
-		Mat4			Transpose() const;
+		QXmat4				Transpose() const;
 
 		/* for debug */
-		std::string		ToString() const;
+		QXstring			ToString() const;
 
+		#pragma region Operator Functions
+		/* operator for access to the matrix */
+		QXfloat*			operator[](QXint i);
+		const QXfloat*		operator[](QXint i) const;
 
-		static Mat4		CreateScaleMatrix(const Vec3& scale);
+		/* math operators */
+		QXmat4				operator+(const QXmat4& mat) const;
+		QXmat4				operator*(const QXmat4& mat) const;
+		QXmat4&				operator*=(const QXmat4& mat);
+		QXvec3				operator*(const QXvec3& vec) const;
+		QXvec3				operator*(const QXvec4& vec) const;
+		#pragma endregion Operator Functions
 
-		static Mat4		CreateTranslationMatrix(const Vec3& trans);
+		#pragma region Static Functions
+		static QXmat4		CreateScaleMatrix(const QXvec3& scale);
 
-		static Mat4		CreateRotationMatrix(const Vec3& axis, const float& angle);
+		static QXmat4		CreateTranslationMatrix(const QXvec3& trans);
 
-		static Mat4		CreateXRotationMatrix(const float angle);
-		static Mat4		CreateYRotationMatrix(const float angle);
-		static Mat4		CreateZRotationMatrix(const float angle);
-		static Mat4		CreateFixedAngleEulerRotationMatrix(const QXvec3& rotate);
+		static QXmat4		CreateRotationMatrix(const QXvec3& axis, const QXfloat& angle);
 
-		static Mat4		CreateTRSMatrix(const Vec3& trans, const Vec3& rotate,
-									const Vec3& scale);
+		static QXmat4		CreateXRotationMatrix(const QXfloat angle);
+		static QXmat4		CreateYRotationMatrix(const QXfloat angle);
+		static QXmat4		CreateZRotationMatrix(const QXfloat angle);
+		static QXmat4		CreateFixedAngleEulerRotationMatrix(const QXvec3& rotate);
+
+		static QXmat4		CreateTRSMatrix(const QXvec3& trans, const QXvec3& rotate,
+									const QXvec3& scale);
 		/* ============================= */
 
-		static Mat4		CreateProjectionMatrix(int width, int height, float near,
-												float far, float fov);
-		static Mat4		CreateOrthographicProjectionMatrix(int width, int height, float near, float far);
+		static QXmat4		CreateProjectionMatrix(QXint width, QXint height, QXfloat near,
+													QXfloat far, QXfloat fov);
+		static QXmat4		CreateOrthographicProjectionMatrix(QXint width, QXint height, QXfloat near, QXfloat far);
 
-		static Mat4		CreateLookAtMatrix(Vec3 position, Vec3 target, Vec3 up, Vec3 Scale);
+		static QXmat4		CreateLookAtMatrix(QXvec3 position, QXvec3 target, QXvec3 up, QXvec3 Scale);
 
-		/* func to get inverse matrix */
-		Mat4 			Inverse() const;
-
-
+		static QXmat4		Identity();
+		#pragma endregion Static Functions
+		#pragma endregion Functions
 	};
 }
 

@@ -165,6 +165,7 @@
     <ClCompile Include="Src\Mat.cpp" />
     <ClCompile Include="Src\Mat4.cpp" />
     <ClCompile Include="Src\Maths.cpp" />
+    <ClCompile Include="Src\Quaternion.cpp" />
     <ClCompile Include="Src\Ref3.cpp" />
     <ClCompile Include="Src\Vec2.cpp" />
     <ClCompile Include="Src\Vec3.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Include\Mat4.h" />
     <ClInclude Include="Include\MathDefines.h" />
     <ClInclude Include="Include\Maths.hpp" />
+    <ClInclude Include="Include\Quaternion.h" />
     <ClInclude Include="Include\Ref3.h" />
     <ClInclude Include="Include\Type.h" />
     <ClInclude Include="Include\Vec2.h" />

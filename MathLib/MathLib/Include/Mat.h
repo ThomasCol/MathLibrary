@@ -6,43 +6,107 @@
 
 namespace Math
 {
-    struct Mat
+	/**
+	 * @brief QXmat structure
+	 * 
+	 */
+    struct QXmat
     {
-        int       line;
-        int       column;
+		#pragma region Attributes
+        QXint       line;
+        QXint       column;
 
         float*    array;
+		#pragma endregion Attributes
 
-        Mat() = default;
-        Mat(int ln = 0, int col = 0);
-        Mat(const Vec3& v1, const Vec3& v2, const Vec3& v3);
-        Mat(const Mat& Mat);
-        Mat(Mat&& mat);
-        ~Mat();
+		#pragma region Constructor/Destructor
+		/**
+		 * @brief Construct a default QXmat object
+		 * 
+		 */
+		QXmat() = default;
 
-        float*			operator[](int i);
-        float*			operator[](int i) const;
-        Mat				operator+(const Mat& Mat);
-        Mat				operator*(const Mat& Mat)const;
-        Vec3			operator*(const Vec3& vect) const;
-        Vec4			operator*(const Vec4& vect) const;
-        Mat&			operator=(const Mat& Mat);
+		/**
+		 * @brief Construct new QXmat object
+		 * 
+		 * @param ln int for number of line
+		 * @param col int for number of column
+		 */
+		QXmat(QXint ln = 0, QXint col = 0);
 
-        static Mat		Zero(int m);
-        static Mat		Identity(int m);
+		/**
+		 * @brief Construct new QXmat object of size 3
+		 * 
+		 * @param v1 Vec3 for the first line
+		 * @param v2 Vec3 for the second line
+		 * @param v3 Vec3 for the third line
+		 */
+		QXmat(const QXvec3& v1, const QXvec3& v2, const QXvec3& v3);
 
-        Mat				Transpose() const;
-        float			Determinant() const;
-		float			GetMinor(const unsigned int& l, const unsigned int& c) const;
-	    float			GetCofactor(const unsigned int& l, const unsigned int& c) const;
-	    Mat				GetCofactorMatrix() const;
-        Mat				GetSubMatrix(unsigned int line, unsigned int column) const;
+		/**
+		 * @brief Construct new QXmat object
+		 * 
+		 * @param Mat QXmat to copy
+		 */
+		QXmat(const QXmat& Mat);
 
-		Mat 			Inverse() const;
-        Mat 			InverseMat3();
+		/**
+		 * @brief Construct new QXmat object
+		 * 
+		 * @param mat QXmat to move
+		 */
+		QXmat(QXmat&& mat);
+
+		/**
+		 * @brief Destroy the QXmat object
+		 * 
+		 */
+        ~QXmat();
+		#pragma endregion Constructor/Destructor
+
+		#pragma region Functions
+		/**
+		 * @brief Compute Determinant
+		 * 
+		 * @return QXfloat constant value of the matrix determinant
+		 */
+		QXfloat			Determinant() const;
+
+		/**
+		 * @brief Get the matrix cofactor
+		 * 
+		 * @param l QXint for the number of line in matrix
+		 * @param c QXint for the number of column in matrix
+		 * @return QXfloat factor value of the matrix
+		 */
+		QXfloat			GetCofactor(const QXuint& l, const QXuint& c) const;
+		QXmat			GetCofactorMatrix() const;
+		QXfloat			GetMinor(const QXuint& l, const QXuint& c) const;
+		QXmat			GetSubMatrix(QXuint line, QXuint column) const;
+
+		QXmat 			Inverse() const;
+		QXmat 			InverseMat3();
+		QXmat			Transpose() const;
+
+		#pragma region Operator Functions
+        QXfloat*		operator[](QXint i);
+        QXfloat*		operator[](QXint i) const;
+		QXmat			operator+(const QXmat& Mat);
+		QXmat			operator*(const QXmat& Mat)const;
+		QXvec3			operator*(const QXvec3& vect) const;
+		QXvec4			operator*(const QXvec4& vect) const;
+		QXmat&			operator=(const QXmat& Mat);
+		#pragma endregion Operator Functions
+
+		#pragma region Static Functions
+        static QXmat	Identity(QXint m);
+        static QXmat	Zero(QXint m);
+		#pragma endregion Static Functions
+		#pragma endregion Functions
+
     };
 
-    Mat					operator*(Mat mat, float nb);
+	QXmat				operator*(QXmat mat, QXfloat nb);
 }
 
 #endif //_MAT_H_
