@@ -1,32 +1,205 @@
 #include "Ref3.h"
 
+#include "Mat4.h"
+
 namespace Math
 {
-    Ref3::Ref3(const Vec3& O, const Vec3& I, const Vec3& J, const Vec3& K):
+
+  #pragma region Constructors
+
+	QXref3::QXref3(const QXvec3& O, QXfloat AngleI, QXfloat AngleJ, QXfloat AngleK) noexcept :
+		o{ O },
+		i{ Mat4::CreateFixedAngleEulerRotationMatrix(QXvec3(AngleI, AngleJ, AngleK)) * QXvec3::right },
+		j{ Mat4::CreateFixedAngleEulerRotationMatrix(QXvec3(AngleI, AngleJ, AngleK)) * QXvec3::up },
+		k{ Mat4::CreateFixedAngleEulerRotationMatrix(QXvec3(AngleI, AngleJ, AngleK)) * QXvec3::forward }
+  {}
+
+  QXref3::QXref3(const QXvec3& O, const QXvec3& I, const QXvec3& J, const QXvec3& K) noexcept :
 		o {O},
 		i {I.Normalize()},
 		j {J.Normalize()},
-		k {K.Normalize()}
-    {
-	}
+		k {K.Normalize()}        
+  {}
 
-    Ref3::Ref3(const Ref3& ref):
-		o {ref.o},
+  QXref3::QXref3(const QXref3& ref) noexcept :
+  	o {ref.o},
 		i {ref.i},
 		j {ref.j},
 		k {ref.k}
-    {}
+  {}
 
-    Ref3::~Ref3()
-    {}
+  QXref3::QXref3(QXref3&& ref) noexcept :
+    o {std::move(ref.o)},
+    i {std::move(ref.i)},
+    j {std::move(ref.j)},
+    k {std::move(ref.k)}
+  {}
 
-    Ref3&   Ref3::operator=(const Ref3& ref)
-    {
-        o = ref.o;
-        i = ref.i;
-        j = ref.j;
-        k = ref.k;
+  #pragma endregion
 
-        return *this;
-    }
+  #pragma region Operators
+
+  QXref3&   QXref3::operator=(const QXref3& ref) noexcept
+  {
+      o = ref.o;
+      i = ref.i;
+      j = ref.j;
+      k = ref.k;
+
+      return *this;
+  }
+
+  QXref3& QXref3::operator=(QXref3&& ref) noexcept
+  {
+      o = std::move(ref.o);
+      i = std::move(ref.i);
+      j = std::move(ref.j);
+      k = std::move(ref.k);
+
+      return *this;
+  }
+
+  QXbool QXref3::operator==(const QXref3& ref) const noexcept
+  {
+    if (o == ref.o && i == ref.i && j == ref.j && k == ref.k)
+      return true;
+    return false;
+  }
+
+  QXbool QXref3::operator!=(const QXref3& ref) const noexcept
+  {
+    if (o != ref.o || i != ref.i || j != ref.j || k != ref.k)
+      return true;
+    return false;
+  }
+
+  #pragma endregion
+
+  #pragma region Functions
+
+  QXref3& QXref3::GlobalToLocal(const QXref3& ref) noexcept
+  {
+	  QXmat4 m;
+
+	  m[0][0] = ref.i.x;
+	  m[0][1] = ref.j.x;
+	  m[0][2] = ref.k.x;
+	  m[0][3] = ref.o.x;
+	  m[1][0] = ref.i.y;
+	  m[1][1] = ref.j.y;
+	  m[1][2] = ref.k.y;
+	  m[1][3] = ref.o.y;
+	  m[2][0] = ref.i.z;
+	  m[2][1] = ref.j.z;
+	  m[2][2] = ref.k.z;
+	  m[2][3] = ref.o.z;
+	  m[3][3] = 1;
+
+	  m = m.Inverse();
+	  return m * *this;
+  }
+
+  QXref3 QXref3::GlobalToLocal(const QXref3& ref) const noexcept
+  {
+	  QXmat4 m;
+
+	  m[0][0] = ref.i.x;
+	  m[0][1] = ref.j.x;
+	  m[0][2] = ref.k.x;
+	  m[0][3] = ref.o.x;
+	  m[1][0] = ref.i.y;
+	  m[1][1] = ref.j.y;
+	  m[1][2] = ref.k.y;
+	  m[1][3] = ref.o.y;
+	  m[2][0] = ref.i.z;
+	  m[2][1] = ref.j.z;
+	  m[2][2] = ref.k.z;
+	  m[2][3] = ref.o.z;
+	  m[3][3] = 1;
+
+	  m = m.Inverse();
+
+	  QXref3 res{ *this };
+
+	  return m * res;
+  }
+
+  QXref3& QXref3::LocalToGlobal(const QXref3& ref) noexcept
+  {
+	  QXmat4 m;
+
+	  m[0][0] = ref.i.x;
+	  m[0][1] = ref.j.x;
+	  m[0][2] = ref.k.x;
+	  m[0][3] = ref.o.x;
+	  m[1][0] = ref.i.y;
+	  m[1][1] = ref.j.y;
+	  m[1][2] = ref.k.y;
+	  m[1][3] = ref.o.y;
+	  m[2][0] = ref.i.z;
+	  m[2][1] = ref.j.z;
+	  m[2][2] = ref.k.z;
+	  m[2][3] = ref.o.z;
+	  m[3][3] = 1;
+
+	  return m * *this;
+  }
+
+  QXref3 QXref3::LocalToGlobal(const QXref3& ref) const noexcept
+  {
+	  QXmat4 m;
+
+	  m[0][0] = ref.i.x;
+	  m[0][1] = ref.j.x;
+	  m[0][2] = ref.k.x;
+	  m[0][3] = ref.o.x;
+	  m[1][0] = ref.i.y;
+	  m[1][1] = ref.j.y;
+	  m[1][2] = ref.k.y;
+	  m[1][3] = ref.o.y;
+	  m[2][0] = ref.i.z;
+	  m[2][1] = ref.j.z;
+	  m[2][2] = ref.k.z;
+	  m[2][3] = ref.o.z;
+	  m[3][3] = 1;
+
+	  QXref3 res { *this };
+
+	  return m * res;
+  }
+
+  QXref3& QXref3::Rotate(const Quaternion& quat) noexcept
+  {
+	  i *= quat;
+	  j *= quat;
+	  k *= quat;
+	  return *this;
+  }
+
+  QXref3 QXref3::Rotate(const Quaternion& quat) const noexcept
+  {
+	  QXref3 res{ *this };
+
+	  res.i *= quat;
+	  res.j *= quat;
+	  res.k *= quat;
+
+	  return res;
+  }
+
+  QXref3& QXref3::Translate(const QXvec3& value) noexcept
+  {
+	  o += value;
+
+	  return *this;
+  }
+
+  QXref3 QXref3::Translate(const QXvec3& value) const noexcept
+  {
+	  QXref3 res{ *this };
+	  res.o += value;
+
+	  return res;
+  }
+  #pragma endregion
 }

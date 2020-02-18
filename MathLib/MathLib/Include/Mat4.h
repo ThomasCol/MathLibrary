@@ -48,7 +48,7 @@ namespace Math
 		static Mat4		CreateXRotationMatrix(const float angle);
 		static Mat4		CreateYRotationMatrix(const float angle);
 		static Mat4		CreateZRotationMatrix(const float angle);
-		static Mat4		CreateFixedAngleEulerRotationMatrix(const Vec3& rotate);
+		static Mat4		CreateFixedAngleEulerRotationMatrix(const QXvec3& rotate);
 
 		static Mat4		CreateTRSMatrix(const Vec3& trans, const Vec3& rotate,
 									const Vec3& scale);

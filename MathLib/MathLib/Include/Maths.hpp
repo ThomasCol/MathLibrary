@@ -34,9 +34,6 @@ namespace Math
 
         return val;
     }
-
-	Vec3	WorldToLocal(Vec3 vec, Ref3 ref);
-	Vec3	LocalToWorld(Vec3 vec, Ref3 ref);
 }
 
 #endif //_MATH_H_

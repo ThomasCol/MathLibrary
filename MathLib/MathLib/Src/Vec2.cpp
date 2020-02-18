@@ -18,29 +18,26 @@ namespace Math
 
 #pragma region Constructors
 
-	QXvec2::QXvec2(const QXfloat& posX = 0.f , const QXfloat& posY = 0.f) :
+	QXvec2::QXvec2(const QXfloat& posX, const QXfloat& posY) noexcept :
 		x {posX},
 		y {posY}
 	{}
 
-	QXvec2::QXvec2(const QXvec2& vect) :
+	QXvec2::QXvec2(const QXvec2& vect) noexcept :
 		x{ vect.x },
 		y{ vect.y }
 	{}
 
-	QXvec2::QXvec2(QXvec2&& vec):
+	QXvec2::QXvec2(QXvec2&& vec) noexcept :
 		x { std::move(vec.x) },
 		y { std::move(vec.y) }
-	{}
-
-	QXvec2::~QXvec2()
 	{}
 
 #pragma endregion
 
 #pragma region Operators
 
-	QXvec2& QXvec2::operator=(const QXvec2& vect)
+	QXvec2& QXvec2::operator=(const QXvec2& vect) noexcept
 	{
 		x = vect.x;
 		y = vect.y;
@@ -48,7 +45,7 @@ namespace Math
 		return *this;
 	}
 
-	QXvec2& QXvec2::operator=(QXvec2&& vect)
+	QXvec2& QXvec2::operator=(QXvec2&& vect) noexcept
 	{
 		x = std::move(vect.x);
 		y = std::move(vect.y);
@@ -56,7 +53,7 @@ namespace Math
 		return *this;
 	}
 
-	QXvec2& QXvec2::operator+=(const QXvec2& vect)
+	QXvec2& QXvec2::operator+=(const QXvec2& vect) noexcept
 	{
 		x += vect.x;
 		y += vect.y;
@@ -64,7 +61,7 @@ namespace Math
 		return *this;
 	}
 
-	QXvec2	QXvec2::operator+(const QXvec2& vect) const
+	QXvec2	QXvec2::operator+(const QXvec2& vect) const noexcept
 	{
 		QXvec2	res;
 
@@ -74,7 +71,7 @@ namespace Math
 		return res;
 	}
 
-	QXvec2& QXvec2::operator-=(const QXvec2& vect)
+	QXvec2& QXvec2::operator-=(const QXvec2& vect) noexcept
 	{
 		x -= vect.x;
 		y -= vect.y;
@@ -82,7 +79,7 @@ namespace Math
 		return *this;
 	}
 
-	QXvec2	QXvec2::operator-(const QXvec2& vect) const
+	QXvec2	QXvec2::operator-(const QXvec2& vect) const noexcept
 	{
 		QXvec2	res;
 
@@ -92,7 +89,7 @@ namespace Math
 		return res;
 	}
 
-	QXvec2	QXvec2::operator-() const
+	QXvec2	QXvec2::operator-() const noexcept
 	{
 		QXvec2	res;
 
@@ -102,7 +99,7 @@ namespace Math
 		return res;
 	}
 
-	QXvec2& QXvec2::operator/=(QXfloat value)
+	QXvec2& QXvec2::operator/=(QXfloat value) noexcept
 	{
 		x /= value;
 		y /= value;
@@ -110,7 +107,7 @@ namespace Math
 		return *this;
 	}
 
-	QXvec2	QXvec2::operator/(QXfloat value) const
+	QXvec2	QXvec2::operator/(QXfloat value) const noexcept
 	{
 		QXvec2	res;
 
@@ -120,7 +117,7 @@ namespace Math
 		return res;
 	}
 
-	QXvec2& QXvec2::operator*=(QXfloat nb)
+	QXvec2& QXvec2::operator*=(QXfloat nb) noexcept
 	{
 		x *= nb;
 		y *= nb;
@@ -128,7 +125,7 @@ namespace Math
 		return *this;
 	}
 
-	QXvec2	QXvec2::operator*(QXfloat value) const
+	QXvec2	QXvec2::operator*(QXfloat value) const noexcept
 	{
 		QXvec2	res;
 
@@ -138,46 +135,34 @@ namespace Math
 		return res;
 	}
 
-	QXbool	QXvec2::operator==(const QXvec2& vect) const
+	QXbool	QXvec2::operator==(const QXvec2& vect) const noexcept
 	{
-		if (SqrLength() == vect.SqrLength())
-			return true;
-		return false;
+		return SqrLength() == vect.SqrLength();
 	}
 
-	QXbool	QXvec2::operator!=(const QXvec2& vect) const
+	QXbool	QXvec2::operator!=(const QXvec2& vect) const noexcept
 	{
-		if (SqrLength() != vect.SqrLength())
-			return true;
-		return false;
+		return SqrLength() != vect.SqrLength();
 	}
 
-	QXbool	QXvec2::operator<(const QXvec2& vect) const
+	QXbool	QXvec2::operator<(const QXvec2& vect) const noexcept
 	{
-		if (SqrLength() < vect.SqrLength())
-			return true;
-		return false;
+		return SqrLength() < vect.SqrLength();
 	}
 
-	QXbool	QXvec2::operator<=(const QXvec2& vect) const
+	QXbool	QXvec2::operator<=(const QXvec2& vect) const noexcept
 	{
-		if (SqrLength() <= vect.SqrLength())
-			return true;
-		return false;
+		return SqrLength() <= vect.SqrLength();
 	}
 
-	QXbool	QXvec2::operator>(const QXvec2& vect) const
+	QXbool	QXvec2::operator>(const QXvec2& vect) const noexcept
 	{
-		if (SqrLength() > vect.SqrLength())
-			return true;
-		return false;
+		return SqrLength() > vect.SqrLength();
 	}
 
-	QXbool	QXvec2::operator>=(const QXvec2& vect) const
+	QXbool	QXvec2::operator>=(const QXvec2& vect) const noexcept
 	{
-		if (SqrLength() >= vect.SqrLength())
-			return true;
-		return false;
+		return SqrLength() >= vect.SqrLength();
 	}
 
 	const QXfloat QXvec2::operator[](const QXuint idx) const noexcept
@@ -194,23 +179,23 @@ namespace Math
 
 #pragma region Functions
 
-	QXfloat QXvec2::Angle(const QXvec2& vect) const
+	QXfloat QXvec2::Angle(const QXvec2& vect) const noexcept
 	{
 		return std::atan2(vect.y - y, vect.x - x);	
 	}
 
-	QXfloat QXvec2::Cross(const QXvec2& vect) const
+	QXfloat QXvec2::Cross(const QXvec2& vect) const noexcept
 	{
 		return x * vect.y - vect.x * y;
 	}
 
 
-	QXfloat QXvec2::Dot(const QXvec2& vect) const
+	QXfloat QXvec2::Dot(const QXvec2& vect) const noexcept
 	{
 		return x * vect.x + y * vect.y;
 	}
 
-	QXbool QXvec2::IsCollinear(const QXvec2& vect) const
+	QXbool QXvec2::IsCollinear(const QXvec2& vect) const noexcept
 	{
 		QXfloat res{ Dot(vect) };
 		if (res == 1 || res == -1)
@@ -218,19 +203,17 @@ namespace Math
 		return false;
 	}
 
-	QXfloat	QXvec2::Length() const
+	QXfloat	QXvec2::Length() const noexcept
 	{
 		return sqrt(x * x + y * y);
 	}
 
-	QXvec2& QXvec2::Normalize()
+	QXvec2& QXvec2::Normalize() noexcept
 	{
-		QXfloat	size = Length();
+		QXfloat	size{ Length() };
 
 		if (size == 0)
-		{
 			return *this;
-		}
 
 		x = x / size;
 		y = y / size;
@@ -238,16 +221,14 @@ namespace Math
 		return *this;
 	}
 
-	QXvec2	QXvec2::Normalized() const
+	QXvec2	QXvec2::Normalized() const noexcept
 	{
 		QXvec2	res;
 
-	    QXfloat size = Length();
+		QXfloat size{ Length() };
 
 	    if (size == 0)
-		{
 	    	return res;
-	    }
 
 		res.x = x / size;
 		res.y = y / size;
@@ -255,7 +236,7 @@ namespace Math
 		return res;
 	}
 
-	QXvec2& QXvec2::Scale(QXfloat nb)
+	QXvec2& QXvec2::Scale(QXfloat nb) noexcept
 	{
 		x = x * nb;
 		y = y * nb;
@@ -263,7 +244,7 @@ namespace Math
 		return *this;
 	}
 
-	QXvec2	QXvec2::Scale(QXfloat nb) const
+	QXvec2	QXvec2::Scale(QXfloat nb) const noexcept
 	{
 		QXvec2	res;
 
@@ -273,12 +254,12 @@ namespace Math
 		return res;
 	}
 
-	QXfloat	QXvec2::SqrLength() const
+	QXfloat	QXvec2::SqrLength() const noexcept
 	{
 		return x * x + y * y;
 	}
 
-	QXstring	QXvec2::ToString() const
+	QXstring	QXvec2::ToString() const noexcept
 	{
 		QXstring vec = std::to_string(x) + ", " + std::to_string(y) + "\n";
 
@@ -286,14 +267,14 @@ namespace Math
 	}
 #pragma endregion
 
-	std::ostream& operator<<(std::ostream& os, const QXvec2& vect)
+	std::ostream& operator<<(std::ostream& os, const QXvec2& vect) noexcept
 	{
 		os << vect.x << ", " << vect.y << std::endl;
 
 		return os;
 	}
 
-	std::string	operator+(std::string& str, const QXvec2& vect)
+	std::string	operator+(std::string& str, const QXvec2& vect) noexcept
 	{
 		std::string	res = str + "x : " + std::to_string(vect.x) +
 			" , y : " + std::to_string(vect.y);

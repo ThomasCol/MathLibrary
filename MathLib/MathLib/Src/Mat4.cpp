@@ -261,7 +261,7 @@ namespace Math
 	    return zRotation;
 	}
 
-	Mat4	Mat4::CreateFixedAngleEulerRotationMatrix(const Vec3& rotate)
+	Mat4	Mat4::CreateFixedAngleEulerRotationMatrix(const QXvec3& rotate)
 	{
 		Mat4	xRotation(Mat4::CreateXRotationMatrix(rotate.x));
 	    Mat4	yRotation(Mat4::CreateYRotationMatrix(rotate.y));
@@ -374,49 +374,5 @@ namespace Math
 				invt[i][j] = m[i][j];
 
 		return invt;
-	}
-
-	Vec3 WorldToLocal(Vec3 vec, Ref3 ref)
-	{
-		Mat4 m;
-
-		m[0][0] = ref.i.x;
-		m[0][1] = ref.j.x;
-		m[0][2] = ref.k.x;
-		m[0][3] = ref.o.x;
-		m[1][0] = ref.i.y;
-		m[1][1] = ref.j.y;
-		m[1][2] = ref.k.y;
-		m[1][3] = ref.o.y;
-		m[2][0] = ref.i.z;
-		m[2][1] = ref.j.z;
-		m[2][2] = ref.k.z;
-		m[2][3] = ref.o.z;
-		m[3][3] = 1;
-
-		m = m.Inverse();
-		return m * vec;
-
-	}
-
-	Vec3 LocalToWorld(Vec3 vec, Ref3 ref)
-	{
-		Mat4 m;
-
-		m[0][0] = ref.i.x;
-		m[0][1] = ref.j.x;
-		m[0][2] = ref.k.x;
-		m[0][3] = ref.o.x;
-		m[1][0] = ref.i.y;
-		m[1][1] = ref.j.y;
-		m[1][2] = ref.k.y;
-		m[1][3] = ref.o.y;
-		m[2][0] = ref.i.z;
-		m[2][1] = ref.j.z;
-		m[2][2] = ref.k.z;
-		m[2][3] = ref.o.z;
-		m[3][3] = 1;
-
-		return m * vec;
 	}
 }

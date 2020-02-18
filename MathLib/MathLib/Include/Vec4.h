@@ -306,7 +306,7 @@ namespace Math
 	 * @param vector Vector to add to the stream
 	 * @return std::ostream& Reference to the stream
 	 */
-	std::ostream&	operator<<(std::ostream& os, const QXvec4& vect) const noexcept;
+	std::ostream&	operator<<(std::ostream& os, const QXvec4& vect) noexcept;
 
 	/**
 	 * @brief Operator to add a print of vector in string
@@ -315,7 +315,7 @@ namespace Math
 	 * @param vector Vector to add to the stream
 	 * @return QXstring New string
 	 */
-	std::string		operator+(std::string& str, const QXvec4& vect) const noexcept;
+	QXstring		operator+(std::string& str, const QXvec4& vect) noexcept;
 }
 
 #endif //_VEC4_H_

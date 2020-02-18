@@ -7,6 +7,8 @@
 
 namespace Math
 {
+	struct QXref3;
+
 	/**
 	 * @brief Vector3 structure
 	 * 
@@ -276,6 +278,9 @@ namespace Math
 		 */
 		QXfloat			Length() const noexcept;
 
+		QXvec3	WorldToLocal(const QXref3& ref) const noexcept;
+		QXvec3	LocalToWorld(const QXref3& ref) const noexcept;
+
 		/**
 		 * @brief Normalize vector
 		 * 
@@ -288,7 +293,7 @@ namespace Math
 		 * 
 		 * @return QXvec3 Vector normalized
 		 */
-		QXvec3			Normalized() const noexcept;
+		const QXvec3			Normalize() const noexcept;
 
 		/**
 		 * @brief Multiply vectors values by constant

@@ -18,7 +18,7 @@ namespace Math
 
 #pragma region Constructors
 
-	QXvec4::QXvec4(const QXfloat& posX = 0.f, const QXfloat& posY = 0.f, const QXfloat& posZ = 0.f, const QXfloat& posW = 0.f):
+	QXvec4::QXvec4(const QXfloat& posX, const QXfloat& posY, const QXfloat& posZ, const QXfloat& posW) noexcept :
 		x (posX),
 		y (posY),
 		z (posZ),
@@ -26,21 +26,21 @@ namespace Math
 	{
 	}
 
-	QXvec4::QXvec4(const QXvec3& vec, QXfloat posW):
+	QXvec4::QXvec4(const QXvec3& vec, QXfloat posW) noexcept :
 		x { vec.x },
 		y { vec.y },
 		z { vec.z },
 		w { posW }
 	{}
 
-	QXvec4::QXvec4(const QXvec4& vec) :
+	QXvec4::QXvec4(const QXvec4& vec)  noexcept :
 		x{ vec.x },
 		y{ vec.y },
 		z{ vec.z },
 		w{ vec.w }
 	{}
 
-	QXvec4::QXvec4(QXvec4&& vec) :
+	QXvec4::QXvec4(QXvec4&& vec)  noexcept :
 		x{ std::move(vec.x) },
 		y{ std::move(vec.y) },
 		z{ std::move(vec.z) },
@@ -51,7 +51,7 @@ namespace Math
 
 #pragma region Operators
 
-	QXvec4& QXvec4::operator=(const QXvec4& vect)
+	QXvec4& QXvec4::operator=(const QXvec4& vect) noexcept
 	{
 		x = vect.x;
 		y = vect.y;
@@ -61,24 +61,28 @@ namespace Math
 		return *this;
 	}
 
-	std::ostream&	operator<<(std::ostream& os, const QXvec4& vect)
+	QXvec4&	QXvec4::operator=(QXvec4&& vec)  noexcept
 	{
-		os << vect.x << ", " << vect.y << ", " << vect.z <<
-								", " << vect.w << std::endl;
+		x = std::move(vec.x);
+		y = std::move(vec.y);
+		z = std::move(vec.z);
+		w = std::move(vec.w);
 
-		return os;
+		return *this;
 	}
 
-	std::string	operator+(std::string& str, const QXvec4& vect)
+	
+	QXvec4&	QXvec4::operator+=(const QXvec4& vect) noexcept
 	{
-		std::string	res = str + "x : " + std::to_string(vect.x) +
-		" , y : " + std::to_string(vect.y) + " , z : " + std::to_string(vect.z) +
-		" , w : " + std::to_string(vect.w);
+		x += vect.x;
+		y += vect.y;
+	    z += vect.z;
+		w += vect.w;
 
-		return res;
+		return *this;
 	}
 
-	QXvec4	QXvec4::operator+(const QXvec4& vect)
+	QXvec4	QXvec4::operator+(const QXvec4& vect) const noexcept
 	{
 		QXvec4	res;
 
@@ -90,7 +94,17 @@ namespace Math
 		return res;
 	}
 
-	QXvec4	QXvec4::operator-(const QXvec4& vect)
+	QXvec4&	QXvec4::operator-=(const QXvec4& vect) noexcept
+	{
+		x -= vect.x;
+		y -= vect.y;
+	    z -= vect.z;
+		w -= vect.w;
+
+		return *this;
+	}
+
+	QXvec4	QXvec4::operator-(const QXvec4& vect) const noexcept
 	{
 		QXvec4	res;
 
@@ -102,7 +116,7 @@ namespace Math
 		return res;
 	}
 
-	QXvec4	QXvec4::operator-()
+	QXvec4	QXvec4::operator-() const noexcept
 	{
 		QXvec4	res;
 
@@ -114,7 +128,17 @@ namespace Math
 		return res;
 	}
 
-	QXvec4	QXvec4::operator*(QXfloat nb)
+	QXvec4&	QXvec4::operator*=(QXfloat nb) noexcept
+	{
+		x *= nb;
+		y *= nb;
+	    z *= nb;
+		w *= nb;
+
+		return *this;
+	}
+
+	QXvec4	QXvec4::operator*(QXfloat nb) const noexcept
 	{
 		QXvec4	res;
 
@@ -126,19 +150,17 @@ namespace Math
 		return res;
 	}
 
-	QXvec4	operator*(QXfloat nb, const QXvec4& vect)
+	QXvec4&	QXvec4::operator/=(QXfloat nb) noexcept
 	{
-		QXvec4	res;
+		x /= nb;
+		y /= nb;
+	    z /= nb;
+		w /= nb;
 
-		res.x = vect.x * nb;
-		res.y = vect.y * nb;
-	    res.z = vect.z * nb;
-		res.w = vect.w * nb;
-
-		return res;
+		return *this;
 	}
 
-	QXvec4	QXvec4::operator/(QXfloat nb)
+	QXvec4	QXvec4::operator/(QXfloat nb) const noexcept
 	{
 		QXvec4	res;
 
@@ -150,71 +172,98 @@ namespace Math
 		return res;
 	}
 
-	QXvec4	operator/(QXfloat nb, const QXvec4& vect)
+	QXbool	QXvec4::operator==(const QXvec4& vect) const noexcept
 	{
-		QXvec4	res;
-
-		res.x = nb / vect.x;
-		res.y = nb / vect.y;
-		res.z = nb / vect.z;
-		res.w = nb / vect.w;
-
-		return res;
+		return SqrLength() == vect.SqrLength();
 	}
 
-	QXvec4&	QXvec4::operator/=(QXfloat nb)
+	QXbool	QXvec4::operator!=(const QXvec4& vect) const noexcept
 	{
-		x /= nb;
-		y /= nb;
-	    z /= nb;
-		w /= nb;
-
-		return *this;
+		return SqrLength() != vect.SqrLength();
 	}
 
-	QXvec4&	QXvec4::operator*=(QXfloat nb)
+	QXbool	QXvec4::operator<(const QXvec4& vect) const noexcept
 	{
-		x *= nb;
-		y *= nb;
-	    z *= nb;
-		w *= nb;
-
-		return *this;
+		return SqrLength() < vect.SqrLength();
 	}
 
-	QXvec4&	QXvec4::operator+=(const QXvec4& vect)
+	QXbool	QXvec4::operator<=(const QXvec4& vect) const noexcept
 	{
-		x += vect.x;
-		y += vect.y;
-	    z += vect.z;
-		w += vect.w;
-
-		return *this;
+		return SqrLength() <= vect.SqrLength();
 	}
 
-	QXvec4&	QXvec4::operator-=(const QXvec4& vect)
+	QXbool	QXvec4::operator>(const QXvec4& vect) const noexcept
 	{
-		x -= vect.x;
-		y -= vect.y;
-	    z -= vect.z;
-		w -= vect.w;
+		return SqrLength() > vect.SqrLength();
+	}
 
-		return *this;
+	QXbool	QXvec4::operator>=(const QXvec4& vect) const noexcept
+	{
+		return SqrLength() >= vect.SqrLength();
+	}
+
+	QXfloat& QXvec4::operator[](QXuint idx) noexcept
+	{
+		return e[idx];
+	}
+
+	const QXfloat QXvec4::operator[](QXuint idx) const noexcept
+	{
+		return e[idx];
 	}
 
 #pragma endregion
 
-	QXfloat	QXvec4::Length() const
+#pragma region Functions
+
+	void 	QXvec4::Homogenize() noexcept
+	{
+		if (w == 0)
+			return;
+
+		x /= w;
+		y /= w;
+		z /= w;
+	}
+
+	QXfloat	QXvec4::Length() const noexcept
 	{
 		return sqrt(x * x + y * y + z * z + w * w);
 	}
 
-	QXfloat	QXvec4::SqrLength() const
+	QXvec4	QXvec4::Normalize() const noexcept
 	{
-		return x * x + y * y + z * z + w * w;
+		QXvec4	res;
+
+		QXfloat size{ Length() };
+
+	    if (size == 0)
+	    	return res;
+
+		res.x = x / size;
+		res.y = y / size;
+	    res.z = z / size;
+		res.w = w / size;
+
+		return res;
 	}
 
-	QXvec4	QXvec4::Scale(QXfloat nb) const
+	QXvec4&	QXvec4::Normalize() noexcept
+	{
+		QXfloat	size{ Length() };
+
+		if (size == 0)
+	    	return *this;
+
+		x = x / size;
+		y = y / size;
+	    z = z / size;
+		w = w / size;
+
+		return *this;
+	}
+
+	QXvec4	QXvec4::Scale(QXfloat nb) const noexcept
 	{
 		QXvec4	res;
 
@@ -226,7 +275,7 @@ namespace Math
 		return res;
 	}
 
-	QXvec4& QXvec4::Scale(QXfloat nb)
+	QXvec4& QXvec4::Scale(QXfloat nb) noexcept
 	{
 		x = x * nb;
 		y = y * nb;
@@ -236,99 +285,35 @@ namespace Math
 		return *this;
 	}
 
-	QXvec4	QXvec4::Normalize() const
+	QXfloat	QXvec4::SqrLength() const noexcept
 	{
-		QXvec4	res;
-
-	    QXfloat size = Length();
-
-	    if (size == 0)
-		{
-	    	return res;
-	    }
-
-		res.x = x / size;
-		res.y = y / size;
-	    res.z = z / size;
-		res.w = w / size;
-
-		return res;
+		return x * x + y * y + z * z + w * w;
 	}
 
-	QXvec4&	QXvec4::Normalize()
+	QXstring	QXvec4::ToString() const noexcept
 	{
-		QXfloat	size = Length();
-
-		if (size == 0)
-		{
-	    	return *this;
-		}
-
-		x = x / size;
-		y = y / size;
-	    z = z / size;
-		w = w / size;
-
-		return *this;
-	}
-
-	void 	QXvec4::Homogenize()
-	{
-		if (w == 0)
-			return;
-
-		x /= w;
-		y /= w;
-		z /= w;
-	}
-
-	QXbool	QXvec4::operator==(const QXvec4& vect)
-	{
-		if (SqrLength() == vect.SqrLength())
-			return true;
-		return false;
-	}
-
-	QXbool	QXvec4::operator!=(const QXvec4& vect)
-	{
-		if (SqrLength() != vect.SqrLength())
-			return true;
-		return false;
-	}
-
-	QXbool	QXvec4::operator<(const QXvec4& vect)
-	{
-		if (SqrLength() < vect.SqrLength())
-			return true;
-		return false;
-	}
-
-	QXbool	QXvec4::operator<=(const QXvec4& vect)
-	{
-		if (SqrLength() <= vect.SqrLength())
-			return true;
-		return false;
-	}
-
-	QXbool	QXvec4::operator>(const QXvec4& vect)
-	{
-		if (SqrLength() > vect.SqrLength())
-			return true;
-		return false;
-	}
-
-	QXbool	QXvec4::operator>=(const QXvec4& vect)
-	{
-		if (SqrLength() >= vect.SqrLength())
-			return true;
-		return false;
-	}
-
-	std::string	QXvec4::ToString() const
-	{
-		std::string vec = std::to_string(x) + ", " + std::to_string(y) + ", " +
+		QXstring vec = std::to_string(x) + ", " + std::to_string(y) + ", " +
 		std::to_string(z) + ", " + std::to_string(w) + "\n";
 
 		return vec;
+	}
+
+#pragma endregion
+	
+	std::ostream&	operator<<(std::ostream& os, const QXvec4& vect) noexcept
+	{
+		os << vect.x << ", " << vect.y << ", " << vect.z <<
+								", " << vect.w << std::endl;
+
+		return os;
+	}
+
+	QXstring	operator+(std::string& str, const QXvec4& vect) noexcept
+	{
+		QXstring	res = str + "x : " + std::to_string(vect.x) +
+		" , y : " + std::to_string(vect.y) + " , z : " + std::to_string(vect.z) +
+		" , w : " + std::to_string(vect.w);
+
+		return res;
 	}
 }
