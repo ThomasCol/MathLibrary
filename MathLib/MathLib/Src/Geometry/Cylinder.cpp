@@ -3,7 +3,7 @@
 namespace Math::Geometry
 {
 	#pragma region Constructors
-	QXcylinder::QXcylinder(const Segment& segment, const QXfloat& radius) noexcept:
+	QXcylinder::QXcylinder(const QXsegment& segment, const QXfloat& radius) noexcept:
 		_segment(segment),
 		_radius{radius}
 	{}

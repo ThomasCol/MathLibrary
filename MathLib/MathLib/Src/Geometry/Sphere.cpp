@@ -2,25 +2,25 @@
 
 namespace Math::Geometry
 {
-	Sphere::Sphere(const QXvec3& position, const QXfloat& radius):
-		m_position(position),
-		m_radius{radius}
+	QXsphere::QXsphere(const QXvec3& position, const QXfloat& radius):
+		_position{position},
+		_radius{radius}
 	{}
 
-	Sphere::Sphere(const Sphere& sphere):
-		m_position(sphere.m_position),
-		m_radius{sphere.m_radius}
+	QXsphere::QXsphere(const QXsphere& sphere):
+		_position{sphere._position},
+		_radius{sphere._radius}
 	{}
 
-	Sphere::Sphere(Sphere&& sphere):
-		m_position(std::move(sphere.m_position)),
-		m_radius{std::move(sphere.m_radius)}
+	QXsphere::QXsphere(QXsphere&& sphere):
+		_position{std::move(sphere._position)},
+		_radius{std::move(sphere._radius)}
 	{}
 
-	Sphere& Sphere::operator=(const Sphere& sphere)
+	QXsphere& QXsphere::operator=(const QXsphere& sphere)
 	{
-		m_position = sphere.m_position;
-		m_radius = sphere.m_radius;
+		_position = sphere._position;
+		_radius = sphere._radius;
 
 		return *this;
 	}

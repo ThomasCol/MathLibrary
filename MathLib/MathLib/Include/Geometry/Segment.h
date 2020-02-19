@@ -5,25 +5,96 @@
 
 namespace Math::Geometry
 {
-	class Segment
+	class QXsegment
 	{
 	private:
-		QXvec3	m_a;
-		QXvec3	m_b;
+		#pragma region Attributes
+		QXvec3	_a;
+		QXvec3	_b;
+		#pragma endregion Attributes
 
 	public:
-		Segment(const QXvec3& a = 0.f, const QXvec3 & b = 1.f);
-		Segment(const Segment& seg);
-		Segment(Segment&& seg) noexcept;
-		~Segment() = default;
+		#pragma region Constructors/Destructor
+		/**
+		 * @brief Construct a new QXsegment object
+		 * 
+		 * @param a first point
+		 * @param b second point
+		 */
+		QXsegment(const QXvec3& a = 0.f, const QXvec3 & b = 1.f);
 
-		inline QXvec3	A() const {return m_a;}
-		inline QXvec3	B() const {return m_b;}
-		inline QXvec3	AB() const {return m_b - m_a;}
-		inline QXvec3	BA() const {return m_a - m_b;}
-		inline QXvec3	GetPoint(const QXfloat& t) const {return m_a + AB() * t;}
+		/**
+		 * @brief Construct a new QXsegment object
+		 * 
+		 * @param seg QXsegment to copy
+		 */
+		QXsegment(const QXsegment& seg);
 
-		Segment&		operator=(const Segment& seg);
+		/**
+		 * @brief Construct a new QXsegment object
+		 * 
+		 * @param seg QXsegment to move
+		 */
+		QXsegment(QXsegment&& seg) noexcept;
+
+		/**
+		 * @brief Destroy the QXsegment object
+		 * 
+		 */
+		~QXsegment() = default;
+		#pragma endregion Constructors/Destructor
+
+		#pragma region Methods
+		#pragma region Accessors
+
+		/**
+		 * @brief Get the Point A object
+		 * 
+		 * @return QXvec3 
+		 */
+		inline QXvec3	GetPointA() const {return _a;}
+
+		/**
+		 * @brief Get the Point B object
+		 * 
+		 * @return QXvec3 
+		 */
+		inline QXvec3	GetPointB() const {return _b;}
+
+		/**
+		 * @brief Get the Segment AB object
+		 * 
+		 * @return QXvec3 
+		 */
+		inline QXvec3	GetSegmentAB() const {return _b - _a;}
+
+		/**
+		 * @brief Get the Segment BA object
+		 * 
+		 * @return QXvec3 
+		 */
+		inline QXvec3	GetSegmentBA() const {return _a - _b;}
+
+		/**
+		 * @brief Get the Point object
+		 * 
+		 * @param t QXfloat ratio
+		 * @return QXvec3 point on the segment
+		 */
+		inline QXvec3	GetPoint(const QXfloat& t) const {return _a + AB() * t;}
+		#pragma endregion Accessors
+
+		#pragma region Operator
+
+		/**
+		 * @brief Operator = by copy
+		 * 
+		 * @param seg QXsegment to copy
+		 * @return QXsegment& 
+		 */
+		QXsegment&		operator=(const QXsegment& seg);
+		#pragma endregion Operator
+		#pragma endregion Methods
 	};
 }
 

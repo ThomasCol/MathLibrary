@@ -6,22 +6,89 @@
 
 namespace Math::Geometry
 {
-	class Sphere
+	/**
+	 * @brief QXsphere class
+	 * 
+	 */
+	class QXsphere
 	{
 	private:
-		QXvec3	m_position;
-		QXfloat	m_radius;
+		#pragma region Attributes
+		QXvec3	_position;
+		QXfloat	_radius;
+		#pragma endregion Attributes
 
 	public:
-		Sphere(const QXvec3& position = QXvec3(0), const QXfloat& radius = 1.f);
-		Sphere(const Sphere& sphere);
-		Sphere(Sphere&& sphere);
-		~Sphere() = default;
+		#pragma region Constructors/Destructor
+		/**
+		 * @brief Construct a QXsphere object
+		 * 
+		 * @param position QXvec3 for the center
+		 * @param radius QXfloat for the radius
+		 */
+		QXsphere(const QXvec3& position = QXvec3(0), const QXfloat& radius = 1.f);
+		/**
+		 * @brief Construct a QXsphere object
+		 * 
+		 * @param sphere QXsphere to copy
+		 */
+		QXsphere(const QXsphere& sphere);
+		/**
+		 * @brief Construct a QXsphere object
+		 * 
+		 * @param sphere QXsphere to move
+		 */
+		QXsphere(QXsphere&& sphere);
+		/**
+		 * @brief Destroy a QXsphere object
+		 * 
+		 */
+		~QXsphere() = default;
+		#pragma endregion Constructors/Destructor
 
-		inline QXvec3	Position() const {return m_position;}
-		inline QXfloat	Radius() const {return m_radius;}
+		#pragma region Methods
+		#pragma region Accessors
+		
+		/**
+		 * @brief Get Position
+		 * 
+		 * @return QXvec3 position of the center of the sphere
+		 */
+		inline QXvec3	GetPosition() const {return _position;}
 
-		Sphere&			operator=(const Sphere& sphere);
+		/**
+		 * @brief Set Position
+		 * 
+		 * @return Reference QXvec3 position of the center of the sphere
+		 */
+		inline QXvec3&	SetPosition() {return _position;}
+
+		/**
+		 * @brief Get Radius
+		 * 
+		 * @return QXfloat radius of the sphere
+		 */
+		inline QXfloat	GetRadius() const {return _radius;}
+
+		/**
+		 * @brief Set Radius
+		 * 
+		 * @return Reference QXfloat radius of the sphere
+		 */
+		inline QXfloat&	SetRadius() {return _radius;}
+		#pragma endregion Accessors
+
+		#pragma region Operator
+		
+		/**
+		 * @brief Operator = by move
+		 * 
+		 * @param sphere QXsphere to move
+		 * @return QXsphere& Reference of current sphere
+		 */
+		QXsphere&			operator=(const QXsphere& sphere);
+		#pragma endregion Operator
+		#pragma endregion Methods
 	};
 }
 

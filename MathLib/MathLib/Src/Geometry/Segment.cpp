@@ -2,25 +2,25 @@
 
 namespace Math::Geometry
 {
-	Segment::Segment(const QXvec3& a, const QXvec3& b):
-		m_a(a),
-		m_b(b)
+	QXsegment::QXsegment(const QXvec3& a, const QXvec3& b) :
+		_a{ a },
+		_b{ b }
 	{}
 
-	Segment::Segment(const Segment& seg):
-		m_a(seg.m_a),
-		m_b(seg.m_b)
+	QXsegment::QXsegment(const QXsegment& seg):
+		_a{ seg._a },
+		_b{ seg._b }
 	{}
 
-	Segment::Segment(Segment&& seg) noexcept:
-		m_a(std::move(seg.m_a)),
-		m_b(std::move(seg.m_b))
+	QXsegment::QXsegment(QXsegment&& seg) noexcept:
+		_a{ std::move(seg._a) },
+		_b{ std::move(seg._b) }
 	{}
 
-	Segment& Segment::operator=(const Segment& seg)
+	QXsegment& QXsegment::operator=(const QXsegment& seg)
 	{
-		m_a = seg.m_a;
-		m_b = seg.m_b;
+		_a = seg._a;
+		_b = seg._b;
 
 		return *this;
 	}

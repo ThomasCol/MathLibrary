@@ -14,7 +14,7 @@ namespace Math::Geometry
 
 	#pragma region Attributes
 
-		Segment	_segment;
+		QXsegment	_segment;
 		QXfloat	_radius;
 
 	#pragma endregion Attributes
@@ -29,7 +29,7 @@ namespace Math::Geometry
 		 * @param segment Value for _segment parameter Segment() by default
 		 * @param radius Value for _radius parameter 1 by default
 		 */
-		QXcylinder(const Segment& segment = Segment(), const QXfloat& radius = 1.f) noexcept;
+		QXcylinder(const QXsegment& segment = QXsegment(), const QXfloat& radius = 1.f) noexcept;
 
 		/**
 		 * @brief Construct a new QXcylinder object
@@ -84,14 +84,14 @@ namespace Math::Geometry
 		 * 
 		 * @return Segment& 
 		 */
-		inline Segment&	SetSegment() { return _segment; }
+		inline QXsegment&	SetSegment() { return _segment; }
 
 		/**
 		 * @brief Get the Segment object
 		 * 
 		 * @return Segment 
 		 */
-		inline Segment	GetSegment() const noexcept { return _segment; }
+		inline QXsegment	GetSegment() const noexcept { return _segment; }
 
 		/**
 		 * @brief Set the Radius object

@@ -9,8 +9,8 @@ namespace Math::Geometry
 	class QXquad
 	{
 	private:
-
 		#pragma region Attributes
+
 		QXref3 		_ref;
 		QXvec2		_halfSizes;
 
