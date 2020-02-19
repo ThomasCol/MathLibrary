@@ -1,8 +1,8 @@
-#include "Geometry/Box.h"
+#include "Box.h"
 
 namespace Math::Geometry
 {
-	Box::Box(const Vec3& position, const float& x, const float& y, const float& z):
+	Box::Box(const QXvec3& position, const QXfloat& x, const QXfloat& y, const QXfloat& z):
 		m_position(position),
 		m_x{x},
 		m_y{y},

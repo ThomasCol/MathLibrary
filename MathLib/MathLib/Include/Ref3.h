@@ -1,9 +1,7 @@
 #ifndef _REF3_H_
 #define _REF3_H_
 
-#include "Vec3.h"
 #include "Quaternion.h"
-#include "Type.h"
 
 namespace Math
 {

@@ -2,7 +2,7 @@
 
 namespace Math::Geometry
 {
-	Segment::Segment(const Vec3& a, const Vec3& b):
+	Segment::Segment(const QXvec3& a, const QXvec3& b):
 		m_a(a),
 		m_b(b)
 	{}

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Vec3.h"
 #include "Mat.h"
 #include "Mat4.h"
 
@@ -103,7 +102,7 @@ namespace Math
 		 * @param vec Vector to multiply
 		 * @return QXvec3& Reference of the new vector
 		 */
-		QXvec3& 		operator*(const QXvec3& vec) noexcept;
+		QXvec3 		operator*(const QXvec3& vec) const noexcept;
 
 		/**
 		 * @brief Operator + addition

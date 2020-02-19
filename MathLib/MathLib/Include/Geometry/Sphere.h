@@ -9,17 +9,17 @@ namespace Math::Geometry
 	class Sphere
 	{
 	private:
-		Vec3	m_position;
+		QXvec3	m_position;
 		float	m_radius;
 
 	public:
-		Sphere(const Vec3& position = Vec3(0), const float& radius = 1.f);
+		Sphere(const QXvec3& position = QXvec3(0), const QXfloat& radius = 1.f);
 		Sphere(const Sphere& sphere);
 		Sphere(Sphere&& sphere);
 		~Sphere() = default;
 
-		inline Vec3		Position() const {return m_position;}
-		inline float	Radius() const {return m_radius;}
+		inline QXvec3	Position() const {return m_position;}
+		inline QXfloat	Radius() const {return m_radius;}
 
 		Sphere&			operator=(const Sphere& sphere);
 	};

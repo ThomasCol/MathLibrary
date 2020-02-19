@@ -6,14 +6,14 @@
 
 namespace Math::Geometry
 {
-	OrientedBox::OrientedBox(const Box& box, const Vec3& i, const Vec3& j, const Vec3& k):
+	OrientedBox::OrientedBox(const Box& box, const QXvec3& i, const QXvec3& j, const QXvec3& k):
 		m_box(box),
 		m_i(i),
 		m_j(j),
 		m_k(k)
 	{}
 
-	OrientedBox::OrientedBox(const OrientedBox& box, const float& offsetExtention):
+	OrientedBox::OrientedBox(const OrientedBox& box, const QXfloat& offsetExtention):
 		m_box(box.m_box),
 		m_i(box.m_i),
 		m_j(box.m_j),
@@ -31,21 +31,21 @@ namespace Math::Geometry
 		m_k(std::move(box.m_k))
 	{}
 
-	float max(const float& f1, const float& f2) { return f1 > f2 ? f1 : f2;}
+	QXfloat max(const QXfloat& f1, const QXfloat& f2) { return f1 > f2 ? f1 : f2;}
 
 	Box OrientedBox::AABB() const
 	{
-		Vec3 vx(m_i * m_box.X());
-		Vec3 vy(m_j * m_box.Y());
-		Vec3 vz(m_k * m_box.Z());
-		Vec3 point(vx + vy + vz);
-		float x{ std::numeric_limits<float>::min() };
-		float y{ std::numeric_limits<float>::min() };
-		float z{ std::numeric_limits<float>::min() };
+		QXvec3 vx(m_i * m_box.X());
+		QXvec3 vy(m_j * m_box.Y());
+		QXvec3 vz(m_k * m_box.Z());
+		QXvec3 point(vx + vy + vz);
+		QXfloat x{ std::numeric_limits<QXfloat>::min() };
+		QXfloat y{ std::numeric_limits<QXfloat>::min() };
+		QXfloat z{ std::numeric_limits<QXfloat>::min() };
 
-		Vec3* array = Points();
-		
-		for (int i = 0; i < 8; i++)
+		QXvec3* array = Points();
+
+		for (QXint i = 0; i < 8; i++)
 		{
 			x = max(x, m_box.Position().x - array[i].x);
 			y = max(y, m_box.Position().y - array[i].y);
@@ -57,13 +57,13 @@ namespace Math::Geometry
 		return Box(m_box.Position(), x, y, z);
 	}
 
-	Vec3* OrientedBox::Points() const
+	QXvec3* OrientedBox::Points() const
 	{
-		Vec3* array = new Vec3[8];
+		QXvec3* array = new QXvec3[8];
 
-		Vec3 vx(m_i * m_box.X());
-		Vec3 vy(m_j * m_box.Y());
-		Vec3 vz(m_k * m_box.Z());
+		QXvec3 vx(m_i * m_box.X());
+		QXvec3 vy(m_j * m_box.Y());
+		QXvec3 vz(m_k * m_box.Z());
 
 		array[0] = m_box.Position() + vx + vy + vz;
 		array[1] = m_box.Position() + vx + vy - vz;
@@ -107,9 +107,9 @@ namespace Math::Geometry
 		return Plane(m_i * (-1), m_box.Position() - m_i * m_box.X());
 	}
 
-	int OrientedBox::GetNumberPlaneGoodSide(const Vec3& point) const
+	QXint OrientedBox::GetNumberPlaneGoodSide(const QXvec3& point) const
 	{
-		int counter{0};
+		QXint counter{ 0 };
 
 		if (TopPlane().GetSide(point))
 			counter++;
@@ -127,13 +127,13 @@ namespace Math::Geometry
 		return counter;
 	}
 
-	Segment OrientedBox::GetNearestSegment(const Vec3& point) const
+	Segment OrientedBox::GetNearestSegment(const QXvec3& point) const
 	{
-		Vec3* array = Points();
-		Vec3 p1(FLT_MAX);
-		Vec3 p2(FLT_MAX);
+		QXvec3* array = Points();
+		QXvec3 p1(FLT_MAX);
+		QXvec3 p2(FLT_MAX);
 
-		for (int i = 0; i < 8; i++)
+		for (QXint i = 0; i < 8; i++)
 		{
 			if (point.Nearest(array[i], p1))
 			{
@@ -144,7 +144,7 @@ namespace Math::Geometry
 			{
 				p2 = array[i];
 			}
-			
+
 		}
 
 		delete[] array;
@@ -152,12 +152,12 @@ namespace Math::Geometry
 		return Segment(p1, p2);
 	}
 
-	Vec3 OrientedBox::GetNearestPoint(const Vec3& point) const
+	QXvec3 OrientedBox::GetNearestPoint(const QXvec3& point) const
 	{
-		Vec3* array = Points();
-		Vec3 p1(array[0]);
+		QXvec3* array = Points();
+		QXvec3 p1(array[0]);
 
-		for (int i = 1; i < 6; i++)
+		for (QXint i = 1; i < 6; i++)
 		{
 			if (point.Nearest(array[i], p1))
 			{
@@ -170,25 +170,25 @@ namespace Math::Geometry
 		return p1;
 	}
 
-	Segment* OrientedBox::GetSegmentsWithThisPoint(const Vec3& point) const
+	Segment* OrientedBox::GetSegmentsWithThisPoint(const QXvec3& point) const
 	{
 		Segment* array = new Segment[3];
 
-		Vec3 localPoint;
+		QXvec3 localPoint;
 
 		localPoint.x = (point - m_box.Position()).Dot(m_i);
 		localPoint.y = (point - m_box.Position()).Dot(m_j);
 		localPoint.z = (point - m_box.Position()).Dot(m_k);
 
-		Vec3 p1(m_box.Position() + m_i * localPoint.x
+		QXvec3 p1(m_box.Position() + m_i * localPoint.x
 								 + m_j * localPoint.y
 								 - m_k * localPoint.z);
 
-		Vec3 p2(m_box.Position() + m_i * localPoint.x
+		QXvec3 p2(m_box.Position() + m_i * localPoint.x
 								 - m_j * localPoint.y
 								 + m_k * localPoint.z);
 		
-		Vec3 p3(m_box.Position() - m_i * localPoint.x
+		QXvec3 p3(m_box.Position() - m_i * localPoint.x
 								 + m_j * localPoint.y
 								 + m_k * localPoint.z);
 

@@ -65,7 +65,7 @@ namespace Math
 		return res;
 	}
 
-	QXvec3& QXquaternion::operator*(const QXvec3& vec) noexcept
+	QXvec3 QXquaternion::operator*(const QXvec3& vec) const noexcept
 	{
 		QXvec3 res{ vec };
 

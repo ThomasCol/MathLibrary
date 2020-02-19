@@ -3,7 +3,6 @@
 
 #include "Vec3.h"
 #include "Vec4.h"
-#include "Ref3.h"
 
 #include <string>
 

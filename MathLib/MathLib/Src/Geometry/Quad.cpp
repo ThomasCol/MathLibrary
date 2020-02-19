@@ -2,8 +2,8 @@
 
 namespace Math::Geometry
 {
-	Quad::Quad(const Vec3& position, const Vec3& i, const Vec3& j, const Vec3& k,
-			const float& x, const float& y):
+	Quad::Quad(const QXvec3& position, const QXvec3& i, const QXvec3& j, const QXvec3& k,
+			const QXfloat& x, const QXfloat& y):
 		m_position(position),
 		m_i(i),
 		m_j(j),

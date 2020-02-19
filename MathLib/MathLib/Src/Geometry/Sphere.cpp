@@ -2,7 +2,7 @@
 
 namespace Math::Geometry
 {
-	Sphere::Sphere(const Vec3& position, const float& radius):
+	Sphere::Sphere(const QXvec3& position, const QXfloat& radius):
 		m_position(position),
 		m_radius{radius}
 	{}

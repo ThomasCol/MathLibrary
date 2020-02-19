@@ -5,6 +5,7 @@
 
 #include "MathDefines.h"
 #include "Mat4.h"
+#include "Ref3.h"
 
 namespace Math
 {

@@ -2,7 +2,7 @@
 
 namespace Math::Geometry
 {
-	Cylinder::Cylinder(const Segment& segment, const float& radius):
+	Cylinder::Cylinder(const Segment& segment, const QXfloat& radius):
 		m_segment(segment),
 		m_radius{radius}
 	{}
