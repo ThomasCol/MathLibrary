@@ -274,7 +274,7 @@ namespace Math
 		return os;
 	}
 
-	std::string	operator+(std::string& str, const QXvec2& vect) noexcept
+	QXstring operator+(QXstring& str, const QXvec2& vect) noexcept
 	{
 		std::string	res = str + "x : " + std::to_string(vect.x) +
 			" , y : " + std::to_string(vect.y);

@@ -26,6 +26,83 @@ namespace Math
 
 	#pragma endregion Constructors
 
+#pragma region Operator Functions
+
+	QXquaternion& QXquaternion::operator=(const QXquaternion& q) noexcept
+	{
+		w = q.w;
+		v = q.v;
+
+		return *this;
+	}
+
+	QXquaternion& QXquaternion::operator=(QXquaternion&& q) noexcept
+	{
+		w = std::move(q.w);
+		v = std::move(q.v);
+
+		return *this;
+	}
+
+	QXquaternion& QXquaternion::operator*(QXfloat s) const noexcept
+	{
+		QXquaternion res{ QXquaternion() };
+
+		res.w = s * w;
+		res.v = v * s;
+		return res;
+	}
+
+	QXquaternion& QXquaternion::operator*(const QXquaternion& q) const noexcept
+	{
+		QXquaternion res{ QXquaternion() };
+
+		res.w = w * q.w - v.x * q.v.x - v.y * q.v.y - v.z * q.v.z;
+		res.v.x = w * q.v.x + v.x * q.w + v.y * q.v.z - v.z * q.v.y;
+		res.v.y = w * q.v.y - v.x * q.v.z + v.y * q.w + v.z * q.v.x;
+		res.v.z = w * q.v.z + v.x * q.v.y - v.y * q.v.x + v.z * q.w;
+
+		return res;
+	}
+
+	QXvec3& QXquaternion::operator*(const QXvec3& vec) noexcept
+	{
+		QXvec3 res{ vec };
+
+		QXmat4 m{ ConvertQuaternionToMat() };
+		return m * res;
+	}
+
+	QXquaternion& QXquaternion::operator+(const QXquaternion& q) const noexcept
+	{
+		QXquaternion res{ QXquaternion() };
+
+		res.w = w + q.w;
+		res.v = v + q.v;
+		return res;
+	}
+
+	QXquaternion& QXquaternion::operator-(const QXquaternion& q) const noexcept
+	{
+		QXquaternion res{ QXquaternion() };
+
+		res.w = w - q.w;
+		res.v = v - q.v;
+		return res;
+	}
+
+	QXfloat& QXquaternion::operator[](const QXuint idx) noexcept
+	{
+		return e[idx];
+	}
+
+	QXfloat QXquaternion::operator[](const QXuint idx) const noexcept
+	{
+		return e[idx];
+	}
+
+#pragma endregion Operator Functions
+
 	#pragma region Functions
 
 	QXquaternion& QXquaternion::AddQuaternion(const QXquaternion& q) const noexcept
@@ -142,7 +219,7 @@ namespace Math
 		QXfloat theta{ acos(DotProductQuaternion(q)) };
 
 		if (theta < 0.f)
-			* this = *this * -1.f;
+			*this = *this * -1.f;
 
 		return ((*this * sin((1 - t) * theta) + q * sin(t * theta)) * (1 / sin(theta))).NormalizeQuaternion();
 	}
@@ -163,9 +240,7 @@ namespace Math
 		return quat;
 	}
 
-	#pragma endregion Functions
-
-	#pragma region Static Functions
+#pragma region Static Functions
 
 	QXmat4 QXquaternion::ConvertQuaternionToMat(const QXquaternion& q) noexcept
 	{
@@ -197,14 +272,14 @@ namespace Math
 		return QXquaternion(qw, QXvec3(qx, qy, qz));
 	}
 
-	QXquaternion QXquaternion::ConvertEulerAngleToQuaternion(QXvec3& euler) noexcept
+	QXquaternion QXquaternion::ConvertEulerAngleToQuaternion(const QXvec3& euler) noexcept
 	{
-		QXfloat c1 = cos(euler.x / 2);
-		QXfloat c2 = cos(euler.y / 2);
-		QXfloat c3 = cos(euler.z / 2);
-		QXfloat s1 = sin(euler.x / 2);
-		QXfloat s2 = sin(euler.y / 2);
-		QXfloat s3 = sin(euler.z / 2);
+		QXfloat c1{ cos(euler.x / 2) };
+		QXfloat c2{ cos(euler.y / 2) };
+		QXfloat c3{ cos(euler.z / 2) };
+		QXfloat s1{ sin(euler.x / 2) };
+		QXfloat s2{ sin(euler.y / 2) };
+		QXfloat s3{ sin(euler.z / 2) };
 
 		QXfloat qw = ((c1 * c2 * c3) - (s1 * s2 * s3));
 		QXfloat qx = ((s1 * s2 * c3) + (c1 * c2 * s3));
@@ -224,56 +299,7 @@ namespace Math
 		return ((q1 * sin((1 - t) * theta) + q2 * sin(t * theta)) * (1 / sin(theta))).NormalizeQuaternion();
 	}
 
-	#pragma endregion Static Functions
+#pragma endregion Static Functions
 
-	#pragma region Operator Functions
-
-	QXquaternion& QXquaternion::operator=(const QXquaternion& q) noexcept
-	{
-		w = q.w;
-		v = q.v;
-
-		return *this;
-	}
-
-	QXquaternion& QXquaternion::operator*(QXfloat s) const noexcept
-	{
-		QXquaternion res = QXquaternion();
-
-		res.w = s * w;
-		res.v = v * s;
-		return res;
-	}
-
-	QXquaternion& QXquaternion::operator*(const QXquaternion& q) const noexcept
-	{
-		QXquaternion res = QXquaternion();
-
-		res.w = w * q.w - v.x * q.v.x - v.y * q.v.y - v.z * q.v.z;
-		res.v.x = w * q.v.x + v.x * q.w + v.y * q.v.z - v.z * q.v.y;
-		res.v.y = w * q.v.y - v.x * q.v.z + v.y * q.w + v.z * q.v.x;
-		res.v.z = w * q.v.z + v.x * q.v.y - v.y * q.v.x + v.z * q.w;
-
-		return res;
-	}
-
-	QXquaternion& QXquaternion::operator+(const QXquaternion& q) const noexcept
-	{
-		QXquaternion res = QXquaternion();
-
-		res.w = w + q.w;
-		res.v = v + q.v;
-		return res;
-	}
-
-	QXquaternion& QXquaternion::operator-(const QXquaternion& q) const noexcept
-	{
-		QXquaternion res = QXquaternion();
-
-		res.w = w - q.w;
-		res.v = v - q.v;
-		return res;
-	}
-
-	#pragma endregion Operator Functions
+	#pragma endregion Functions
 }

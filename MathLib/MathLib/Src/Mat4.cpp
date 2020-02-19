@@ -1,7 +1,9 @@
+#include <math.h>
+
 #include "Mat4.h"
 #include "Mat.h"
 
-#include <math.h>
+#include "MathDefines.h"
 
 namespace Math
 {
@@ -302,7 +304,7 @@ namespace Math
 		QXfloat top, bottom, left, right;
 		QXfloat a = (QXfloat)width / height;
 
-		top = (QXfloat)(near * tan(fov * 0.5 * M_PI / 180.0f));
+		top = (QXfloat)(near * tan(fov * 0.5 * Q_PI / 180.0f));
 		bottom = -top;
 		right = top * a;
 		left = -right;
@@ -344,9 +346,9 @@ namespace Math
 
 		Z = target - position;
 		Z.Normalize();
-		X = (up ^ Z);
+		X = (up.Cross(Z));
 		X.Normalize();
-		Y = (Z ^ X);
+		Y = (Z.Cross(X));
 		Y.Normalize();
 
 		lookAt[0][0] = X.x;

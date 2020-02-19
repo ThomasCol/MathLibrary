@@ -86,6 +86,14 @@ namespace Math
 		/* Mathematics operators */
 
 		/**
+		 * @brief Operator to multiply a ref by a Matrix4
+		 * 
+		 * @param m Matrix to multiply
+		 * @return QXref3& Reference of the new Ref3
+		 */
+		QXref3& operator*(const QXmat4& m) const noexcept;
+
+		/**
 		 * @brief Operator to compare vectors
 		 * 
 		 * @param ref Referentiel compared

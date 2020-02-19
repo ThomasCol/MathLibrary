@@ -332,7 +332,7 @@ namespace Math
 	 * @param vector Vector to add to the stream
 	 * @return QXstring New string
 	 */
-	QXstring		operator+(std::string& str, const QXvec2& vect) noexcept;
+	QXstring		operator+(QXstring& str, const QXvec2& vect) noexcept;
 }
 
 #endif // __VEC2_H__

@@ -4,6 +4,7 @@
 #include <string>
 
 #include "MathDefines.h"
+#include "Mat4.h"
 
 namespace Math
 {

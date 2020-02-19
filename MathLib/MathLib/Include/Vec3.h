@@ -8,6 +8,7 @@
 namespace Math
 {
 	struct QXref3;
+	struct QXmat4;
 
 	/**
 	 * @brief Vector3 structure

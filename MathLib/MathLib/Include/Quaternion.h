@@ -63,6 +63,82 @@ namespace Math
 		~QXquaternion() = default;
 		#pragma endregion Constructors/Destructor
 
+		#pragma region Operators
+
+		/**
+		 * @brief Operator = by copy
+		 * 
+		 * @param q Quaternion to copy
+		 * @return Reference QXquaternion of current Quaternion
+		 */
+		QXquaternion&		operator=(const QXquaternion& q) noexcept;
+
+		/**
+		 * @brief Operator = by move
+		 * 
+		 * @param q Quaternion to move
+		 * @return QXquaternion& Reference of current Quaternion
+		 */
+		QXquaternion&		operator=(QXquaternion&& q) noexcept;
+
+		/**
+		 * @brief Operator * multiplication
+		 * 
+		 * @param s float scale value for multiplication
+		 * @return New reference QXquaternion result of multiplication
+		 */
+		QXquaternion&		operator*(QXfloat s) const noexcept;
+
+		/**
+		 * @brief Operator * multiplication
+		 * 
+		 * @param q Quaternion for multiplication
+		 * @return New reference QXquaternion result of multiplication
+		 */
+		QXquaternion&		operator*(const QXquaternion& q) const noexcept;
+
+		/**
+		 * @brief Operator * multiplication with a vector
+		 * 
+		 * @param vec Vector to multiply
+		 * @return QXvec3& Reference of the new vector
+		 */
+		QXvec3& 		operator*(const QXvec3& vec) noexcept;
+
+		/**
+		 * @brief Operator + addition
+		 * 
+		 * @param q QXquaternion for addition
+		 * @return Reference of new QXquaternion result object
+		 */
+		QXquaternion&		operator+(const QXquaternion& q) const noexcept;
+
+		/**
+		 * @brief Operator - substaction
+		 * 
+		 * @param q QXquaternion for substraction
+		 * @return String quaternion of the current quaternion
+		 */
+		QXquaternion&		operator-(const QXquaternion& q) const noexcept;
+
+		/**
+		 * @brief Operator to access quaternion values as an array
+		 * 
+		 * @param idx Index of the array
+		 * @return QXfloat& Reference of the vector value
+		 */
+		QXfloat& 	operator[](const QXuint idx) noexcept;
+
+		/**
+		 * @brief Operator to access quaternion values as an array
+		 * 
+		 * @param idx Index of the array
+		 * @return QXfloat Value of the vector array
+		 */
+		QXfloat 	operator[](const QXuint idx) const noexcept;
+
+		#pragma endregion Operator Functions
+
 		#pragma region Functions
 		/**
 		 * @brief Add two Quaternion object
@@ -204,7 +280,7 @@ namespace Math
 		 * @param euler Vec3 for conversion
 		 * @return New Quaternion from Vec3
 		 */
-		static QXquaternion	ConvertEulerAngleToQuaternion(QXvec3& euler) noexcept;
+		static QXquaternion	ConvertEulerAngleToQuaternion(const QXvec3& euler) noexcept;
 
 		/**
 		 * @brief Slerp of Quaternion object
@@ -216,73 +292,6 @@ namespace Math
 		 */
 		static QXquaternion	SlerpQuaternion(QXquaternion& q1, const QXquaternion& q2, QXfloat t) noexcept;
 		#pragma endregion Static Functions
-		#pragma region Operator Functions
-
-		/**
-		 * @brief Operator = by copy
-		 * 
-		 * @param q Quaternion to copy
-		 * @return Reference QXquaternion of current Quaternion
-		 */
-		QXquaternion&		operator=(const QXquaternion& q) noexcept;
-
-		/**
-		 * @brief Operator = by move
-		 * 
-		 * @param q Quaternion to move
-		 * @return QXquaternion& Reference of current Quaternion
-		 */
-		QXquaternion&		operator=(QXquaternion&& q) noexcept;
-
-		/**
-		 * @brief Operator * multiplication
-		 * 
-		 * @param s float scale value for multiplication
-		 * @return New reference QXquaternion result of multiplication
-		 */
-		QXquaternion&		operator*(QXfloat s) const noexcept;
-
-		/**
-		 * @brief Operator * multiplication
-		 * 
-		 * @param q Quaternion for multiplication
-		 * @return New reference QXquaternion result of multiplication
-		 */
-		QXquaternion&		operator*(const QXquaternion& q) const noexcept;
-
-		/**
-		 * @brief Operator + addition
-		 * 
-		 * @param q QXquaternion for addition
-		 * @return Reference of new QXquaternion result object
-		 */
-		QXquaternion&		operator+(const QXquaternion& q) const noexcept;
-
-		/**
-		 * @brief Operator - substaction
-		 * 
-		 * @param q QXquaternion for substraction
-		 * @return String quaternion of the current quaternion
-		 */
-		QXquaternion&		operator-(const QXquaternion& q) const noexcept;
-
-		/**
-		 * @brief Operator to access quaternion values as an array
-		 * 
-		 * @param idx Index of the array
-		 * @return QXfloat& Reference of the vector value
-		 */
-		QXfloat& 	operator[](const QXuint idx) noexcept;
-
-		/**
-		 * @brief Operator to access quaternion values as an array
-		 * 
-		 * @param idx Index of the array
-		 * @return QXfloat Value of the vector array
-		 */
-		QXfloat 	operator[](const QXuint idx) const noexcept;
-
-		#pragma endregion Operator Functions
 		#pragma endregion Functions
 
 

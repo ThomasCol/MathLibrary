@@ -66,6 +66,16 @@ namespace Math
     return false;
   }
 
+  QXref3& QXref3::operator*(const QXmat4& m) const noexcept
+  {
+	  QXref3 res{ *this };
+	  res.o = m * res.o;
+	  res.i = m * res.i;
+	  res.j = m * res.j;
+	  res.k = m * res.k;
+	  return res;
+  }
+
   QXbool QXref3::operator!=(const QXref3& ref) const noexcept
   {
     if (o != ref.o || i != ref.i || j != ref.j || k != ref.k)
@@ -96,7 +106,7 @@ namespace Math
 	  m[3][3] = 1;
 
 	  m = m.Inverse();
-	  return m * *this;
+	  return *this * m;
   }
 
   QXref3 QXref3::GlobalToLocal(const QXref3& ref) const noexcept
@@ -121,7 +131,7 @@ namespace Math
 
 	  QXref3 res{ *this };
 
-	  return m * res;
+	  return res*m;
   }
 
   QXref3& QXref3::LocalToGlobal(const QXref3& ref) noexcept
@@ -142,7 +152,7 @@ namespace Math
 	  m[2][3] = ref.o.z;
 	  m[3][3] = 1;
 
-	  return m * *this;
+	  return  *this * m;
   }
 
   QXref3 QXref3::LocalToGlobal(const QXref3& ref) const noexcept
@@ -165,7 +175,7 @@ namespace Math
 
 	  QXref3 res { *this };
 
-	  return m * res;
+	  return res * m;
   }
 
   QXref3& QXref3::Rotate(const QXquaternion& quat) noexcept
