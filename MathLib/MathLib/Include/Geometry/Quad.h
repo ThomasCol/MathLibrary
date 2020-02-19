@@ -12,8 +12,8 @@ namespace Math::Geometry
 		QXvec3	m_i;
 		QXvec3	m_j;
 		QXvec3	m_k;
-		float	m_x;
-		float	m_y;
+		QXfloat	m_x;
+		QXfloat	m_y;
 
 	public:
 		Quad(const QXvec3& position = QXvec3(0), const QXvec3& i = QXvec3(1, 0, 0),

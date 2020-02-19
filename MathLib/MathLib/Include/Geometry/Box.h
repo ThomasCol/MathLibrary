@@ -9,9 +9,9 @@ namespace Math::Geometry
 	{
 	private:
 		QXvec3	m_position;
-		float	m_x;
-		float	m_y;
-		float	m_z;
+		QXfloat	m_x;
+		QXfloat	m_y;
+		QXfloat	m_z;
 
 	public:
 		Box(const QXvec3& position = QXvec3(0), const QXfloat& x = 1.f,

@@ -10,7 +10,7 @@ namespace Math::Geometry
 	{
 	private:
 		QXvec3	m_position;
-		float	m_radius;
+		QXfloat	m_radius;
 
 	public:
 		Sphere(const QXvec3& position = QXvec3(0), const QXfloat& radius = 1.f);
