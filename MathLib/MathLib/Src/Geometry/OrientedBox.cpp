@@ -6,14 +6,14 @@
 
 namespace Math::Geometry
 {
-	OrientedBox::OrientedBox(const Box& box, const QXvec3& i, const QXvec3& j, const QXvec3& k):
+	QXorientedBox::QXorientedBox(const Box& box, const QXvec3& i, const QXvec3& j, const QXvec3& k) noexcept :
 		m_box(box),
 		m_i(i),
 		m_j(j),
 		m_k(k)
 	{}
 
-	OrientedBox::OrientedBox(const OrientedBox& box, const QXfloat& offsetExtention):
+	QXorientedBox::QXorientedBox(const QXorientedBox& box, const QXfloat& offsetExtention) noexcept :
 		m_box(box.m_box),
 		m_i(box.m_i),
 		m_j(box.m_j),
@@ -24,7 +24,7 @@ namespace Math::Geometry
 		m_box.Z() += offsetExtention;
 	}
 
-	OrientedBox::OrientedBox(OrientedBox&& box):
+	QXorientedBox::QXorientedBox(QXorientedBox&& box) noexcept :
 		m_box(std::move(box.m_box)),
 		m_i(std::move(box.m_i)),
 		m_j(std::move(box.m_j)),
@@ -33,7 +33,7 @@ namespace Math::Geometry
 
 	QXfloat max(const QXfloat& f1, const QXfloat& f2) { return f1 > f2 ? f1 : f2;}
 
-	Box OrientedBox::AABB() const
+	Box QXorientedBox::GetBox() const
 	{
 		QXvec3 vx(m_i * m_box.X());
 		QXvec3 vy(m_j * m_box.Y());
@@ -43,21 +43,21 @@ namespace Math::Geometry
 		QXfloat y{ std::numeric_limits<QXfloat>::min() };
 		QXfloat z{ std::numeric_limits<QXfloat>::min() };
 
-		QXvec3* array = Points();
+		QXvec3* array = GetPoints();
 
 		for (QXint i = 0; i < 8; i++)
 		{
-			x = max(x, m_box.Position().x - array[i].x);
-			y = max(y, m_box.Position().y - array[i].y);
-			z = max(z, m_box.Position().z - array[i].z);
+			x = max(x, m_box.GetPosition().x - array[i].x);
+			y = max(y, m_box.GetPosition().y - array[i].y);
+			z = max(z, m_box.GetPosition().z - array[i].z);
 		}
 
 		delete[] array;
 
-		return Box(m_box.Position(), x, y, z);
+		return Box(m_box.GetPosition(), x, y, z);
 	}
 
-	QXvec3* OrientedBox::Points() const
+	QXvec3* QXorientedBox::GetPoints() const
 	{
 		QXvec3* array = new QXvec3[8];
 
@@ -77,59 +77,59 @@ namespace Math::Geometry
 		return array;
 	}
 
-	Plane OrientedBox::TopPlane() const
+	QXplane QXorientedBox::GetTopPlane() const
 	{
-		return Plane(m_j, m_box.Position() + m_j * m_box.Y());
+		return QXplane(m_j, m_box.GetPosition() + m_j * m_box.GetY());
 	}
 
-	Plane OrientedBox::BottomPlane() const
+	QXplane QXorientedBox::GetBottomPlane() const
 	{
-		return Plane(m_j * (-1), m_box.Position() - m_j * m_box.Y());
+		return QXplane(m_j * (-1), m_box.GetPosition() - m_j * m_box.GetY());
 	}
 
-	Plane OrientedBox::FrontPlane() const
+	QXplane QXorientedBox::GetFrontPlane() const
 	{
-		return Plane(m_k, m_box.Position() + m_k * m_box.Z());
+		return QXplane(m_k, m_box.GetPosition() + m_k * m_box.GetZ());
 	}
 
-	Plane OrientedBox::BackPlane() const
+	QXplane QXorientedBox::GetBackPlane() const
 	{
-		return Plane(m_k * (-1), m_box.Position() - m_k * m_box.Z());
+		return QXplane(m_k * (-1), m_box.GetPosition() - m_k * m_box.GetZ());
 	}
 
-	Plane OrientedBox::RightPlane() const
+	QXplane QXorientedBox::GetRightPlane() const
 	{
-		return Plane(m_i, m_box.Position() + m_i * m_box.X());
+		return QXplane(m_i, m_box.GetPosition() + m_i * m_box.GetX());
 	}
 
-	Plane OrientedBox::LeftPlane() const
+	QXplane QXorientedBox::GetLeftPlane() const
 	{
-		return Plane(m_i * (-1), m_box.Position() - m_i * m_box.X());
+		return QXplane(m_i * (-1), m_box.GetPosition() - m_i * m_box.GetX());
 	}
 
-	QXint OrientedBox::GetNumberPlaneGoodSide(const QXvec3& point) const
+	QXint QXorientedBox::GetNumberPlaneGoodSide(const QXvec3& point) const
 	{
 		QXint counter{ 0 };
 
-		if (TopPlane().GetSide(point))
+		if (GetTopPlane().GetSide(point))
 			counter++;
-		if (BottomPlane().GetSide(point))
+		if (GetBottomPlane().GetSide(point))
 			counter++;
-		if (FrontPlane().GetSide(point))
+		if (GetFrontPlane().GetSide(point))
 			counter++;
-		if (BackPlane().GetSide(point))
+		if (GetBackPlane().GetSide(point))
 			counter++;
-		if (RightPlane().GetSide(point))
+		if (GetRightPlane().GetSide(point))
 			counter++;
-		if (LeftPlane().GetSide(point))
+		if (GetLeftPlane().GetSide(point))
 			counter++;
 
 		return counter;
 	}
 
-	Segment OrientedBox::GetNearestSegment(const QXvec3& point) const
+	QXsegment QXorientedBox::GetNearestSegment(const QXvec3& point) const
 	{
-		QXvec3* array = Points();
+		QXvec3* array = GetPoints();
 		QXvec3 p1(FLT_MAX);
 		QXvec3 p2(FLT_MAX);
 
@@ -149,12 +149,12 @@ namespace Math::Geometry
 
 		delete[] array;
 
-		return Segment(p1, p2);
+		return QXsegment(p1, p2);
 	}
 
-	QXvec3 OrientedBox::GetNearestPoint(const QXvec3& point) const
+	QXvec3 QXorientedBox::GetNearestPoint(const QXvec3& point) const
 	{
-		QXvec3* array = Points();
+		QXvec3* array = GetPoints();
 		QXvec3 p1(array[0]);
 
 		for (QXint i = 1; i < 6; i++)
@@ -170,36 +170,36 @@ namespace Math::Geometry
 		return p1;
 	}
 
-	Segment* OrientedBox::GetSegmentsWithThisPoint(const QXvec3& point) const
+	QXsegment* QXorientedBox::GetSegmentsWithThisPoint(const QXvec3& point) const
 	{
-		Segment* array = new Segment[3];
+		QXsegment* array = new QXsegment[3];
 
 		QXvec3 localPoint;
 
-		localPoint.x = (point - m_box.Position()).Dot(m_i);
-		localPoint.y = (point - m_box.Position()).Dot(m_j);
-		localPoint.z = (point - m_box.Position()).Dot(m_k);
+		localPoint.x = (point - m_box.GetPosition()).Dot(m_i);
+		localPoint.y = (point - m_box.GetPosition()).Dot(m_j);
+		localPoint.z = (point - m_box.GetPosition()).Dot(m_k);
 
-		QXvec3 p1(m_box.Position() + m_i * localPoint.x
+		QXvec3 p1(m_box.GetPosition() + m_i * localPoint.x
+			+ m_j * localPoint.y
+			- m_k * localPoint.z);
+
+		QXvec3 p2(m_box.GetPosition() + m_i * localPoint.x
+			- m_j * localPoint.y
+			+ m_k * localPoint.z);
+
+		QXvec3 p3(m_box.GetPosition() - m_i * localPoint.x
 								 + m_j * localPoint.y
-								 - m_k * localPoint.z);
-
-		QXvec3 p2(m_box.Position() + m_i * localPoint.x
-								 - m_j * localPoint.y
-								 + m_k * localPoint.z);
-		
-		QXvec3 p3(m_box.Position() - m_i * localPoint.x
-								 + m_j * localPoint.y
 								 + m_k * localPoint.z);
 
-		array[0] = Segment(point, p1);
-		array[1] = Segment(point, p2);
-		array[2] = Segment(point, p3);
+		array[0] = QXsegment(point, p1);
+		array[1] = QXsegment(point, p2);
+		array[2] = QXsegment(point, p3);
 
 		return array;
 	}
 
-	OrientedBox&	OrientedBox::operator=(const OrientedBox& box)
+	QXorientedBox&	QXorientedBox::operator=(const QXorientedBox& box)
 	{
 		m_box = box.m_box;
 		m_i = box.m_i;

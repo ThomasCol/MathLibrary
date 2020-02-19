@@ -8,18 +8,18 @@ namespace Math::Geometry
 	class Cylinder
 	{
 	private:
-		Segment	m_segment;
+		QXsegment	m_segment;
 		QXfloat	m_radius;
 
 	public:
-		Cylinder(const Segment& segment = Segment(), const QXfloat& radius = 1.f);
+		Cylinder(const QXsegment& segment = QXsegment(), const QXfloat& radius = 1.f);
 		Cylinder(const Cylinder& cylinder);
 		Cylinder(Cylinder&& cylinder);
 		~Cylinder() = default;
 
 		Cylinder& operator=(const Cylinder& cylinder);
 
-		inline Segment	GetSegment() const { return m_segment; }
+		inline QXsegment	GetSegment() const { return m_segment; }
 		inline QXfloat	Radius() const { return m_radius; }
 		inline QXfloat	SqrtRadius() const {return m_radius * m_radius;}
 	};
