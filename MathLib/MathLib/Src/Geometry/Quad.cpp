@@ -2,43 +2,50 @@
 
 namespace Math::Geometry
 {
-	Quad::Quad(const QXvec3& position, const QXvec3& i, const QXvec3& j, const QXvec3& k,
-			const QXfloat& x, const QXfloat& y):
-		m_position(position),
-		m_i(i),
-		m_j(j),
-		m_k(k),
-		m_x{x},
-		m_y{y}
+	#pragma region Constructors
+
+	QXquad::QXquad(const QXvec3& position, const QXvec3& i, const QXvec3& j, const QXvec3& k,
+			const QXfloat& x, const QXfloat& y) noexcept :
+		_ref {QXref3(position, i, j, k)},
+		_halfSizes {QXvec2(x, y)}
 	{}
 
-	Quad::Quad(const Quad& quad):
-		m_position(quad.m_position),
-		m_i(quad.m_i),
-		m_j(quad.m_j),
-		m_k(quad.m_k),
-		m_x{quad.m_x},
-		m_y{quad.m_y}
+	QXquad::QXquad(const QXref3& ref, const QXvec2& halfSizes) noexcept :
+		_ref {ref},
+		_halfSizes {halfSizes}
 	{}
 
-	Quad::Quad(Quad&& quad):
-		m_position(std::move(quad.m_position)),
-		m_i(std::move(quad.m_i)),
-		m_j(std::move(quad.m_j)),
-		m_k(std::move(quad.m_k)),
-		m_x{std::move(quad.m_x)},
-		m_y{std::move(quad.m_y)}
+	QXquad::QXquad(const QXquad& quad) noexcept :
+		_ref {quad._ref},
+		_halfSizes {quad._halfSizes}
 	{}
 
-	Quad& Quad::operator=(const Quad& quad)
+	QXquad::QXquad(QXquad&& quad) noexcept:
+		_ref {std::move(quad._ref)},
+		_halfSizes {std::move(quad._halfSizes)}
+	{}
+
+	#pragma endregion Constructors
+
+	#pragma region Functions
+
+	#pragma region Operators
+
+	QXquad& QXquad::operator=(const QXquad& quad) noexcept
 	{
-		m_position = quad.m_position;
-		m_i = quad.m_i;
-		m_j = quad.m_j;
-		m_k = quad.m_k;
-		m_x = quad.m_x;
-		m_y = quad.m_y;
+		_ref = quad._ref;
+		_halfSizes = quad._halfSizes;
 
 		return *this;
 	}
+
+	QXquad& QXquad::operator=(QXquad&& quad) noexcept
+	{
+		_ref = std::move(quad._ref);
+		_halfSizes = std::move(quad._halfSizes);
+
+		return *this;
+	}
+	#pragma endregion Operators
+	#pragma endregion Functions
 }

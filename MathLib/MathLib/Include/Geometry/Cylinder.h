@@ -5,26 +5,118 @@
 
 namespace Math::Geometry
 {
-	class Cylinder
+	/**
+	 * @brief Class for Cylinder
+	 */
+	class QXcylinder
 	{
 	private:
-		Segment	m_segment;
-		QXfloat	m_radius;
+
+	#pragma region Attributes
+
+		Segment	_segment;
+		QXfloat	_radius;
+
+	#pragma endregion Attributes
 
 	public:
-		Cylinder(const Segment& segment = Segment(), const QXfloat& radius = 1.f);
-		Cylinder(const Cylinder& cylinder);
-		Cylinder(Cylinder&& cylinder);
-		~Cylinder() = default;
 
-		Cylinder& operator=(const Cylinder& cylinder);
+	#pragma region Constructors
 
-		inline Segment	GetSegment() const { return m_segment; }
-		inline QXfloat	Radius() const { return m_radius; }
-		inline QXfloat	SqrtRadius() const {return m_radius * m_radius;}
+		/**
+		 * @brief Construct a new QXcylinder object
+		 * 
+		 * @param segment Value for _segment parameter Segment() by default
+		 * @param radius Value for _radius parameter 1 by default
+		 */
+		QXcylinder(const Segment& segment = Segment(), const QXfloat& radius = 1.f) noexcept;
+
+		/**
+		 * @brief Construct a new QXcylinder object
+		 * 
+		 * @param cylinder Cylinder to copy
+		 */
+		QXcylinder(const QXcylinder& cylinder) noexcept;
+
+		/**
+		 * @brief Construct a new QXcylinder object
+		 * 
+		 * @param cylinder Cylinder to move
+		 */
+		QXcylinder(QXcylinder&& cylinder) noexcept;
+
+		/**
+		 * @brief Destroy the QXcylinder object
+		 */
+		~QXcylinder() = default;
+
+	#pragma endregion Constructors
+
+	#pragma region Functions
+
+	#pragma region Operators
+
+		/**
+		 * @brief Operator = by copy
+		 * 
+		 * @param cylinder Cylinder to copy
+		 * @return QXcylinder& Reference of the new Cylinder
+		 */
+		QXcylinder& operator=(const QXcylinder& cylinder) noexcept;
+
+		/**
+		 * @brief Operator = by move
+		 * 
+		 * @param cylinder Cylinder to move
+		 * @return QXcylinder& Reference of the new Cylinder
+		 */
+		QXcylinder& operator=(QXcylinder&& cylinder) noexcept;
+	
+	#pragma endregion Operators
+
+	#pragma region Statics Functions
+	#pragma endregion Statics Functions
+
+	#pragma region Accessors
+
+		/**
+		 * @brief Set the Segment object
+		 * 
+		 * @return Segment& 
+		 */
+		inline Segment&	SetSegment() { return _segment; }
+
+		/**
+		 * @brief Get the Segment object
+		 * 
+		 * @return Segment 
+		 */
+		inline Segment	GetSegment() const noexcept { return _segment; }
+
+		/**
+		 * @brief Set the Radius object
+		 * 
+		 * @return QXfloat& 
+		 */
+		inline QXfloat&	SetRadius() noexcept { return _radius; }
+
+		/**
+		 * @brief Get the Radius object
+		 * 
+		 * @return QXfloat 
+		 */
+		inline QXfloat	GetRadius() const noexcept { return _radius; }
+
+		/**
+		 * @brief Get the Square Radius object
+		 * 
+		 * @return QXfloat 
+		 */
+		inline QXfloat	GetSqrtRadius() const noexcept {return _radius * _radius;}
+
+	#pragma endregion Accessors
+	#pragma endregion Functions
 	};
-
-	typedef Cylinder Capsule;
 }
 
 

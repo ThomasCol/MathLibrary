@@ -1,36 +1,124 @@
 #ifndef __QUAD_H__
 #define __QUAD_H__
 
-#include "Vec3.h"
+#include "Ref3.h"
+#include "Vec2.h"
 
 namespace Math::Geometry
 {
-	class Quad
+	class QXquad
 	{
 	private:
-		QXvec3	m_position;
-		QXvec3	m_i;
-		QXvec3	m_j;
-		QXvec3	m_k;
-		QXfloat	m_x;
-		QXfloat	m_y;
+
+		#pragma region Attributes
+		QXref3 		_ref;
+		QXvec2		_halfSizes;
+
+		#pragma endregion Attributes
 
 	public:
-		Quad(const QXvec3& position = QXvec3(0), const QXvec3& i = QXvec3(1, 0, 0),
+
+		#pragma region Constructors
+
+		/**
+		 * @brief Construct a new QXquad object
+		 * 
+		 * @param position Value for _ref.o parameter QXvec3(0) by default
+		 * @param i Value for _ref.i parameter right by default
+		 * @param j Value for _ref.j parameter up by default
+		 * @param k Value for _ref.k parameter forward by default
+		 * @param x Value for _halfSizes.x parameter 1 by default
+		 * @param y Value for _halfSizes.y parameter 1 by default
+		 */
+		QXquad(const QXvec3& position = QXvec3(0), const QXvec3& i = QXvec3(1, 0, 0),
 				const QXvec3& j = QXvec3(0, 1, 0), const QXvec3& k = QXvec3(0, 0, 1),
-				const QXfloat& x = 1.f, const QXfloat & y = 1.f);
-		Quad(const Quad& quad);
-		Quad(Quad&& quad);
-		~Quad() {};
+				const QXfloat& x = 1.f, const QXfloat & y = 1.f) noexcept;
 
-		inline QXvec3	Position() const {return m_position;}
-		inline QXvec3	I() const {return m_i;}
-		inline QXvec3	J() const {return m_j;}
-		inline QXvec3	K() const {return m_k;}
-		inline QXfloat	X() const {return m_x;}
-		inline QXfloat	Y() const {return m_y;}
+		/**
+		 * @brief Construct a new QXquad object
+		 * 
+		 * @param ref Value for _ref
+		 * @param halfSizes Value for _halfSizes
+		 */
+		QXquad(const QXref3& ref, const QXvec2& halfSizes) noexcept;
 
-		Quad&			operator=(const Quad& quad);
+		/**
+		 * @brief Construct a new QXquad object
+		 * 
+		 * @param quad Quad to copy
+		 */
+		QXquad(const QXquad& quad) noexcept;
+
+		/**
+		 * @brief Construct a new QXquad object
+		 * 
+		 * @param quad Quad to move
+		 */
+		QXquad(QXquad&& quad) noexcept;
+
+		/**
+		 * @brief Destroy the QXquad object
+		 */
+		~QXquad() = default;
+
+		#pragma endregion Contructors
+
+		#pragma region Functions
+
+		#pragma region Operators
+
+		/**
+		 * @brief Operator = by copy
+		 * 
+		 * @param quad Quad to copy
+		 * @return QXquad& Reference of the new quad
+		 */
+		QXquad&			operator=(const QXquad& quad) noexcept;
+
+		/**
+		 * @brief Operator = by move
+		 * 
+		 * @param quad Quad to move
+		 * @return QXquad& Reference of the new quad
+		 */
+		QXquad&			operator=(QXquad&& quad) noexcept;
+
+		#pragma endregion Operators
+
+		#pragma region Accessors
+
+		/**
+		 * @brief Get the Ref object
+		 * 
+		 * @return QXref3 
+		 */
+		inline QXref3	GetRef() const noexcept {return _ref;}
+
+		/**
+		 * @brief Set the Ref object
+		 * 
+		 * @return QXref3& 
+		 */
+		inline QXref3&	SetRef() noexcept {return _ref;}
+
+		/**
+		 * @brief Get the Half Sizes object
+		 * 
+		 * @return QXvec2 
+		 */
+		inline QXvec2	GetHalfSizes() const noexcept {return _halfSizes;}
+
+		/**
+		 * @brief Set the Half Sizes object
+		 * 
+		 * @return QXvec2& 
+		 */
+		inline QXvec2&	SetHalfSizes() noexcept {return _halfSizes;}
+		
+
+		#pragma endregion Accessors
+
+		#pragma endregion Functions
 	};
 }
 

@@ -2,36 +2,51 @@
 
 namespace Math::Geometry
 {
-	Box::Box(const QXvec3& position, const QXfloat& x, const QXfloat& y, const QXfloat& z):
-		m_position(position),
-		m_x{x},
-		m_y{y},
-		m_z{z}
+
+	#pragma region Attributes
+
+	QXbox::QXbox(const QXvec3& position, const QXfloat& x, const QXfloat& y, const QXfloat& z) noexcept:
+		_position{position},
+		_halfSizes{QXvec3(x, y, z)}
 	{}
 
-	Box::Box(const Box& box): 
-		m_position(box.m_position),
-		m_x{box.m_x},
-		m_y{box.m_y},
-		m_z{box.m_z}
+	QXbox::QXbox(const QXvec3& position, const QXvec3& sizes) noexcept :
+		_position{position},
+		_halfSizes{sizes}
 	{}
 
-	Box::Box(Box&& box) noexcept:
-		m_position(std::move(box.m_position)),
-		m_x{std::move(box.m_x)},
-		m_y{std::move(box.m_y)},
-		m_z{std::move(box.m_z)}
+	QXbox::QXbox(const QXbox& box) noexcept: 
+		_position{box._position},
+		_halfSizes{box._halfSizes}
 	{}
 
+	QXbox::QXbox(QXbox&& box) noexcept:
+		_position{std::move(box._position)},
+		_halfSizes{std::move(box._halfSizes)}
+	{}
 
+	#pragma endregion Attributes
 
-	Box& Box::operator=(const Box& box)
+	#pragma region Functions
+
+	#pragma region Operators
+
+	QXbox& QXbox::operator=(const QXbox& box) noexcept
 	{
-		m_position = box.m_position;
-		m_x = box.m_x;
-		m_y = box.m_y;
-		m_z = box.m_z;
+		_position = box._position;
+		_halfSizes = box._halfSizes;
 
 		return *this;
 	}
+
+	QXbox& QXbox::operator=(QXbox&& box) noexcept
+	{
+		_position = std::move(box._position);
+		_halfSizes = std::move(box._halfSizes);
+		return *this;
+	}
+
+	#pragma endregion Operators
+
+	#pragma endregion Functions
 }
