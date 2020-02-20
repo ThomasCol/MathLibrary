@@ -3,6 +3,7 @@
 
 #include <limits>
 #include <float.h>
+#include <vector>
 
 namespace Math::Geometry
 {
@@ -38,6 +39,49 @@ namespace Math::Geometry
 	}
 
 	QXfloat max(const QXfloat& f1, const QXfloat& f2) { return f1 > f2 ? f1 : f2;}
+
+	QXbox QXorientedBox::GetAABB() const noexcept
+	{
+		QXvec3 verticesLocal[8]
+		{
+			{ _ref.o + _ref.i * _halfSizes.x - _ref.j * _halfSizes.y - _ref.k * _halfSizes.z },
+			{ _ref.o + _ref.i * _halfSizes.x - _ref.j * _halfSizes.y + _ref.k * _halfSizes.z },
+			{ _ref.o - _ref.i * _halfSizes.x - _ref.j * _halfSizes.y + _ref.k * _halfSizes.z },
+			{ _ref.o - _ref.i * _halfSizes.x - _ref.j * _halfSizes.y - _ref.k * _halfSizes.z },
+			{ _ref.o + _ref.i * _halfSizes.x + _ref.j * _halfSizes.y - _ref.k * _halfSizes.z },
+			{ _ref.o + _ref.i * _halfSizes.x + _ref.j * _halfSizes.y + _ref.k * _halfSizes.z },
+			{ _ref.o - _ref.i * _halfSizes.x + _ref.j * _halfSizes.y + _ref.k * _halfSizes.z },
+			{ _ref.o - _ref.i * _halfSizes.x + _ref.j * _halfSizes.y - _ref.k * _halfSizes.z }
+		};
+
+		QXvector<QXvec3> vertices_global;
+
+		for (int i = 0; i < 8; i++)
+		{
+			vertices_global.push_back(verticesLocal[i].LocalToWorld(_ref));
+		}
+
+		float xmin = -FLT_MAX, ymin = -FLT_MAX, zmin = -FLT_MAX, xmax = FLT_MAX, ymax = FLT_MAX, zmax = FLT_MAX;
+		for (int i = 0; i < 8; i++)
+		{
+			if (vertices_global[i].x > xmax)
+				xmax = vertices_global[i].x;
+			else if (vertices_global[i].x < xmin)
+				xmin = vertices_global[i].x;
+
+			if (vertices_global[i].y > ymax)
+				ymax = vertices_global[i].y;
+			else if (vertices_global[i].y < ymin)
+				ymin = vertices_global[i].y;
+
+			if (vertices_global[i].z > zmax)
+				zmax = vertices_global[i].z;
+			else if (vertices_global[i].z < zmin)
+				zmin = vertices_global[i].z;
+		}
+
+		return QXbox(_ref.o, QXvec3((xmax - xmin) * 0.5f, (ymax - ymin) * 0.5f, (zmax - zmin) * 0.5f));
+	}
 
 	QXvec3* QXorientedBox::GetPoints() const noexcept
 	{
@@ -107,49 +151,6 @@ namespace Math::Geometry
 			counter++;
 
 		return counter;
-	}
-
-	QXsegment QXorientedBox::GetNearestSegment(const QXvec3& point) const noexcept
-	{
-		QXvec3* array = GetPoints();
-		QXvec3 p1(FLT_MAX);
-		QXvec3 p2(FLT_MAX);
-
-		for (QXint i = 0; i < 8; i++)
-		{
-			if (point.Nearest(array[i], p1))
-			{
-				p2 = p1;
-				p1 = array[i];
-			}
-			else if (point.Nearest(array[i], p2))
-			{
-				p2 = array[i];
-			}
-
-		}
-
-		delete[] array;
-
-		return QXsegment(p1, p2);
-	}
-
-	QXvec3 QXorientedBox::GetNearestPoint(const QXvec3& point) const noexcept
-	{
-		QXvec3* array = GetPoints();
-		QXvec3 p1(array[0]);
-
-		for (QXint i = 1; i < 6; i++)
-		{
-			if (point.Nearest(array[i], p1))
-			{
-				p1 = array[i];
-			}
-		}
-
-		delete[] array;
-
-		return p1;
 	}
 
 	QXsegment* QXorientedBox::GetSegmentsWithThisPoint(const QXvec3& point) const noexcept

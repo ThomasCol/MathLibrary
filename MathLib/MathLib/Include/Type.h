@@ -1,9 +1,14 @@
 #pragma once
 
 #include <cstdint>
+#include <vector>
 
 typedef uint32_t QXuint;
-typedef int32_t QXint; 
+typedef int32_t QXint;
+typedef short QXshort;
+
+template <class T>
+using QXvector = std::vector<T>;
 
 typedef float QXfloat;
 typedef double QXdouble;

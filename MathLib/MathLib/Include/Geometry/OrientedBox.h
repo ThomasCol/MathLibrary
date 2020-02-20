@@ -178,22 +178,6 @@ namespace Math::Geometry
 		QXint			GetNumberPlaneGoodSide(const QXvec3& point) const noexcept;
 
 		/**
-		 * @brief Get the Nearest Segment object
-		 * 
-		 * @param point 
-		 * @return QXsegment nearest segment in relation to the point and the oriented box
-		 */
-		QXsegment		GetNearestSegment(const QXvec3& point) const noexcept;
-
-		/**
-		 * @brief Get the Nearest Point object
-		 * 
-		 * @param point 
-		 * @return QXvec3 nearest point in relation to the point and the oriented box
-		 */
-		QXvec3			GetNearestPoint(const QXvec3& point) const noexcept;
-
-		/**
 		 * @brief Get the Segments With This Point object
 		 * 
 		 * @param point 
