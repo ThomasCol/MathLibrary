@@ -11,10 +11,26 @@
 
 namespace Math
 {
-    float   QuadraticSolver(const float& a, const float& b, const float& c);
+    /**
+     * @brief Solve an quadratic equation
+     * 
+     * @param a Value for coef in x^2
+     * @param b Value for coef in x
+     * @param c Value for const
+     * @return QXQXfloat Quadratic solver
+     */
+    QXfloat   QuadraticSolver(const QXfloat& a, const QXfloat& b, const QXfloat& c) noexcept;
     
+    /**
+     * @brief Clamp method
+     * 
+     * @tparam T Type of variable
+     * @param min Minimum limit
+     * @param max Maximum limit
+     * @param val Value to clamp
+     */
     template<typename T>
-    inline void Clamp(const T& min, const T& max, T& val)
+    inline void Clamp(const T& min, const T& max, T& val) noexcept
     {
         if (val < min)
             val = min;
@@ -22,7 +38,16 @@ namespace Math
         if(val > max)
             val = max;
     }
-
+    
+    /**
+     * @brief Clamp method
+     * 
+     * @tparam T Type of variable
+     * @param min Minimum limit
+     * @param max Maximum limit
+     * @param val Value to clamp
+     * @return T Result of the clamp in New T 
+     */
     template<typename T>
     inline T   Clamp(const T& min, const T& max, const T& val)
     {

@@ -10,7 +10,6 @@ namespace Math::Geometry
 {
 	/**
 	 * @brief QXorientedBox class
-	 * 
 	 */
 	class QXorientedBox
 	{

@@ -9,7 +9,6 @@ namespace Math::Geometry
 {
 	/**
 	 * @brief QXplane class
-	 * 
 	 */
 	class QXplane
 	{
