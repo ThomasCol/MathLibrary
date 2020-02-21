@@ -54,7 +54,7 @@ namespace Math::Geometry
 			{ _ref.o - _ref.i * _halfSizes.x + _ref.j * _halfSizes.y - _ref.k * _halfSizes.z }
 		};
 
-		QXvector<QXvec3> vertices_global;
+		std::vector<QXvec3> vertices_global;
 
 		for (int i = 0; i < 8; i++)
 		{

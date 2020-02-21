@@ -7,9 +7,6 @@ typedef uint32_t QXuint;
 typedef int32_t QXint;
 typedef short QXshort;
 
-template <class T>
-using QXvector = std::vector<T>;
-
 typedef float QXfloat;
 typedef double QXdouble;
 typedef long double QXlongdouble;
@@ -20,4 +17,3 @@ typedef int64_t QXint64;
 typedef std::string QXstring;
 
 typedef bool QXbool;
-

@@ -2,7 +2,7 @@
 
 namespace Math
 {
-    QXfloat QuadraticSolver(const QXfloat& a, const QXfloat& b, const QXfloat& c)
+    QXfloat QuadraticSolver(const QXfloat& a, const QXfloat& b, const QXfloat& c) noexcept
     {
         QXfloat delta {b * b - 4 * a * c};
         QXfloat doubleA = 2 * a;
