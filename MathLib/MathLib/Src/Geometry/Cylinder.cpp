@@ -2,26 +2,48 @@
 
 namespace Math::Geometry
 {
-	Cylinder::Cylinder(const Segment& segment, const QXfloat& radius):
-		m_segment(segment),
-		m_radius{radius}
+	#pragma region Constructors
+	QXcylinder::QXcylinder(const QXsegment& segment, const QXfloat& radius) noexcept:
+		_segment(segment),
+		_radius{radius}
 	{}
 
-	Cylinder::Cylinder(const Cylinder& cylinder):
-		m_segment(cylinder.m_segment),
-		m_radius{cylinder.m_radius}
+	QXcylinder::QXcylinder(const QXcylinder& cylinder) noexcept:
+		_segment(cylinder._segment),
+		_radius{cylinder._radius}
 	{}
 
-	Cylinder::Cylinder(Cylinder&& cylinder):
-		m_segment(std::move(cylinder.m_segment)),
-		m_radius{std::move(cylinder.m_radius)}
+	QXcylinder::QXcylinder(QXcylinder&& cylinder) noexcept:
+		_segment(std::move(cylinder._segment)),
+		_radius{std::move(cylinder._radius)}
 	{}
 
-	Cylinder& Cylinder::operator=(const Cylinder& cylinder)
+	#pragma endregion Constructors
+
+	#pragma region Functions
+
+	#pragma region Operators
+
+	QXcylinder& QXcylinder::operator=(const QXcylinder& cylinder) noexcept
 	{
-		m_segment = cylinder.m_segment;
-		m_radius = cylinder.m_radius;
+		_segment = cylinder._segment;
+		_radius = cylinder._radius;
 
 		return *this;
 	}
+
+	QXcylinder& QXcylinder::operator=(QXcylinder&& cylinder) noexcept
+	{
+		_segment = std::move(cylinder._segment);
+		_radius = std::move(cylinder._radius);
+
+		return *this;
+	}
+
+	#pragma endregion Operators
+
+	#pragma region Statics Functions
+	#pragma endregion Statics Functions
+
+	#pragma endregion Functions
 }

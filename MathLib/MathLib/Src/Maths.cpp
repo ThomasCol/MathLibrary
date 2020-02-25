@@ -2,10 +2,10 @@
 
 namespace Math
 {
-    float QuadraticSolver(const float& a, const float& b, const float& c)
+    QXfloat QuadraticSolver(const QXfloat& a, const QXfloat& b, const QXfloat& c) noexcept
     {
-        float delta {b * b - 4 * a * c};
-        float doubleA = 2 * a;
+        QXfloat delta {b * b - 4 * a * c};
+        QXfloat doubleA = 2 * a;
 
         if (delta < 0)
             return -1;
@@ -13,9 +13,9 @@ namespace Math
         if (delta == 0)
             return -b / doubleA;
 
-        float   sqrtDelta {(float)sqrt(delta)};
-        float   first = (-b + sqrtDelta) / doubleA;
-        float   second = (-b - sqrtDelta) / doubleA;
+        QXfloat   sqrtDelta {(QXfloat)sqrt(delta)};
+        QXfloat   first = (-b + sqrtDelta) / doubleA;
+        QXfloat   second = (-b - sqrtDelta) / doubleA;
 
         if (first >= 0 && first <= 1)
         {

@@ -1,5 +1,5 @@
 #include "CppUnitTest.h"
-#include "../MathLib/Include/Quaternion.h"
+#include "Quaternion.h"
 #include <glm/glm.hpp>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -506,7 +506,7 @@ namespace UnitTestMathLib
 		/* BEGIN Test Quaternion */
 		TEST_METHOD(dotProductQuaternion)
 		{
-			glm::quat q;
+			//glm::quat q;
 			glm::vec4 gvec4{ 1, 2, 3, 4 };
 			Math::QXvec4 vec4{ 1, 2, 3, 4 };
 

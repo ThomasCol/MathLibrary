@@ -34,7 +34,7 @@ namespace Math
 		static const QXvec3 backward;
 		static const QXvec3 infinity;
 
-#pragma endregion
+#pragma endregion Attributes
 
 #pragma region Constructors
 
@@ -66,176 +66,7 @@ namespace Math
 		 */
 		~QXvec3() = default;
 
-#pragma endregion
-
-#pragma region Operators
-
-		/* Copy and move operator */
-
-		/**
-		 * @brief Operator = by copy
-		 * 
-		 * @param vector Vector to copy
-		 * @return QXvec3& Reference of current vector
-		 */
-		QXvec3& 	operator=(const QXvec3& vector) noexcept;
-
-		/**
-		 * @brief Operator = by move
-		 * 
-		 * @param vector Vector to move
-		 * @return QXvec3& Reference of current vector
-		 */
-		QXvec3& 	operator=(QXvec3&& vector) noexcept;
-
-		/* Mathematics operators */
-
-		/**
-		 * @brief Operator for vector addition
-		 * 
-		 * @param vector Vector to add
-		 * @return QXvec3& Reference of current vector
-		 */
-		QXvec3& 	operator+=(const QXvec3& vector) noexcept;
-
-		/**
-		 * @brief Operator for addition
-		 * 
-		 * @param vector Vector to add
-		 * @return QXvec3 New vector
-		 */
-		QXvec3 	operator+(const QXvec3& vector) const noexcept;
-
-		/**
-		 * @brief Operator for substraction
-		 * 
-		 * @param vector Vector to substract
-		 * @return QXvec3& Reference of current vector
-		 */
-		QXvec3& 	operator-=(const QXvec3& vector) noexcept;
-
-		/**
-		 * @brief Operator for substraction
-		 * 
-		 * @param vector Vector to substract
-		 * @return QXvec3 New vector
-		 */
-		QXvec3 	operator-(const QXvec3& vector) const noexcept;
-
-		/**
-		 * @brief Create a new QXvec3 as the opposite of the vector
-		 * 
-		 * @return QXvec3 New vector
-		 */
-		QXvec3	operator-() const noexcept;
-		
-		/**
-		 * @brief Operator for division by scalar
-		 * 
-		 * @param value Scalar to divide
-		 * @return QXvec3& Reference of current vector
-		 */
-		QXvec3& 	operator/=(QXfloat value) noexcept;
-
-		/**
-		 * @brief Operator for division by scalar
-		 * 
-		 * @param value Scalar to divide
-		 * @return QXvec3 New vector
-		 */
-		QXvec3 	operator/(QXfloat value) const noexcept;
-
-		/**
-		 * @brief Operator for multiplication by scalar
-		 * 
-		 * @param value Scalar to multiply
-		 * @return QXvec3& Reference of current vector
-		 */
-		QXvec3&	operator*=(QXfloat value) noexcept;
-
-		/**
-		 * @brief Operator for multiplication by scalar
-		 * 
-		 * @param value Scalar to multiply
-		 * @return QXvec3 New vector
-		 */
-		QXvec3	operator*(QXfloat value) const noexcept;
-
-		/* Binary operators */
-
-		/**
-		 * @brief Operator to compare vector length
-		 * 
-		 * @param vector Vector to compare
-		 * @return true Vectors have same length
-		 * @return false Vectors have different length
-		 */
-		QXbool	operator==(const QXvec3& vector) const noexcept;
-
-		/**
-		 * @brief Operator to compare vector length
-		 * 
-		 * @param vector Vector to compare
-		 * @return true Vectors have different length
-		 * @return false Vectors have same length
-		 */
-		QXbool	operator!=(const QXvec3& vector) const noexcept;
-
-		/**
-		 * @brief Operator to compare vector length
-		 * 
-		 * @param vector Vector to compare
-		 * @return true Vector length is strictly inferior to compared vector
-		 * @return false Vector length is superior or equal to compared vector
-		 */
-		QXbool	operator<(const QXvec3& vector) const noexcept;
-
-		/**
-		 * @brief Operator to compare vector length
-		 * 
-		 * @param vector Vector to compare
-		 * @return true Vector length is inferior or equal to compared vector
-		 * @return false Vector length is strictly superior to compared vector
-		 */
-		QXbool	operator<=(const QXvec3& vector) const noexcept;
-
-		/**
-		 * @brief Operator to compare vector length
-		 * 
-		 * @param vector Vector to compare
-		 * @return true Vector length is strictly superior to compared vector
-		 * @return false Vector length is inferior or equal to compared vector
-		 */
-		QXbool	operator>(const QXvec3& vector) const noexcept;
-
-		/**
-		 * @brief Operator to compare vector length
-		 * 
-		 * @param vector Vector to compare
-		 * @return true Vector length is superior or equal to compared vector
-		 * @return false Vector length is strictly inferior to compared vector
-		 */
-		QXbool	operator>=(const QXvec3& vector) const noexcept;
-
-		/* Operator accessor*/
-
-		/**
-		 * @brief Operator to access vector values as an array
-		 * 
-		 * @param idx Index of the array
-		 * @return const QXfloat of the vector value
-		 */
-		const QXfloat	operator[](QXuint idx) const noexcept;
-
-		/**
-		* @brief Operator to access vector values as an array
-		*
-		* @param idx Index of the array
-		* @return QXfloat& Reference of the vector value
-		*/
-		QXfloat&	operator[](QXuint idx) noexcept;
-
-#pragma endregion
+#pragma endregion Constructors
 
 #pragma region Functions
 
@@ -326,6 +157,176 @@ namespace Math
 		 */
 		QXstring		ToString() const noexcept;
 
+
+#pragma region Operators
+
+		/* Copy and move operator */
+
+		/**
+		 * @brief Operator = by copy
+		 *
+		 * @param vector Vector to copy
+		 * @return QXvec3& Reference of current vector
+		 */
+		QXvec3& operator=(const QXvec3& vector) noexcept;
+
+		/**
+		 * @brief Operator = by move
+		 *
+		 * @param vector Vector to move
+		 * @return QXvec3& Reference of current vector
+		 */
+		QXvec3& operator=(QXvec3&& vector) noexcept;
+
+		/* Mathematics operators */
+
+		/**
+		 * @brief Operator for vector addition
+		 *
+		 * @param vector Vector to add
+		 * @return QXvec3& Reference of current vector
+		 */
+		QXvec3& operator+=(const QXvec3& vector) noexcept;
+
+		/**
+		 * @brief Operator for addition
+		 *
+		 * @param vector Vector to add
+		 * @return QXvec3 New vector
+		 */
+		QXvec3 	operator+(const QXvec3& vector) const noexcept;
+
+		/**
+		 * @brief Operator for substraction
+		 *
+		 * @param vector Vector to substract
+		 * @return QXvec3& Reference of current vector
+		 */
+		QXvec3& operator-=(const QXvec3& vector) noexcept;
+
+		/**
+		 * @brief Operator for substraction
+		 *
+		 * @param vector Vector to substract
+		 * @return QXvec3 New vector
+		 */
+		QXvec3 	operator-(const QXvec3& vector) const noexcept;
+
+		/**
+		 * @brief Create a new QXvec3 as the opposite of the vector
+		 *
+		 * @return QXvec3 New vector
+		 */
+		QXvec3	operator-() const noexcept;
+
+		/**
+		 * @brief Operator for division by scalar
+		 *
+		 * @param value Scalar to divide
+		 * @return QXvec3& Reference of current vector
+		 */
+		QXvec3& operator/=(QXfloat value) noexcept;
+
+		/**
+		 * @brief Operator for division by scalar
+		 *
+		 * @param value Scalar to divide
+		 * @return QXvec3 New vector
+		 */
+		QXvec3 	operator/(QXfloat value) const noexcept;
+
+		/**
+		 * @brief Operator for multiplication by scalar
+		 *
+		 * @param value Scalar to multiply
+		 * @return QXvec3& Reference of current vector
+		 */
+		QXvec3& operator*=(QXfloat value) noexcept;
+
+		/**
+		 * @brief Operator for multiplication by scalar
+		 *
+		 * @param value Scalar to multiply
+		 * @return QXvec3 New vector
+		 */
+		QXvec3	operator*(QXfloat value) const noexcept;
+
+		/* Binary operators */
+
+		/**
+		 * @brief Operator to compare vector length
+		 *
+		 * @param vector Vector to compare
+		 * @return true Vectors have same length
+		 * @return false Vectors have different length
+		 */
+		QXbool	operator==(const QXvec3& vector) const noexcept;
+
+		/**
+		 * @brief Operator to compare vector length
+		 *
+		 * @param vector Vector to compare
+		 * @return true Vectors have different length
+		 * @return false Vectors have same length
+		 */
+		QXbool	operator!=(const QXvec3& vector) const noexcept;
+
+		/**
+		 * @brief Operator to compare vector length
+		 *
+		 * @param vector Vector to compare
+		 * @return true Vector length is strictly inferior to compared vector
+		 * @return false Vector length is superior or equal to compared vector
+		 */
+		QXbool	operator<(const QXvec3& vector) const noexcept;
+
+		/**
+		 * @brief Operator to compare vector length
+		 *
+		 * @param vector Vector to compare
+		 * @return true Vector length is inferior or equal to compared vector
+		 * @return false Vector length is strictly superior to compared vector
+		 */
+		QXbool	operator<=(const QXvec3& vector) const noexcept;
+
+		/**
+		 * @brief Operator to compare vector length
+		 *
+		 * @param vector Vector to compare
+		 * @return true Vector length is strictly superior to compared vector
+		 * @return false Vector length is inferior or equal to compared vector
+		 */
+		QXbool	operator>(const QXvec3& vector) const noexcept;
+
+		/**
+		 * @brief Operator to compare vector length
+		 *
+		 * @param vector Vector to compare
+		 * @return true Vector length is superior or equal to compared vector
+		 * @return false Vector length is strictly inferior to compared vector
+		 */
+		QXbool	operator>=(const QXvec3& vector) const noexcept;
+
+		/* Operator accessor*/
+
+		/**
+		 * @brief Operator to access vector values as an array
+		 *
+		 * @param idx Index of the array
+		 * @return const QXfloat of the vector value
+		 */
+		const QXfloat	operator[](QXuint idx) const noexcept;
+
+		/**
+		* @brief Operator to access vector values as an array
+		*
+		* @param idx Index of the array
+		* @return QXfloat& Reference of the vector value
+		*/
+		QXfloat& operator[](QXuint idx) noexcept;
+
+#pragma endregion Operators
+
 #pragma region Static Functions
 
 		/**
@@ -365,9 +366,9 @@ namespace Math
 		 */
         static QXvec3		Vec3FromPoints(const QXvec3& point1, const QXvec3& point2) noexcept;
 
-#pragma endregion
+#pragma endregion Static Functions
 
-#pragma endregion
+#pragma endregion Functions
 	};
 
 	/**

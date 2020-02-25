@@ -4,36 +4,33 @@
 #include "Box.h"
 #include "Segment.h"
 #include "Plane.h"
-
+#include "Ref3.h"
 
 namespace Math::Geometry
 {
 	/**
 	 * @brief QXorientedBox class
-	 * 
 	 */
 	class QXorientedBox
 	{
 	private:
 		#pragma region Attributes
-		Box		m_box;
-		QXvec3	m_i;
-		QXvec3	m_j;
-		QXvec3	m_k;
+
+		QXref3 _ref;
+		QXvec3 _halfSizes;
+
 		#pragma endregion Attributes
 
 	public:
 		#pragma region Constructors/Destructor
+
 		/**
 		 * @brief Construct a new QXorientedBox object
 		 * 
-		 * @param box 
-		 * @param i 
-		 * @param j 
-		 * @param k 
+		 * @param ref Value for _ref parameter QXref3() by default
+		 * @param halfSizes Value for _halfSizes parameter QXvec3() by default
 		 */
-		QXorientedBox(const Box& box = Box(), const QXvec3& i = QXvec3(1, 0, 0),
-				const QXvec3& j = QXvec3(1, 0, 0), const QXvec3& k = QXvec3(1, 0, 0)) noexcept;
+		QXorientedBox(const QXref3& ref = QXref3(), const QXvec3& halfSizes = QXvec3()) noexcept;
 
 		/**
 		 * @brief Construct a new QXorientedBox object
@@ -52,158 +49,11 @@ namespace Math::Geometry
 
 		/**
 		 * @brief Destroy the QXorientedBox object
-		 * 
 		 */
 		~QXorientedBox() = default;
 		#pragma endregion Constructors/Destructor
 
 		#pragma region Methods
-		#pragma region Accessors
-
-		/**
-		 * @brief Get the Box object
-		 * 
-		 * @return Box 
-		 */
-		inline QXbox	GetBox() const {return m_box;}
-
-		/**
-		 * @brief Get the Position object
-		 * 
-		 * @return QXvec3 
-		 */
-		inline QXvec3	GetPosition() const {return m_box.GetPosition();}
-
-		/**
-		 * @brief Get the I of the referentiel
-		 * 
-		 * @return QXvec3 
-		 */
-		inline QXvec3	GetI() const {return m_i;}
-
-		/**
-		 * @brief Get the J of the referentiel
-		 * 
-		 * @return QXvec3 
-		 */
-		inline QXvec3	GetJ() const {return m_j;}
-
-		/**
-		 * @brief Get the K of the referentiel
-		 * 
-		 * @return QXvec3 
-		 */
-		inline QXvec3	GetK() const {return m_k;}
-
-		/**
-		 * @brief Get the X of the referentiel
-		 * 
-		 * @return QXvec3 
-		 */
-		inline QXfloat	GetX() const {return m_box.X();}
-
-		/**
-		 * @brief Get the Y of the referentiel
-		 * 
-		 * @return QXvec3 
-		 */
-		inline QXfloat	GetY() const {return m_box.Y();}
-
-		/**
-		 * @brief Get the Z of the referentiel
-		 * 
-		 * @return QXvec3 
-		 */
-		inline QXfloat	GetZ() const {return m_box.Z();}
-
-		/**
-		 * @brief Get the AABB of the oriented box
-		 * 
-		 * @return QXBox 
-		 */
-		QXbox			GetABB() const;
-
-		/**
-		 * @brief Get the Points object
-		 * 
-		 * @return QXvec3* 
-		 */
-		QXvec3*			GetPoints() const;
-
-		/**
-		 * @brief Get the Top Plane object
-		 * 
-		 * @return QXplane 
-		 */
-		QXplane			GetTopPlane() const;
-
-		/**
-		 * @brief Get the Bottom Plane object
-		 * 
-		 * @return QXplane 
-		 */
-		QXplane			GetBottomPlane() const;
-
-		/**
-		 * @brief Get the Front Plane object
-		 * 
-		 * @return QXplane 
-		 */
-		QXplane			GetFrontPlane() const;
-
-		/**
-		 * @brief Get the Back Plane object
-		 * 
-		 * @return QXplane 
-		 */
-		QXplane			GetBackPlane() const;
-
-		/**
-		 * @brief Get the Left Plane object
-		 * 
-		 * @return QXplane 
-		 */
-		QXplane			GetLeftPlane() const;
-
-		/**
-		 * @brief Get the Right Plane object
-		 * 
-		 * @return QXplane 
-		 */
-		QXplane			GetRightPlane() const;
-
-		/**
-		 * @brief Get the Number Plane Good Side object
-		 * 
-		 * @param point QXvec 
-		 * @return QXint number of planes that are in the good side
-		 */
-		QXint			GetNumberPlaneGoodSide(const QXvec3& point) const;
-
-		/**
-		 * @brief Get the Nearest Segment object
-		 * 
-		 * @param point 
-		 * @return QXsegment nearest segment in relation to the point and the oriented box
-		 */
-		QXsegment		GetNearestSegment(const QXvec3& point) const;
-
-		/**
-		 * @brief Get the Nearest Point object
-		 * 
-		 * @param point 
-		 * @return QXvec3 nearest point in relation to the point and the oriented box
-		 */
-		QXvec3			GetNearestPoint(const QXvec3& point) const;
-
-		/**
-		 * @brief Get the Segments With This Point object
-		 * 
-		 * @param point 
-		 * @return QXsegment* between the point and the oriented box
-		 */
-		QXsegment*		GetSegmentsWithThisPoint(const QXvec3& point) const;
-		#pragma endregion Accessors
 
 		#pragma region Operator
 
@@ -213,8 +63,127 @@ namespace Math::Geometry
 		 * @param box to copy
 		 * @return QXorientedBox& 
 		 */
-		QXorientedBox&	operator=(const QXorientedBox& box);
+		QXorientedBox&	operator=(const QXorientedBox& box) noexcept;
+
+		/**
+		 * @brief Operator = by move
+		 * 
+		 * @param box Box to move
+		 * @return QXorientedBox& Reference of the new Box 
+		 */
+		QXorientedBox& operator=(QXorientedBox&& box) noexcept;
+		
 		#pragma endregion Operator
+
+		#pragma region Accessors
+
+		/**
+		 * @brief Get the Box object
+		 * 
+		 * @return Box 
+		 */
+		inline QXbox	GetBox() const  noexcept {return QXbox(_ref.o, _halfSizes);}
+
+		/**
+		 * @brief Get the Ref object
+		 * 
+		 * @return QXref3 
+		 */
+		inline QXref3	GetRef() const noexcept {return _ref;}
+
+		/**
+		 * @brief Set the Ref object
+		 * 
+		 * @return QXref3& 
+		 */
+		inline QXref3&	SetRef() noexcept {return _ref;}
+
+		/**
+		 * @brief Get the Half Sizes object
+		 * 
+		 * @return QXvec3 
+		 */
+		inline QXvec3	GetHalfSizes() const noexcept {return _halfSizes;}
+
+		/**
+		 * @brief Set the Half Sizes object
+		 * 
+		 * @return QXvec3& 
+		 */
+		inline QXvec3&	SetHalfSizes() noexcept {return _halfSizes;}
+
+		/**
+		 * @brief Get the AABB of the oriented box
+		 * 
+		 * @return QXBox 
+		 */
+		QXbox			GetAABB() const noexcept;
+
+		/**
+		 * @brief Get the Points object
+		 * 
+		 * @return QXvec3* 
+		 */
+		QXvec3*			GetPoints() const noexcept;
+
+		/**
+		 * @brief Get the Top Plane object
+		 * 
+		 * @return QXplane 
+		 */
+		QXplane			GetTopPlane() const noexcept;
+
+		/**
+		 * @brief Get the Bottom Plane object
+		 * 
+		 * @return QXplane 
+		 */
+		QXplane			GetBottomPlane() const noexcept;
+
+		/**
+		 * @brief Get the Front Plane object
+		 * 
+		 * @return QXplane 
+		 */
+		QXplane			GetFrontPlane() const noexcept;
+
+		/**
+		 * @brief Get the Back Plane object
+		 * 
+		 * @return QXplane 
+		 */
+		QXplane			GetBackPlane() const noexcept;
+
+		/**
+		 * @brief Get the Left Plane object
+		 * 
+		 * @return QXplane 
+		 */
+		QXplane			GetLeftPlane() const noexcept;
+
+		/**
+		 * @brief Get the Right Plane object
+		 * 
+		 * @return QXplane 
+		 */
+		QXplane			GetRightPlane() const noexcept;
+
+		/**
+		 * @brief Get the Number Plane Good Side object
+		 * 
+		 * @param point QXvec 
+		 * @return QXint number of planes that are in the good side
+		 */
+		QXint			GetNumberPlaneGoodSide(const QXvec3& point) const noexcept;
+
+		/**
+		 * @brief Get the Segments With This Point object
+		 * 
+		 * @param point 
+		 * @return QXsegment* between the point and the oriented box
+		 */
+		QXsegment*		GetSegmentsWithThisPoint(const QXvec3& point) const noexcept;
+		#pragma endregion Accessors
 		#pragma endregion Methods
 	};
 }

@@ -19,7 +19,7 @@ namespace Math
 			QXfloat e[4];
 		};
 
-		#pragma endregion
+		#pragma endregion Attributes
 	
 		#pragma region Constructors/Destructor
 
@@ -167,7 +167,7 @@ namespace Math
 		 * @param q Quaternion to compute dot product
 		 * @return QXfloat float result of dot product
 		 */
-		float				DotProductQuaternion(const QXquaternion& q) const noexcept;
+		QXfloat				DotProductQuaternion(const QXquaternion& q) const noexcept;
 
 		/**
 		 * @brief Inverse of the current Quaternion object

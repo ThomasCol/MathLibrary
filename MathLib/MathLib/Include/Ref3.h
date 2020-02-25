@@ -15,7 +15,7 @@ namespace Math
 
 		QXvec3 o, i, j, k;
 
-#pragma endregion
+#pragma endregion Attributes		
 
 #pragma region Constructors
 
@@ -59,57 +59,7 @@ namespace Math
 		 */
 		~QXref3() = default;
 
-#pragma endregion
-
-#pragma region Operators
-
-		/* Copy and move operator */
-
-		/**
-		 * @brief Operator = by copy
-		 * 
-		 * @param ref Referentiel to copy
-		 * @return QXref3& Reference of current referentiel
-		 */
-		QXref3&	operator=(const QXref3& ref) noexcept;
-
-		/**
-		 * @brief Operator = by move
-		 * 
-		 * @param ref Referentiel to move
-		 * @return QXref3& Reference of current referentiel
-		 */
-		QXref3& operator=(QXref3&& ref) noexcept;
-
-		/* Mathematics operators */
-
-		/**
-		 * @brief Operator to multiply a ref by a Matrix4
-		 * 
-		 * @param m Matrix to multiply
-		 * @return QXref3& Reference of the new Ref3
-		 */
-		QXref3& operator*(const QXmat4& m) const noexcept;
-
-		/**
-		 * @brief Operator to compare vectors
-		 * 
-		 * @param ref Referentiel compared
-		 * @return true Referentiels have same vectors
-		 * @return false Referentiels have different vectors
-		 */
-		QXbool 	operator==(const QXref3& ref) const noexcept;
-
-		/**
-		 * @brief Operator to compare vectors
-		 * 
-		 * @param ref Referentiel compared
-		 * @return true Referentiels have different vectors
-		 * @return false Referentiels have same vectors
-		 */
-		QXbool  operator!=(const QXref3& ref) const noexcept;
-
-#pragma endregion
+#pragma endregion Constructors
 
 #pragma region Functions
 
@@ -178,7 +128,57 @@ namespace Math
 		 */
 		QXref3 Translate(const QXvec3& value) const noexcept;
 
-#pragma endregion
+#pragma region Operators
+
+		/* Copy and move operator */
+
+		/**
+		 * @brief Operator = by copy
+		 *
+		 * @param ref Referentiel to copy
+		 * @return QXref3& Reference of current referentiel
+		 */
+		QXref3& operator=(const QXref3& ref) noexcept;
+
+		/**
+		 * @brief Operator = by move
+		 *
+		 * @param ref Referentiel to move
+		 * @return QXref3& Reference of current referentiel
+		 */
+		QXref3& operator=(QXref3&& ref) noexcept;
+
+		/* Mathematics operators */
+
+		/**
+		 * @brief Operator to multiply a ref by a Matrix4
+		 *
+		 * @param m Matrix to multiply
+		 * @return QXref3& Reference of the new Ref3
+		 */
+		QXref3& operator*(const QXmat4& m) const noexcept;
+
+		/**
+		 * @brief Operator to compare vectors
+		 *
+		 * @param ref Referentiel compared
+		 * @return true Referentiels have same vectors
+		 * @return false Referentiels have different vectors
+		 */
+		QXbool 	operator==(const QXref3& ref) const noexcept;
+
+		/**
+		 * @brief Operator to compare vectors
+		 *
+		 * @param ref Referentiel compared
+		 * @return true Referentiels have different vectors
+		 * @return false Referentiels have same vectors
+		 */
+		QXbool  operator!=(const QXref3& ref) const noexcept;
+
+#pragma endregion Operators
+
+#pragma endregion Functions
 	};
 }
 
