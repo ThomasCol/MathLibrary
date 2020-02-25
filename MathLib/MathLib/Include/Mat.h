@@ -16,7 +16,7 @@ namespace Math
         QXint       line;
         QXint       column;
 
-        float*    array;
+        QXfloat*    array;
 		#pragma endregion Attributes
 
 		#pragma region Constructor/Destructor
@@ -59,7 +59,6 @@ namespace Math
 
 		/**
 		 * @brief Destroy the QXmat object
-		 * 
 		 */
         ~QXmat();
 		#pragma endregion Constructor/Destructor
@@ -68,7 +67,7 @@ namespace Math
 		/**
 		 * @brief Compute Determinant
 		 * 
-		 * @return QXfloat constant value of the matrix determinant
+		 * @return QXfloat value of the matrix determinant
 		 */
 		QXfloat			Determinant() const;
 

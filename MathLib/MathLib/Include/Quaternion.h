@@ -102,7 +102,7 @@ namespace Math
 		 * @param vec Vector to multiply
 		 * @return QXvec3& Reference of the new vector
 		 */
-		QXvec3 		operator*(const QXvec3& vec) const noexcept;
+		QXvec3 				operator*(const QXvec3& vec) const noexcept;
 
 		/**
 		 * @brief Operator + addition
@@ -126,7 +126,7 @@ namespace Math
 		 * @param idx Index of the array
 		 * @return QXfloat& Reference of the vector value
 		 */
-		QXfloat& 	operator[](const QXuint idx) noexcept;
+		QXfloat& 			operator[](const QXuint idx) noexcept;
 
 		/**
 		 * @brief Operator to access quaternion values as an array
@@ -134,7 +134,7 @@ namespace Math
 		 * @param idx Index of the array
 		 * @return QXfloat Value of the vector array
 		 */
-		QXfloat 	operator[](const QXuint idx) const noexcept;
+		QXfloat 			operator[](const QXuint idx) const noexcept;
 
 		#pragma endregion Operator Functions
 
@@ -263,7 +263,7 @@ namespace Math
 		 * @param q Quaternion for conversion
 		 * @return New QXmat4 from the Quaternion
 		 */
-		static QXmat4			ConvertQuaternionToMat(const QXquaternion& q) noexcept;
+		static QXmat4		ConvertQuaternionToMat(const QXquaternion& q) noexcept;
 
 		/**
 		 * @brief Convert Mat4 object into Quaternion object

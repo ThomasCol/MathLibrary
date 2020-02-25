@@ -81,7 +81,7 @@ namespace Math::Geometry
 		 * @param t QXfloat ratio
 		 * @return QXvec3 point on the segment
 		 */
-		inline QXvec3	GetPoint(const QXfloat& t) const {return _a + AB() * t;}
+		inline QXvec3	GetPoint(const QXfloat& t) const {return _a + GetSegmentAB() * t;}
 		#pragma endregion Accessors
 
 		#pragma region Operator
