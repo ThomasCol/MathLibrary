@@ -302,7 +302,7 @@ namespace Math
 
 	QXvec4 QXmat::operator*(const QXvec4& vect) const
 	{
-		QXmat  v(4, 4);
+		QXmat  v(4, 1);
 		v[0][0] = vect.x;
 		v[1][0] = vect.y;
 		v[2][0] = vect.z;

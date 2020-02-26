@@ -125,7 +125,7 @@ namespace Math
 		 * 
 		 * @return QXvec3 Vector normalized
 		 */
-		const QXvec3	Normalize() const noexcept;
+		const QXvec3	Normalized() const noexcept;
 
 		/**
 		 * @brief Multiply vectors values by constant

@@ -20,7 +20,7 @@ namespace Math::Geometry
 
 	QXplane::QXplane(const QXvec3& normal, const QXfloat& d)
 	{
-		_normal = normal.Normalize();
+		_normal = normal.Normalized();
 		_d = d / normal.Length();
 	}
 
@@ -28,13 +28,13 @@ namespace Math::Geometry
 	{
 		QXvec3 v1(p2 - p1);
 		QXvec3 v2(p3 - p1);
-		_normal = v1.Cross(v2).Normalize();
+		_normal = v1.Cross(v2).Normalized();
 		_d = p3.Dot(_normal);
 	}
 
 	QXplane::QXplane(const QXvec3& normal, const QXvec3& p)
 	{
-		_normal = normal.Normalize();
+		_normal = normal.Normalized();
 		_d = p.Dot(_normal);
 	}
 

@@ -122,7 +122,7 @@ namespace Math
 		 * @param vect QXvec4 for multiplication
 		 * @return new QXvec4 result of the multiplication
 		 */
-		QXvec3				operator*(const QXvec4& vec) const;
+		QXvec4				operator*(const QXvec4& vec) const;
 		#pragma endregion Operator Functions
 
 		#pragma region Static Functions

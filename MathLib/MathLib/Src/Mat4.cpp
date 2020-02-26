@@ -140,13 +140,12 @@ namespace Math
 
 	QXvec3	QXmat4::operator*(const QXvec3& vec) const
 	{
-
-		return QXvec3(array[0] * vec.x + array[1] * vec.x + array[2] * vec.x + array[3] * vec.x,
-			array[4] * vec.y + array[5] * vec.y + array[6] * vec.y + array[7] * vec.y,
-			array[8] * vec.z + array[9] * vec.z + array[10] * vec.z + array[11] * vec.z);
+		return QXvec3(array[0] * vec.x + array[1] * vec.y + array[2] * vec.z + array[3],
+			array[4] * vec.x + array[5] * vec.y + array[6] * vec.z + array[7],
+			array[8] * vec.x + array[9] * vec.y + array[10] * vec.z + array[11]);
 	}
 
-	QXvec3	QXmat4::operator*(const QXvec4& vec) const
+	QXvec4	QXmat4::operator*(const QXvec4& vec) const
 	{
 		QXmat4  matVec;
 		matVec[0][0] = vec.x;
@@ -156,7 +155,7 @@ namespace Math
 
 		QXmat4  res((*this) * matVec);
 
-		QXvec3 vecRes(res[0][0], res[1][0], res[2][0]);
+		QXvec4 vecRes(res[0][0], res[1][0], res[2][0], res[3][0]);
 
 		return vecRes;
 	}
