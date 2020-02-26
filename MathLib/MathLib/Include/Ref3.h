@@ -67,25 +67,9 @@ namespace Math
 		 * @brief Transform to Global referential to a local referential
 		 * 
 		 * @param ref Referential to transform
-		 * @return QXref3& Reference of current referential
-		 */
-		QXref3& GlobalToLocal(const QXref3& ref) noexcept;
-
-		/**
-		 * @brief Transform to Global referential to a local referential
-		 * 
-		 * @param ref Referential to transform
 		 * @return QXref3 New referential
 		 */
 		QXref3 GlobalToLocal(const QXref3& ref) const noexcept;
-
-		/**
-		 * @brief Transform to local referential to a Global referential
-		 * 
-		 * @param ref Referential to transform
-		 * @return QXref3& Reference of current referential
-		 */
-		QXref3& LocalToGlobal(const QXref3& ref) noexcept;
 
 		/**
 		 * @brief Transform to local referential to a Global referential
@@ -154,9 +138,17 @@ namespace Math
 		 * @brief Operator to multiply a ref by a Matrix4
 		 *
 		 * @param m Matrix to multiply
-		 * @return QXref3& Reference of the new Ref3
+		 * @return QXref3& Reference of the current Ref3
 		 */
-		QXref3& operator*(const QXmat4& m) const noexcept;
+		QXref3& operator*=(const QXmat4& m) noexcept;
+
+		/**
+		 * @brief Operator to multiply a ref by a Matrix4
+		 *
+		 * @param m Matrix to multiply
+		 * @return QXref3& new Ref3
+		 */
+		QXref3 operator*(const QXmat4& m) const noexcept;
 
 		/**
 		 * @brief Operator to compare vectors

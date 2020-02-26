@@ -240,7 +240,6 @@ namespace Math
 		return sqrt(x * x + y * y + z * z);
 	}
 
-
 	QXvec3 QXvec3::WorldToLocal(const QXref3& ref) const noexcept
 	{
 		QXmat4 m;

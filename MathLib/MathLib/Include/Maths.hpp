@@ -7,8 +7,6 @@
 #include "Mat.h"
 #include "Vec2.h"
 
-
-
 namespace Math
 {
     /**
