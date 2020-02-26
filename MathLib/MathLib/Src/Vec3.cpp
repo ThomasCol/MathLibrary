@@ -299,7 +299,7 @@ namespace Math
 		return *this;
 	}
 
-	const QXvec3	QXvec3::Normalize() const noexcept
+	const QXvec3	QXvec3::Normalized() const noexcept
 	{
 		QXvec3	res;
 

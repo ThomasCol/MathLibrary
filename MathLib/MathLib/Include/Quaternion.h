@@ -86,7 +86,7 @@ namespace Math
 		 * @param s float scale value for multiplication
 		 * @return New reference QXquaternion result of multiplication
 		 */
-		QXquaternion&		operator*(QXfloat s) const noexcept;
+		QXquaternion		operator*(QXfloat s) const noexcept;
 
 		/**
 		 * @brief Operator * multiplication
@@ -94,7 +94,7 @@ namespace Math
 		 * @param q Quaternion for multiplication
 		 * @return New reference QXquaternion result of multiplication
 		 */
-		QXquaternion&		operator*(const QXquaternion& q) const noexcept;
+		QXquaternion		operator*(const QXquaternion& q) const noexcept;
 
 		/**
 		 * @brief Operator * multiplication with a vector
@@ -110,7 +110,7 @@ namespace Math
 		 * @param q QXquaternion for addition
 		 * @return Reference of new QXquaternion result object
 		 */
-		QXquaternion&		operator+(const QXquaternion& q) const noexcept;
+		QXquaternion		operator+(const QXquaternion& q) const noexcept;
 
 		/**
 		 * @brief Operator - substaction
@@ -118,7 +118,7 @@ namespace Math
 		 * @param q QXquaternion for substraction
 		 * @return String quaternion of the current quaternion
 		 */
-		QXquaternion&		operator-(const QXquaternion& q) const noexcept;
+		QXquaternion		operator-(const QXquaternion& q) const noexcept;
 
 		/**
 		 * @brief Operator to access quaternion values as an array
@@ -145,14 +145,14 @@ namespace Math
 		 * @param q Quaternion to add
 		 * @return Reference of new QXquaternion result object
 		 */
-		QXquaternion&		AddQuaternion(const QXquaternion& q) const noexcept;
+		QXquaternion		AddQuaternion(const QXquaternion& q) const noexcept;
 
 		/**
 		 * @brief Conjugate of Quaternion object
 		 * 
 		 * @return Reference of new QXquaternion result object
 		 */
-		QXquaternion&		ConjugateQuaternion() const noexcept;
+		QXquaternion		ConjugateQuaternion() const noexcept;
 
 		/**
 		 * @brief Convert Quaternion object into Mat4 object
@@ -174,7 +174,7 @@ namespace Math
 		 * 
 		 * @return Reference QXquaternion of the current Quaternion
 		 */
-		QXquaternion&		InverseQuaternion() noexcept;
+		QXquaternion		InverseQuaternion() noexcept;
 
 		/**
 		 * @brief Multiply Quaternion object with QXfloat
@@ -182,7 +182,7 @@ namespace Math
 		 * @param s float scale value for multiplication
 		 * @return New reference QXquaternion result of multiplication 
 		 */
-		QXquaternion&		MultQuaternion(QXfloat s) const noexcept;
+		QXquaternion		MultQuaternion(QXfloat s) const noexcept;
 
 		/**
 		 * @brief Multiply two Quaternion object
@@ -190,7 +190,7 @@ namespace Math
 		 * @param q Quaternion for multiplication
 		 * @return New reference QXquaternion result of multiplication
 		 */
-		QXquaternion&		MultQuaternion(const QXquaternion& q) const noexcept;
+		QXquaternion		MultQuaternion(const QXquaternion& q) const noexcept;
 
 		/**
 		 * @brief Negate of the current Quaternion object
@@ -203,7 +203,7 @@ namespace Math
 		 * 
 		 * @return New reference QXquaternion result of normalize
 		 */
-		QXquaternion&		NormalizeQuaternion() noexcept;
+		QXquaternion		NormalizeQuaternion() noexcept;
 
 		/**
 		 * @brief Nullify the current Quaternion object
@@ -223,7 +223,7 @@ namespace Math
 		 * 
 		 * @return New reference QXquaternion result of negate Quaternion
 		 */
-		QXquaternion&		ReturnNegateQuaternion() const noexcept;
+		QXquaternion		ReturnNegateQuaternion() const noexcept;
 
 		/**
 		 * @brief Square root of Quaternion object
@@ -239,7 +239,7 @@ namespace Math
 		 * @param t float ratio
 		 * @return reference of the current QXquaternion slerp normalize
 		 */
-		QXquaternion&		SlerpQuaternion(const QXquaternion& q, QXfloat t) noexcept;
+		QXquaternion		SlerpQuaternion(const QXquaternion& q, QXfloat t) noexcept;
 
 		/**
 		 * @brief Substract two Quaternion object
@@ -247,7 +247,7 @@ namespace Math
 		 * @param q Quaternion for substraction
 		 * @return New reference QXquaternion result of substraction of two quaternion
 		 */
-		QXquaternion&		SubQuaternion(const QXquaternion& q) const noexcept;
+		QXquaternion		SubQuaternion(const QXquaternion& q) const noexcept;
 
 		/**
 		 * @brief String of Quaternion object

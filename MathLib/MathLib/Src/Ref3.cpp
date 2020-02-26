@@ -16,9 +16,9 @@ namespace Math
 
   QXref3::QXref3(const QXvec3& O, const QXvec3& I, const QXvec3& J, const QXvec3& K) noexcept :
 		o {O},
-		i {I.Normalize()},
-		j {J.Normalize()},
-		k {K.Normalize()}        
+		i {I.Normalized()},
+		j {J.Normalized()},
+		k {K.Normalized()}        
   {}
 
   QXref3::QXref3(const QXref3& ref) noexcept :

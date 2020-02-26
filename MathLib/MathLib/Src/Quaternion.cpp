@@ -44,16 +44,16 @@ namespace Math
 		return *this;
 	}
 
-	QXquaternion& QXquaternion::operator*(QXfloat s) const noexcept
+	QXquaternion QXquaternion::operator*(QXfloat s) const noexcept
 	{
-		QXquaternion res{ QXquaternion() };
+		QXquaternion res = QXquaternion();
 
 		res.w = s * w;
 		res.v = v * s;
 		return res;
 	}
 
-	QXquaternion& QXquaternion::operator*(const QXquaternion& q) const noexcept
+	QXquaternion QXquaternion::operator*(const QXquaternion& q) const noexcept
 	{
 		QXquaternion res{ QXquaternion() };
 
@@ -73,7 +73,7 @@ namespace Math
 		return m * res;
 	}
 
-	QXquaternion& QXquaternion::operator+(const QXquaternion& q) const noexcept
+	QXquaternion QXquaternion::operator+(const QXquaternion& q) const noexcept
 	{
 		QXquaternion res{ QXquaternion() };
 
@@ -82,7 +82,7 @@ namespace Math
 		return res;
 	}
 
-	QXquaternion& QXquaternion::operator-(const QXquaternion& q) const noexcept
+	QXquaternion QXquaternion::operator-(const QXquaternion& q) const noexcept
 	{
 		QXquaternion res{ QXquaternion() };
 
@@ -105,7 +105,7 @@ namespace Math
 
 	#pragma region Functions
 
-	QXquaternion& QXquaternion::AddQuaternion(const QXquaternion& q) const noexcept
+	QXquaternion QXquaternion::AddQuaternion(const QXquaternion& q) const noexcept
 	{
 		QXquaternion res = QXquaternion();
 
@@ -114,7 +114,7 @@ namespace Math
 		return res;
 	}
 
-	QXquaternion& QXquaternion::ConjugateQuaternion() const noexcept
+	QXquaternion QXquaternion::ConjugateQuaternion() const noexcept
 	{
 		QXquaternion res(w, -v.x, -v.y, -v.z);
 		return res;
@@ -145,12 +145,12 @@ namespace Math
 		return (w * q.w + v.Dot(q.v));
 	}
 
-	QXquaternion& QXquaternion::InverseQuaternion() noexcept
+	QXquaternion QXquaternion::InverseQuaternion() noexcept
 	{
 		return ConjugateQuaternion().MultQuaternion(1 / SqrtRootQuaternion());
 	}
 
-	QXquaternion& QXquaternion::MultQuaternion(QXfloat s) const noexcept
+	QXquaternion QXquaternion::MultQuaternion(QXfloat s) const noexcept
 	{
 		QXquaternion res = QXquaternion();
 
@@ -159,7 +159,7 @@ namespace Math
 		return res;
 	}
 
-	QXquaternion& QXquaternion::MultQuaternion(const QXquaternion& q) const noexcept
+	QXquaternion QXquaternion::MultQuaternion(const QXquaternion& q) const noexcept
 	{
 		QXquaternion res = QXquaternion();
 
@@ -179,7 +179,7 @@ namespace Math
 		v.z = -v.z;
 	}
 
-	QXquaternion& QXquaternion::NormalizeQuaternion() noexcept
+	QXquaternion QXquaternion::NormalizeQuaternion() noexcept
 	{
 		QXfloat s = 1 / QuaternionLength();
 
@@ -197,7 +197,7 @@ namespace Math
 		return sqrt(powf(w, 2) + (v.Dot(v)));
 	}
 
-	QXquaternion& QXquaternion::ReturnNegateQuaternion() const noexcept
+	QXquaternion QXquaternion::ReturnNegateQuaternion() const noexcept
 	{
 		QXquaternion res = QXquaternion();
 
@@ -214,7 +214,7 @@ namespace Math
 		return DotProductQuaternion(ConjugateQuaternion());
 	}
 
-	QXquaternion& QXquaternion::SlerpQuaternion(const QXquaternion& q, QXfloat t) noexcept
+	QXquaternion QXquaternion::SlerpQuaternion(const QXquaternion& q, QXfloat t) noexcept
 	{
 		QXfloat theta{ acos(DotProductQuaternion(q)) };
 
@@ -224,7 +224,7 @@ namespace Math
 		return ((*this * sin((1 - t) * theta) + q * sin(t * theta)) * (1 / sin(theta))).NormalizeQuaternion();
 	}
 
-	QXquaternion& QXquaternion::SubQuaternion(const QXquaternion& q) const noexcept
+	QXquaternion QXquaternion::SubQuaternion(const QXquaternion& q) const noexcept
 	{
 		QXquaternion res = QXquaternion();
 
@@ -245,7 +245,6 @@ namespace Math
 	QXmat4 QXquaternion::ConvertQuaternionToMat(const QXquaternion& q) noexcept
 	{
 		QXmat4 res;
-
 		res.array[0] = 1 - (2 * powf(q.v.y, 2)) - (2 * powf(q.v.z, 2));
 		res.array[1] = (2 * q.v.x * q.v.y) - (2 * q.w * q.v.z);
 		res.array[2] = (2 * q.v.x * q.v.z) + (2 * q.w * q.v.y);
@@ -264,10 +263,45 @@ namespace Math
 
 	QXquaternion QXquaternion::ConvertMatToQuaternion(const QXmat4& m) noexcept
 	{
-		QXfloat qw = sqrt(1 + m.array[0] + m.array[5] + m.array[10]) / 2.f;
-		QXfloat qx = (m.array[9] - m.array[6]) / (4 * qw);
-		QXfloat qy = (m.array[2] - m.array[8]) / (4 * qw);
-		QXfloat qz = (m.array[4] - m.array[1]) / (4 * qw);
+		QXfloat tr = m.array[0] + m.array[5] + m.array[10];
+		QXfloat qw, qx, qy, qz;
+
+		if (tr > 0)
+		{
+			QXfloat S = sqrt(tr + 1.f) * 2;
+
+			qw = 0.25f * S;
+			qx = (m.array[9] - m.array[6]) / S;
+			qy = (m.array[2] - m.array[8]) / S;
+			qz = (m.array[4] - m.array[1]) / S;
+		}
+		else if ((m.array[0] > m.array[5]) && (m.array[0] > m.array[10]))
+		{
+			QXfloat S = sqrt(1.f + m.array[0] - m.array[5] - m.array[10]) * 2;
+
+			qw = (m.array[9] - m.array[6]) / S;
+			qx = 0.25f * S;
+			qy = (m.array[1] + m.array[4]) / S;
+			qz = (m.array[2] + m.array[8]) / S;
+		}
+		else if (m.array[5] > m.array[10])
+		{
+			QXfloat S = sqrt(1.f + m.array[5] - m.array[0] - m.array[10]) * 2;
+
+			qw = (m.array[2] - m.array[8]) / S;
+			qx = (m.array[1] - m.array[4]) / S;
+			qy = 0.25f * S;
+			qz = (m.array[6] + m.array[9]) / S;
+		}
+		else
+		{
+			QXfloat S = sqrt(1.f + m.array[10] - m.array[0] - m.array[5]) * 2;
+
+			qw = (m.array[4] - m.array[1]) / S;
+			qx = (m.array[2] + m.array[8]) / S;
+			qy = (m.array[6] + m.array[9]) / S;
+			qz = 0.25f * S;
+		}
 
 		return QXquaternion(qw, QXvec3(qx, qy, qz));
 	}
