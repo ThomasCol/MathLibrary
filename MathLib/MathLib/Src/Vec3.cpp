@@ -31,8 +31,8 @@ namespace Math
 
     QXvec3::QXvec3(const QXvec3& vector)  noexcept :
         x {vector.x},
-        y {vector.x},
-        z {vector.x}
+        y {vector.y},
+        z {vector.z}
     {}
 
     QXvec3::QXvec3(QXvec3&& vector)  noexcept :
@@ -150,7 +150,8 @@ namespace Math
 
     QXbool    QXvec3::operator==(const QXvec3& vector) const noexcept
     {
-        return SqrLength() == vector.SqrLength();
+		float epsilon = 0.0001f;
+        return fabs(x - vector.x) < epsilon && fabs(y - vector.y) < epsilon && fabs(z - vector.z) < epsilon;
     }
 
     QXbool    QXvec3::operator!=(const QXvec3& vector) const noexcept

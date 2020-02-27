@@ -381,4 +381,16 @@ namespace Math
 	std::ostream&	operator<<(std::ostream& stream, const QXvec3& vector) noexcept;
 }
 
+namespace std
+{
+	template<>
+	struct hash<Math::QXvec3>
+	{
+		size_t operator()(const Math::QXvec3& v)
+		{
+			return std::hash<float>{}(v.x) + std::hash<float>{}(v.y) + std::hash<float>{}(v.z);
+		}
+	};
+}
+
 #endif // __VEC3_H__

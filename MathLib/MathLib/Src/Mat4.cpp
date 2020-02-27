@@ -299,23 +299,20 @@ namespace Math
 	QXmat4	QXmat4::CreateProjectionMatrix(QXint width, QXint height, QXfloat near,
 		QXfloat far, QXfloat fov)
 	{
-		QXmat4    toReturn;
-		QXfloat top, bottom, left, right;
+		QXfloat top, right;
 		QXfloat a = (QXfloat)width / height;
 
-		top = (QXfloat)(near * tan(fov * 0.5 * Q_PI / 180.0f));
-		bottom = -top;
+		top = (QXfloat)(near * tanf(fov * 0.5 * Q_PI / 180.0f));
 		right = top * a;
-		left = -right;
-		toReturn[0][0] = 2 * near / (right - left);
-		toReturn[1][1] = 2 * near / (top - bottom);
-		toReturn[2][2] = -(far + near) / (far - near);
-		toReturn[3][2] = -1;
-		toReturn[0][3] = -near * (right + left) / (right - left);
-		toReturn[1][3] = -near * (top + bottom) / (top - bottom);
-		toReturn[2][3] = 2 * far * near / (near - far);
 
-		return toReturn;
+		QXmat4 res;
+		res[0][0] = near / right;
+		res[1][1] = near / top;
+		res[2][2] = -(far + near) / (far - near);
+		res[3][2] = -(2 * far * near) / (far - near);
+		res[2][3] = -1.0f;
+
+		return res;
 	}
 
 	QXmat4    QXmat4::CreateOrthographicProjectionMatrix(QXint width, QXint height, QXfloat near, QXfloat far)
@@ -337,13 +334,13 @@ namespace Math
 	}
 
 	// Custom implementation of the LookAt function
-	QXmat4	QXmat4::CreateLookAtMatrix(QXvec3 position, QXvec3 target, QXvec3 up, QXvec3 scale)
+	QXmat4	QXmat4::CreateLookAtMatrix(QXvec3 position, QXvec3 target, QXvec3 up)
 	{
 		QXmat4	lookAt;
 
 		QXvec3	X, Y, Z;
 
-		Z = target - position;
+		Z = position - target;
 		Z.Normalize();
 		X = (up.Cross(Z));
 		X.Normalize();
@@ -353,18 +350,21 @@ namespace Math
 		lookAt[0][0] = X.x;
 		lookAt[1][0] = X.y;
 		lookAt[2][0] = X.z;
-		//		lookAt[0][3] = -(X, position);
+		lookAt[3][0] = -X.Dot(position);
+
 		lookAt[0][1] = Y.x;
 		lookAt[1][1] = Y.y;
 		lookAt[2][1] = Y.z;
-		//		lookAt[1][3] = -(Y, position);
+		lookAt[3][1] = -Y.Dot(position);
+
 		lookAt[0][2] = Z.x;
 		lookAt[1][2] = Z.y;
 		lookAt[2][2] = Z.z;
-		//		lookAt[2][3] = -(Z, position);
-		lookAt[0][3] = position.x;
-		lookAt[1][3] = position.y;
-		lookAt[2][3] = position.z;
+		lookAt[3][2] = -Z.Dot(position);
+
+		lookAt[0][3] = 0;
+		lookAt[1][3] = 0;
+		lookAt[2][3] = 0;
 		lookAt[3][3] = 1.0f;
 
 		return lookAt;

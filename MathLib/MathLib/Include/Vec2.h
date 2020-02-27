@@ -334,4 +334,16 @@ namespace Math
 	QXstring		operator+(QXstring& str, const QXvec2& vect) noexcept;
 }
 
+namespace std
+{
+	template<>
+	struct hash<Math::QXvec2>
+	{
+		size_t operator()(const Math::QXvec2& v)
+		{
+			return std::hash<float>{}(v.x) + std::hash<float>{}(v.y);
+		}
+	};
+}
+
 #endif // __VEC2_H__

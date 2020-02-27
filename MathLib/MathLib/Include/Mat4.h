@@ -228,7 +228,7 @@ namespace Math
 		 * @param Scale QXvec3 scale vector
 		 * @return new QXmat4 mat4 that is the look at matrix
 		 */
-		static QXmat4		CreateLookAtMatrix(QXvec3 position, QXvec3 target, QXvec3 up, QXvec3 Scale);
+		static QXmat4		CreateLookAtMatrix(QXvec3 position, QXvec3 target, QXvec3 up);
 
 		/**
 		 * @brief Get Identity Matrix

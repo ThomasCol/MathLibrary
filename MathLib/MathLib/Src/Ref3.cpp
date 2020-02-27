@@ -5,7 +5,7 @@
 namespace Math
 {
 
-  #pragma region Constructors
+#pragma region Constructors
 
 	QXref3::QXref3(const QXvec3& O, QXfloat AngleI, QXfloat AngleJ, QXfloat AngleK) noexcept :
 		o{ O },
