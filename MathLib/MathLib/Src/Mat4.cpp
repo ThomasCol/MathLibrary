@@ -179,11 +179,11 @@ namespace Math
 		QXmat4	transMatrix;
 
 		transMatrix[0][0] = 1;
-		transMatrix[0][3] = trans.x;
+		transMatrix[3][0] = trans.x;
 		transMatrix[1][1] = 1;
-		transMatrix[1][3] = trans.y;
+		transMatrix[3][1] = trans.y;
 		transMatrix[2][2] = 1;
-		transMatrix[2][3] = trans.z;
+		transMatrix[3][2] = trans.z;
 		transMatrix[3][3] = 1;
 
 		return transMatrix;
@@ -291,7 +291,7 @@ namespace Math
 		QXmat4	rotateMatrix(QXmat4::CreateFixedAngleEulerRotationMatrix(rotate));
 		QXmat4	scaleMatrix(QXmat4::CreateScaleMatrix(scale));
 
-		QXmat4	TRS(transMatrix * rotateMatrix * scaleMatrix);
+		QXmat4	TRS(scaleMatrix * rotateMatrix * transMatrix);
 
 		return TRS;
 	}
